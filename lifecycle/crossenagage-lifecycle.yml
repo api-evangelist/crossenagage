@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: searched
+source: https://api.documentation.crossengage.io/
+versioning:
+  scheme: uri-path
+  current: v2
+  observed: [v1.0, v2.0]
+  docs: https://api.documentation.crossengage.io/user-management-v2/
+  note: >-
+    User Management API is published in two path versions (v1.0 and v2.0);
+    v1.0 remains documented alongside v2.0.
+status_page: https://status.spotler.com/
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No formal deprecation/sunset policy located in public docs.
+sla:
+  url: null
+deprecated_operations: []

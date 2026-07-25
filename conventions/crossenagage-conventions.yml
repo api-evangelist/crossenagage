@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: searched
+source: https://api.crossengage.io/ (live response headers) + https://api.documentation.crossengage.io/
+note: >-
+  Cross-cutting conventions captured from live API response headers and the
+  published documentation surface. Only observed/documented behavior is
+  recorded; unverified aspects are left null (no fabrication). The API docs are
+  JS-rendered, so request/response body conventions could not be machine-read.
+request_tracing:
+  header: X-Request-ID
+  behavior: >-
+    api.crossengage.io returns an X-Request-ID response header and exposes it
+    via Access-Control-Expose-Headers: X-Request-ID (observed on live probe).
+  observed: true
+versioning:
+  style: uri-path
+  example: /user-management/v2
+  observed_versions: [v1.0, v2.0]
+transport:
+  https_only: true
+  hsts: true
+  hsts_max_age: 31536000
+content_type: application/json
+idempotency:
+  supported: unknown
+  note: No documented idempotency-key contract located.
+pagination:
+  style: unknown
+error_envelope:
+  shape: unknown
+rate_limiting:
+  signaled: unknown
+cross_links:
+  lifecycle: lifecycle/crossenagage-lifecycle.yml
+  security: security/crossenagage-domain-security.yml

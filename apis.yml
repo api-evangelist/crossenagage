@@ -1,22 +1,110 @@
 aid: crossenagage
-name: Crossenagage
-description: Crossenagage is a company surfaced as a portfolio company of earlybird and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+name: CrossEngage
+description: >-
+  CrossEngage is a Berlin-based customer data and cross-channel marketing
+  platform (a Customer Data Platform / CDP) founded in 2015 and backed by
+  Earlybird Venture Capital. It unifies first-party customer data into 360-degree
+  profiles, builds no-code predictive AI/ML models for customer lifetime value
+  and behavior, manages audiences with drag-and-drop segmentation, and
+  orchestrates real-time cross-channel customer journeys. Following its
+  acquisition by Spotler, the product is offered as Spotler Activate Pro.
+  CrossEngage exposes a REST API at api.crossengage.io documented at
+  api.documentation.crossengage.io, covering User Management (v1.0 and v2.0),
+  Product Feed, File Attachments, Export, and Statistics.
 url: https://raw.githubusercontent.com/api-evangelist/crossenagage/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://api.documentation.crossengage.io/wp-content/uploads/cropped-favicon-96x96-1-192x192.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - earlybird
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profile
+x-tier-reason: live-api-found
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-apis: []
+- Customer Data Platform
+- Marketing
+- Customer Engagement
+- Marketing Automation
+- Cross-Channel
+- Personalization
+- Predictive Analytics
+- Germany
+apis:
+- name: CrossEngage API
+  description: >-
+    CrossEngage REST API for managing users/customer profiles (User Management
+    v1.0 and v2.0), product feeds, file attachments, data export, and campaign
+    statistics. Served from api.crossengage.io.
+  humanURL: https://api.documentation.crossengage.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Customer Data Platform
+  - Marketing
+  properties:
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: APIReference
+    url: https://api.documentation.crossengage.io/user-management-v2/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/crossenagage-domain-security.yml
+- type: DeveloperPortal
+  url: https://api.documentation.crossengage.io/
+- type: Documentation
+  url: https://api.documentation.crossengage.io/
+- type: APIReference
+  url: https://api.documentation.crossengage.io/user-management-v2/
+- type: Login
+  url: https://app.crossengage.io/
+- type: Pricing
+  url: https://spotler.com/en-de/pricing
+- type: Blog
+  url: https://spotler.com/en-de/resources
+- type: Support
+  url: https://spotler.com/en-de/support
+- type: HelpCenter
+  url: https://spotler.com/en-de/help-centers
+- type: PrivacyPolicy
+  url: https://spotler.com/en-de/privacy-statement
+- type: StatusPage
+  url: https://status.spotler.com/
+- type: TrustCenter
+  url: https://trust.spotler.com/
+- type: Compliance
+  url: https://trust.spotler.com/
+- type: VulnerabilityDisclosure
+  url: security/crossenagage-vulnerability-disclosure.yml
+- type: Security
+  url: https://trust.spotler.com/
+- type: Conformance
+  url: conformance/crossenagage-conformance.yml
+- type: Lifecycle
+  url: lifecycle/crossenagage-lifecycle.yml
+- type: Conventions
+  url: conventions/crossenagage-conventions.yml
+- type: LLMsTxt
+  url: llms/crossenagage-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

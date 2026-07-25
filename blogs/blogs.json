@@ -1,0 +1,11 @@
+{
+  "repo": "crossenagage",
+  "feeds": [
+    {
+      "source": "https://spotler.com/en-de/pricing",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-20T13:31:34Z"
+}

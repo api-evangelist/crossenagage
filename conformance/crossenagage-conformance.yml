@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: searched
+source: https://trust.spotler.com/
+standards:
+- id: iso-27001
+  conforms: true
+  evidence: ISO/IEC 27001:2022 certificate published at trust.spotler.com
+- id: csa-star
+  conforms: true
+  evidence: CSA STAR Certification published at trust.spotler.com
+- id: gdpr
+  conforms: true
+  evidence: GDPR compliance stated at trust.spotler.com (EU/Berlin-based provider)
+- id: soc2
+  conforms: false
+  evidence: not published at trust.spotler.com as of probe date
+- id: pci-dss
+  conforms: false
+- id: hipaa
+  conforms: false
+- id: oauth2
+  conforms: unknown
+  evidence: no machine-readable OpenAPI available; API docs are JS-rendered
+- id: rfc9457-problem-details
+  conforms: unknown
+  evidence: error format not machine-verifiable from published docs

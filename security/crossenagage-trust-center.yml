@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: searched
+probe: true
+source: https://trust.spotler.com/
+url: https://trust.spotler.com/
+note: >-
+  CrossEngage was acquired by Spotler; its security/compliance posture is now
+  published at the Spotler Trust Center (crossengage.io redirects to
+  spotler.com/en-de/activatepro).
+certifications:
+- ISO/IEC 27001:2022
+- CSA STAR Certification
+- GDPR
+evidence:
+- source: https://trust.spotler.com/
+  keywords: [iso/iec 27001:2022, csa star certification, gdpr, trust center]
