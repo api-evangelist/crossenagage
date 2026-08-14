@@ -1,16 +1,17 @@
 aid: crossenagage
 name: CrossEngage
-description: >-
-  CrossEngage is a Berlin-based customer data and cross-channel marketing
-  platform (a Customer Data Platform / CDP) founded in 2015 and backed by
-  Earlybird Venture Capital. It unifies first-party customer data into 360-degree
-  profiles, builds no-code predictive AI/ML models for customer lifetime value
-  and behavior, manages audiences with drag-and-drop segmentation, and
-  orchestrates real-time cross-channel customer journeys. Following its
-  acquisition by Spotler, the product is offered as Spotler Activate Pro.
-  CrossEngage exposes a REST API at api.crossengage.io documented at
-  api.documentation.crossengage.io, covering User Management (v1.0 and v2.0),
-  Product Feed, File Attachments, Export, and Statistics.
+description: CrossEngage is a Berlin-based customer data and cross-channel marketing platform (a Customer
+  Data Platform / CDP) founded in 2015 and backed by Earlybird Venture Capital. It unifies first-party
+  customer data into 360-degree profiles, builds no-code predictive AI/ML models for customer lifetime
+  value and behavior, manages audiences with drag-and-drop segmentation, and orchestrates real-time cross-channel
+  customer journeys across email, push, SMS, WhatsApp and webhooks. Following its acquisition by Spotler,
+  the product is sold as Spotler Activate Pro. CrossEngage exposes six REST APIs on api.crossengage.io
+  — User Management v1 and v2, Product Feed, Raw Export, Statistics and File Attachments — totalling 37
+  operations. Five are published as API Blueprint documents and one (Product Feed) as Swagger 2.0, all
+  served from Apiary and embedded in the reference site at api.documentation.crossengage.io. Authentication
+  is a static X-XNG-AuthToken header paired with a required X-XNG-ApiVersion header; there is no OAuth
+  surface. Product documentation is published at documentation.crossengage.io, which serves a first-party
+  llms.txt index of all 219 pages.
 url: https://raw.githubusercontent.com/api-evangelist/crossenagage/refs/heads/main/apis.yml
 accessModel:
   pricing: unknown
@@ -32,7 +33,7 @@ x-tier: profile
 x-tier-reason: live-api-found
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 tags:
 - Company
 - Customer Data Platform
@@ -42,37 +43,186 @@ tags:
 - Cross-Channel
 - Personalization
 - Predictive Analytics
+- Segmentation
+- Campaign Management
+- Product Feed
+- Data Export
+- Webhooks
+- Web Tracking
 - Germany
 apis:
-- name: CrossEngage API
-  description: >-
-    CrossEngage REST API for managing users/customer profiles (User Management
-    v1.0 and v2.0), product feeds, file attachments, data export, and campaign
-    statistics. Served from api.crossengage.io.
-  humanURL: https://api.documentation.crossengage.io/
+- aid: crossenagage:user-management-v2
+  name: CrossEngage User Management API v2
+  description: 'Asynchronous customer profile API — create, update and delete single users, batch up to
+    1,000 users per call, look a user up by id or by email plus business unit, and poll a tracking id
+    for terminal status. This is the primary data-in path for the CDP and the version CrossEngage recommends
+    over v1. Six operations, published as an API Blueprint on Apiary. Requires the Master API key and
+    X-XNG-ApiVersion: 2.'
+  humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
   - Customer Data Platform
-  - Marketing
+  - User Management
+  - Customer Profiles
+  - Asynchronous
   properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-user-management-v2-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: Overlay
+    url: overlays/crossenagage-user-management-v2-overlay.yaml
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
   - type: Documentation
     url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+- aid: crossenagage:user-management-v1
+  name: CrossEngage User Management API v1
+  description: 'Synchronous predecessor to v2, still fully documented and still monitored as its own status-page
+    component. Broader in surface than v2: user attribute definitions (create/list/fetch/delete), lead
+    capture, individual and bulk user management, behavioural event ingestion, and opt-out / blacklist
+    consent status. Fifteen operations, published as an API Blueprint on Apiary. No deprecation or sunset
+    date has been announced.'
+  humanURL: https://usermanagementv1.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Customer Data Platform
+  - User Management
+  - Events
+  - Consent Management
+  - Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-user-management-v1-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: Overlay
+    url: overlays/crossenagage-user-management-v1-overlay.yaml
   - type: APIReference
-    url: https://api.documentation.crossengage.io/user-management-v2/
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+- aid: crossenagage:product-feed
+  name: CrossEngage Product Feed API
+  description: Real-time product catalogue API backing message personalization — page through products,
+    fetch, upsert and delete by SKU. The only CrossEngage API published as a native Swagger 2.0 document
+    rather than an API Blueprint, so its schemas are the provider's own. Four operations. Complements
+    the (S)FTP file feed, which the provider recommends for bulk loads. A public Postman collection is
+    published for it.
+  humanURL: https://productfeedapiv1.docs.apiary.io/
+  baseURL: https://api.crossengage.io/product-feed/v1
+  tags:
+  - Product Catalog
+  - Personalization
+  - E-commerce
+  - Product Feed
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-product-feed-openapi.yml
+  - type: Overlay
+    url: overlays/crossenagage-product-feed-overlay.yaml
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+- aid: crossenagage:raw-export
+  name: CrossEngage Raw Export API
+  description: Asynchronous bulk data-out API for user and event data. List and inspect the (S)FTP export
+    destinations and CALLBACK webhook destinations configured on the account, list event classes, request
+    an export, poll or cancel it. Enforces a deliberate 3-hour freshness gap so late or out-of-order events
+    are never skipped. Seven operations, published as an API Blueprint on Apiary.
+  humanURL: https://userseventsexportapiv1.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Data Export
+  - ETL
+  - Analytics
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-raw-export-v1-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: Overlay
+    url: overlays/crossenagage-raw-export-v1-overlay.yaml
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+- aid: crossenagage:statistics
+  name: CrossEngage Statistics API
+  description: Synchronous reporting API for story, campaign and message performance. Discover the KPI
+    catalogue configured on the account, then request detailed per-entity or overall roll-up statistics
+    for up to 30 entities per call. Four operations, published as an API Blueprint on Apiary. Uses the
+    Public API key rather than the Master key.
+  humanURL: https://statisticsapi1.docs.apiary.io/
+  baseURL: https://api.crossengage.io/statistics
+  tags:
+  - Analytics
+  - Reporting
+  - Campaign Management
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-statistics-v1-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: Overlay
+    url: overlays/crossenagage-statistics-v1-overlay.yaml
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+- aid: crossenagage:file-attachments
+  name: CrossEngage File Attachments API
+  description: 'Single-operation API for uploading files to be attached to messages sent through stories
+    or campaigns. A paid add-on enabled per account through a customer success representative. Published
+    as an API Blueprint on Apiary; uses the Public API key and X-XNG-ApiVersion: 2.'
+  humanURL: https://fileattachmentsv1.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - File Upload
+  - Messaging
+  - Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-file-attachments-v1-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: Overlay
+    url: overlays/crossenagage-file-attachments-v1-overlay.yaml
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Authentication
+  url: authentication/crossenagage-authentication.yml
 - type: DomainSecurity
   url: security/crossenagage-domain-security.yml
 - type: DeveloperPortal
   url: https://api.documentation.crossengage.io/
 - type: Documentation
-  url: https://api.documentation.crossengage.io/
+  url: https://documentation.crossengage.io/
 - type: APIReference
-  url: https://api.documentation.crossengage.io/user-management-v2/
+  url: https://api.documentation.crossengage.io/
 - type: Login
   url: https://app.crossengage.io/
 - type: Pricing
@@ -80,13 +230,13 @@ common:
 - type: Blog
   url: https://spotler.com/en-de/resources
 - type: Support
-  url: https://spotler.com/en-de/support
+  url: https://documentation.crossengage.io/data-and-engagement-platform/help-and-support/reach-out-to-customer-support
 - type: HelpCenter
   url: https://spotler.com/en-de/help-centers
 - type: PrivacyPolicy
-  url: https://spotler.com/en-de/privacy-statement
+  url: https://trust.spotler.com/privacy-statement
 - type: StatusPage
-  url: https://status.spotler.com/
+  url: https://status.crossengage.io/
 - type: TrustCenter
   url: https://trust.spotler.com/
 - type: Compliance
@@ -103,8 +253,36 @@ common:
   url: conventions/crossenagage-conventions.yml
 - type: LLMsTxt
   url: llms/crossenagage-llms.txt
+- type: Packages
+  url: packages/crossenagage-packages.yml
+- type: SDKs
+  url: packages/crossenagage-packages.yml
+- type: MCPServer
+  url: mcp/crossenagage-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: ErrorCatalog
+  url: errors/crossenagage-error-codes.yml
+- type: Webhooks
+  url: asyncapi/crossenagage-webhooks.yml
+- type: DataModel
+  url: data-model/crossenagage-data-model.yml
+- type: Components
+  url: components/crossenagage-components.yml
+- type: Plans
+  url: plans/crossenagage-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/crossenagage-rate-limits.yml
+- type: Postman
+  url: https://app.getpostman.com/run-collection/7f6c14ba49835c19dbd7
+- type: GitHubOrganization
+  url: https://github.com/CrossEngage
+- type: GettingStarted
+  url: https://documentation.crossengage.io/documentation-guide
+- type: TermsOfService
+  url: https://trust.spotler.com/general-terms-and-conditions-de
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 38
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
