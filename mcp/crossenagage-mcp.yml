@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/ (6 specs, 37 operations) — derived candidate tool list; no provider MCP server exists
+note: SEARCH found no CrossEngage or Spotler MCP server. Probed POST tools/list against mcp.crossengage.io
+  (no DNS/connection), api.crossengage.io/mcp (404), documentation.crossengage.io/mcp (405) and spotler.com/mcp
+  (403 bot challenge); the provider ships no MCP package on npm or PyPI and names none in its documentation
+  or llms.txt. The tools below are a CANDIDATE surface derived from operations that genuinely exist in
+  the harvested contracts — no endpoint has been invented.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+server:
+  name: crossengage
+  transport: null
+  url: null
+tools:
+- name: get_user
+  description: Get a single CrossEngage user profile by id
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#getASingleUserWithId
+- name: get_user_by_email
+  description: Get a single user by email address and business unit
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#getASingleUserWithEmailAndBu
+- name: upsert_user
+  description: Create or update a single user profile
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateASingleUser
+- name: delete_user
+  description: Delete a single user profile
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#deleteASingleUser
+- name: batch_users
+  description: Create, update or delete up to 1,000 user profiles in one asynchronous call
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateDeleteMultipleUsers
+- name: get_user_batch_status
+  description: Retrieve the processing status of an asynchronous user request by tracking id
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#retrieveStatus
+- name: send_event
+  description: Send a behavioural event for a user
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#sendAnEvent
+- name: list_user_attributes
+  description: List the user attribute definitions configured on the account
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttributeList
+- name: create_user_attribute
+  description: Create a user attribute definition
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createAttribute
+- name: get_optout_status
+  description: Read a user's opt-out status
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSOptOutStatus
+- name: set_optout_status
+  description: Update a user's opt-out status
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSOptOutStatus
+- name: list_products
+  description: List catalogue products with pagination
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#getProductsPage
+- name: get_product
+  description: Get a single catalogue product by SKU
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#getProductBySku
+- name: upsert_product
+  description: Create or update a single catalogue product by SKU
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#updateOrCreateProduct
+- name: delete_product
+  description: Delete a catalogue product by SKU
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#deleteProductBySku
+- name: list_exports
+  description: List raw data exports and their status
+  source_operation: openapi/crossenagage-raw-export-v1-openapi.yml#getAllExportsAndTheirDetails
+- name: request_export
+  description: Request a raw user/event export to a configured (S)FTP destination
+  source_operation: openapi/crossenagage-raw-export-v1-openapi.yml#requestAnExportUsers
+- name: get_export
+  description: Get a single export's details
+  source_operation: openapi/crossenagage-raw-export-v1-openapi.yml#getACertainExportSDetails
+- name: cancel_export
+  description: Cancel a running export
+  source_operation: openapi/crossenagage-raw-export-v1-openapi.yml#cancelAnExport
+- name: list_destinations
+  description: List configured export and callback destinations
+  source_operation: openapi/crossenagage-raw-export-v1-openapi.yml#getAllDestinationsAndTheirDetails
+- name: list_kpis
+  description: List the campaign/message KPIs available for reporting
+  source_operation: openapi/crossenagage-statistics-v1-openapi.yml#getAllKPIs
+- name: get_detailed_statistics
+  description: Get detailed statistics for up to 30 entities
+  source_operation: openapi/crossenagage-statistics-v1-openapi.yml#getDetailedStatistics
+- name: get_overall_statistics
+  description: Get overall statistics for up to 30 entities
+  source_operation: openapi/crossenagage-statistics-v1-openapi.yml#getOverallStatistics
+- name: upload_file
+  description: Upload a file attachment for use in campaign messages
+  source_operation: openapi/crossenagage-file-attachments-v1-openapi.yml#uploadAFile

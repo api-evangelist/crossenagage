@@ -1,0 +1,281 @@
+FORMAT: 1A
+HOST: https://api.crossengage.io/statistics
+
+# Statistics API
+
+The Statistics API is designed to help you synchronously access all story, campaign & message statistics performance data available in CrossEngage.
+
+
+#### Versioning
+The versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. 
+To use this API please provide version **2**.
+
+#### Authentication
+CrossEngage uses **header authentication**.
+To get your API key, please log into the [app](https://app.crossengage.io) and navigate
+to **Settings**. You will find the value in the **System setup -> API keys** section
+in the `Public API key`. For example:
+
+* `X-XNG-AuthToken`: `3fe00023932f9903`
+
+#### Date format
+Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+#### Error handling
+When exporting data from CrossEngage, please use the below practices related to error handling:
+
+Resume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:
+* `500 Internal Server Error`
+* `502 Bad gateway`
+* `503 Service Unavailable`
+* `504 Gateway Timeout`
+
+How to retry requests made to CrossEngage in case of errors:
+* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any 
+5xx server error is returned when retrying export requests. These errors can occur if a server is 
+getting overloaded. Exponential backoff can help alleviate these kinds of problems during periods 
+of high volume of requests or heavy network traffic.
+* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. 
+When retrying these requests, limit the number of times you retry them. For example your code could limit to ten 
+retries or less before reporting the error to our team for investigation.
+
+## KPI management [/kpi]
+
+### Get all KPIs [GET]
+
+Use this endpoint to get all of the KPIs available on your account and their details. 
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (kpiList)
+    
+
+### Get a certain KPI [GET /kpi/{id}]
+
+Use this endpoint to get the details of a certain KPI by ID.
+
++ Parameters
+    + id: `234` (string, required) - `id` of a KPI
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (kpi)
+
+## Statistics [/statistics/]
+
+### Get detailed statistics [POST /detailed]
+
+Use this endpoint to get statistics for certain entity IDs (story, campaign or message ID)
+on your account according to a variety of aggregation options. 
+
+Please note that, according to the time interval you request in conjunction with the aggregation, our system will expand your requested interval to fit as many aggregations as possible. Please see the examples below:
+> Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-26T23:59:59Z` with a `MONTH` aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (returning the entire month of August 2018).
+
+> Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-31T23:59:59Z` with a `WEEK` aggregation would return data from `2018-08-20T00:00:00Z` to `2018-09-02T23:59:59Z` (returning calendar Week 34 and 35 of 2018).
+
+
++ Request (application/json)
+    
+    + Attributes (statisticsDetailedRequest)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (statisticsDetailedResponse)
+
+### Get overall statistics [POST /overall]
+
+Use this endpoint to get overall statistics for certain entity IDs (story, campaign or message ID)
+on your account according to a particular time interval or since the first dispatch of a selected entity until the present.
+
++ Request (application/json)
+    
+    + Attributes (statisticsOverallRequest)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (statisticsOverallResponse)
+
+# Data Structures
+
+## kpi(object)
++ id: `213` (string)
++ name(enum[string])
+    - Sample: `Conversion to View Rate`
+    + Members
+        + `Sent` - Metric representing messages sent to any provider by CrossEngage
+        + `Delivered` - Metric representing messages sent by an integration provider to your users
+        + `Viewed` - Metric representing total message/s views
+        + `Unique Viewed` - Metric representing the number of users that viewed a message/s
+        + `Clicked` - Metric representing the total number of times URLs in a message/s was clicked
+        + `Unique Clicked` - Metric representing the number of users that clicked any message/s link
+        + `Soft Bounced` - Metric representing the number of temporary message/s delivery issues
+        + `Hard Bounced` - Metric representing the number of permanent message/s delivery issues
+        + `Bounced` - Metric representing the total number of message/s delivery issues
+        + `Unsubscribed` - Metric representing the total number of unsubscriptions generated by a given entity
+        + `Marked as Spam`- Metric representing the total number of spam reports generated by a given entity
+        + `Conversion` - Metric representing the total number of conversions generated by a given entity
+        + `Delivery Rate` - Metric representing the delivery rate percentage of a given entity
+        + `View to Delivery Rate` - Metric representing the view to delivery rate percentage of a given entity
+        + `Click to Delivery Rate` - Metric representing the click to delivery rate percentage of a given entity
+        + `Click-through-Rate (CTR)`- Metric representing the click-trough-rate percentage of a given entity
+        + `Bounce Rate` - Metric representing the bounce rate percentage of a given entity
+        + `Spam Rate` - Metric representing the spam rate percentage of a given entity
+        + `Unsubscribe Rate` - Metric representing the unsubscription rate percentage of a given entity
+        + `Conversion to Delivery Rate` - Metric representing the conversion to delivery rate percentage of a given entity
+        + `Conversion to View Rate` - Metric representing the conversion to view rate percentage of a given entity
+        + `Conversion to Click Rate` - Metric representing the conversion to click rate percentage of a given entity
+        + `Not Sent due to Control Group` - Metric representing the number of messages that could not be sent due to users being part of the campaign's Control Group 
+        + `Control Group Conversion` - Metric representing the total number of conversions generated by a users which were part of the campaign's Control Group 
+        + `Control Group Conversion Rate` - Metric representing the total number of conversions to the total number of users being part of the campaign's Control Group 
+
++ formula(enum[string])
+    - Sample: `CONVERSION / UNIQUE VIEWED * 100`
+    + Members
+        + `SENT` - Formula of the Sent metric
+        + `DELIVERED` - Formula of the Delivered metric
+        + `VIEWED` - Formula of the Viewed metric
+        + `UNIQUE VIEWED` - Formula of the Unique Viewed metric
+        + `CLICKED` - Formula of the Clicked metric
+        + `UNIQUE CLICKED` - Formula of the Unique Clicked metric
+        + `SOFT BOUNCED` - Formula of the Soft Bounced metric
+        + `HARD BOUNCED` - Formula of the Hard Bounced metric
+        + `SOFT BOUNCED + HARD BOUNCED` - Formula of the Bounced metric
+        + `UNSUBSCRIBED` - Formula of the Unsubscribed metric
+        + `MARKED AS SPAM` - Formula of the Marked as Spam metric
+        + `CONVERSION` - Formula of the Unique Conversion metric
+        + `DELIVERED / SENT * 100` - Formula of the Delivery Rate metric
+        + `UNIQUE VIEWED / DELIVERED * 100` - Formula of the View to Delivery Rate metric
+        + `UNIQUE CLICKED / DELIVERED * 100` - Formula of the Click to Delivery Rate metric
+        + `UNIQUE CLICKED / UNIQUE VIEWED * 100` - Formula of the Click-through-Rate (CTR) metric
+        + `(SOFT BOUNCED + HARD BOUNCED) / (SOFT BOUNCED + HARD BOUNCED + DELIVERED) * 100` - Formula of the Bounce Rate metric
+        + `MARKED AS SPAM / DELIVERED * 100` - Formula of the Spam Rate metric
+        + `UNSUBSCRIBED / DELIVERED * 100` - Formula of the Unsubscribe Rate metric
+        + `CONVERSION / DELIVERED * 100` - Formula of the Conversion to Delivery Rate metric
+        + `CONVERSION / UNIQUE VIEWED * 100` - Formula of the Conversion to View Rate metric
+        + `CONVERSION / UNIQUE VIEWED * 100` - Formula of the Conversion to Click Rate metric
+        + `SENT_CONTROL_GROUP` - Formula of the Not Sent due to Control Group metric
+        + `GOAL_COMPLETED_CONTROL_GROUP` -  Formula of the Control Group Conversion metric
+        + `GOAL_COMPLETED_CONTROL_GROUP / SENT_CONTROL_GROUP * 100` - Formula of the Control Group Conversion Rate metric
+        
++ type(enum[string])
+    - Sample: `PERCENTAGE`
+    + Members
+        + `INTEGER`
+        + `PERCENTAGE`
++ createdAt: `2015-08-05T08:40Z` (string)
++ updatedAt: `2015-08-05T08:40Z` (string)
+
+## kpiList(array[kpi])
+
+## entity(object)
++ id: `245` (string, optional) - Represents the ID of the entity (CAMPAIGN, MESSAGE, STORY, EXPERIMENT or VARIATION IDs) that will be used to return statistics data for. Required when requesting statistics for all entities except for `COMPANY_CHANNEL`.
++ channel(enum, optional) - **Required** when the `type` parameter is present with any of the following values: `COMPANY_CHANNEL`, `STORY_CHANNEL`, `CAMPAIGN_CHANNEL`. Represents the channel that statistics should be returned for. 
+    - Sample: `MAIL`
+    + Members
+        + `BROWSER_NOTIFICATION`
+        + `DIRECT_MAIL`
+        + `EXIT_INTENT`
+        + `INSTANT_MESSAGING`
+        + `MAIL` - Represents the email channel. 
+        + `OFFLINE` - Represents the CSV export channel. 
+        + `PUSH_NOTIFICATION`
+        + `SEGMENT_TRANSFER`
+        + `SMS`
+        + `WEBHOOK`
++ type(enum, required) - Represents the type of entity that should be returned according to the ids selected
+    - Sample: `CAMPAIGN_CHANNEL`
+    + Members
+        + `COMPANY_CHANNEL` - Representing the statistics for a channel across all entities.
+        + `STORY` - Representing the statistics for a story.
+        + `STORY_CHANNEL` - Representing the statistics for a channel used within a story.
+        + `CAMPAIGN` - Representing the statistics for a campaign.
+        + `CAMPAIGN_CHANNEL` - Representing the statistics for a channel used within a campaign.
+        + `MESSAGE` - Representing the statistics of a message.
+        + `EXPERIMENT` - Representing the statistics of an experiment. 
+        + `VARIATION` - Representinng the statistics of a variation within an experiment.
+
+##statisticsResponseEntity(object)
++ entity (object)
+    + Properties
+        + Include entity
+
+## kpiResponsePaylodResult(object)
++ Include statisticsResponseEntity
++ startDate: `2018-08-24T00:00:00Z` (string) - ISO 8601 formatted string representing the date and time of the start of one of the aggregations requested. 
++ endDate: `2018-08-24T23:59:59Z` (string) - ISO 8601 formatted string representing the date and time of the end of one of the aggregations requested. 
++ Include kpiResonsePaylodResultTotals
+
+## kpiResonsePaylodResultTotals(object)
++ Include statisticsResponseEntity
++ startDate: `2018-08-24T00:00:00Z` (string) - ISO 8601 formatted string representing the date and time for which statistics data will be computed from. 
++ endDate: `2018-08-24T23:59:59Z` (string) - ISO 8601 formatted string representing the date and time for which statistics data will be computed to.
++ kpi(object) - Object containing the requested results for a given entity and time period. 
+    + 23: 100.0 - The key represents the KPI ID requested and the value is the computed statistics response. 
+    + 25: 80.0 - The key represents the KPI ID requested and the value is the computed statistics response. 
+    + 31: `NaN` - The key represents the KPI ID requested and the value is the computed statistics response. 
+
+## statisticsDetailedRequest(object)
++ entities(array[entity], required) - Maximum 30 entities may be used for a single request. 
++ kpiIds: `1`, `12` (array[string], optional) - The IDs of the KPIs that will be used to return statistics data for.
++ interval (object, required) - Please note that, according to the time interval you request in conjunction with the aggregation, our system will expand your requested interval to fit as many aggregations as possible. For example:
+    Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-24T23:59:59Z` with a `MONTH` aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (the entire month of August).</li>
+    When _interval_ is not present, statistics data will be returned for the selected _entityIds_ overall (from their first dispatch and until the present day).
+    + Properties 
+        + startDate: `2019-09-01T00:00:00Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed from. Required when using the `interval` object.
+        + endDate: `2019-09-30T23:59:59Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed to. Required when using the `interval` object.
++ aggregation(enum[string], required) - The aggregation time units that will be returned from your selected interval. When a time unit is larger than the interval selected, no statistics data will be returned.
+    - Sample: `WEEK`
+    + Members
+        + `HOUR` - Representing hours of a calendar day. e.g. `2018-08-24T00:00:00Z` to `2018-08-24T01:00:00Z`.
+        + `DAY` - Representing a calendar day. e.g. `2018-08-24T00:00:00Z` to `2018-08-24T23:59:59Z`.
+        + `WEEK` - Representing a calendar week. e.g. `2018-08-20T00:00:00Z` to `2018-08-26T23:59:59Z`.
+        + `MONTH` - Representing a calendar month. e.g. `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z`.
+        + `YEAR` - Representing a calendar year. e.g. `2018-01-01T00:00:00Z` to `2018-12-31T23:59:59Z`.
+
+## statisticsDetailedResponse(object)
++ interval (object, optional) - Please note that, for the detailed endpoint, according to the time interval you request in conjunction with the aggregation, our system will expand your requested interval to fit as many aggregations as possible. The response will return the actual interval for which data is returned for.
+    + Properties 
+        + startDate: `2018-08-24T00:00:00Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed from. Required when using the `interval` object.
+        + endDate: `2018-08-24T23:59:59Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed to. Required when using the `interval` object.
++ detailed (array[kpiResponsePaylodResult]) - Array containing the requested statistics data returned divided by aggregation time unit selected.
++ overall (array[kpiResonsePaylodResultTotals]) - Array of KPI totals for each _entity_ for the truncated time period. If interval is not present, statistics data will be returned for the selected _entity_ overall (from their first dispatch and until the present day). 
+
+## statisticsOverallRequest(object)
++ entities(array[entity], required) - Maximum 30 entities may be used for a single request. 
++ kpiIds: `1`, `12` (array[string], optional) - The IDs of the KPIs that will be used to return statistics data for.
++ interval (object, optional) - Interval for which overall statistics should be returned for.
+    + Properties 
+        + startDate: `2018-08-24T00:00:00Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed from. Required when using the `interval` object.
+        + endDate: `2018-08-24T23:59:59Z` (string, required) - ISO 8601 formatted string representing the date and time for which statistics data will be computed to. Required when using the `interval` object.
+
+## statisticsOverallResponse(array[kpiResonsePaylodResultTotals])
+

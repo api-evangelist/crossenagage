@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/ (6 harvested CrossEngage contracts) + conventions/crossenagage-conventions.yml + errors/crossenagage-error-codes.yml
+  + asyncapi/crossenagage-webhooks.yml
+note: Packaged Agent Skills for the four marquee CrossEngage flows. CrossEngage publishes no AGENTS.md
+  or skill files of its own — searched the documentation host, the API reference host and the GitHub org.
+  Every operationId referenced below was verified verbatim against the specs in openapi/; none was invented.
+skills:
+- file: crossenagage-sync-user-profiles.md
+  name: Sync customer profiles into CrossEngage
+  api: openapi/crossenagage-user-management-v2-openapi.yml
+  operations:
+  - createUpdateASingleUser
+  - createUpdateDeleteMultipleUsers
+  - getASingleUserWithId
+  - getASingleUserWithEmailAndBu
+  - deleteASingleUser
+  - retrieveStatus
+- file: crossenagage-maintain-product-catalogue.md
+  name: Maintain the CrossEngage product catalogue
+  api: openapi/crossenagage-product-feed-openapi.yml
+  operations:
+  - getProductsPage
+  - getProductBySku
+  - updateOrCreateProduct
+  - deleteProductBySku
+- file: crossenagage-export-raw-data.md
+  name: Export raw user and event data out of CrossEngage
+  api: openapi/crossenagage-raw-export-v1-openapi.yml
+  operations:
+  - getAllDestinationsAndTheirDetails
+  - getACertainDestinationAndItsDetails
+  - getAllEventClasses
+  - requestAnExportUsers
+  - getAllExportsAndTheirDetails
+  - getACertainExportSDetails
+  - cancelAnExport
+- file: crossenagage-report-campaign-performance.md
+  name: Report on CrossEngage campaign performance
+  api: openapi/crossenagage-statistics-v1-openapi.yml
+  operations:
+  - getAllKPIs
+  - getACertainKPI
+  - getDetailedStatistics
+  - getOverallStatistics

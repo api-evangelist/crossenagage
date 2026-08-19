@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: searched
+source: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2
+  + https://github.com/CrossEngage
+note: CrossEngage ships no embeddable UI element library. What it does distribute client-side is a tracking
+  SDK plus two Google Tag Manager templates that install it. Recorded here because they are the provider's
+  only client-side distributables; the server-side picture is in packages/crossenagage-packages.yml.
+families:
+- family: Web Tracking SDK
+  kind: javascript-snippet
+  loader: https://app.crossengage.io/xng/ce.js
+  global: ce (configurable via window.CrossEngageObject)
+  init: 'ce({ apiKey: ''<web-tracking-key>'' })'
+  versions:
+  - version: v2
+    status: current
+    docs: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2
+  - version: v1
+    status: legacy
+    docs: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v1-legacy
+    migration: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/migrate-tracking-sdk-v1-greater-than-v2
+  methods:
+  - identify
+  - update
+  - page
+  - track
+  - opt-out
+  note: Also supported for mobile web. Config commands documented under "Configuration & Config Commands".
+- family: Google Tag Manager templates
+  kind: tag-manager-template
+  items:
+  - name: gtm-tracking-sdk
+    purpose: Loads the CrossEngage Tracking SDK snippet
+    url: https://github.com/CrossEngage/gtm-tracking-sdk
+    last_pushed: '2021-06-16'
+  - name: gtm-tracking-sdk-event
+    purpose: Triggers a CrossEngage Tracking SDK event
+    url: https://github.com/CrossEngage/gtm-tracking-sdk-event
+    last_pushed: '2021-10-13'
+  docs: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2/setup-using-google-tag-manager
+not_found:
+- embeddable dashboards
+- hosted checkout/consent widgets
+- web component library
+- embedded analytics iframes

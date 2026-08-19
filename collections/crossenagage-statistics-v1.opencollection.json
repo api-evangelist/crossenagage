@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Statistics API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all KPIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/kpi",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Use this endpoint to get all of the KPIs available on your account and their details."
+        },
+        {
+          "info": {
+            "name": "Get a certain KPI",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/kpi/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`id` of a KPI"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to get the details of a certain KPI by ID."
+        },
+        {
+          "info": {
+            "name": "Get detailed statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/detailed",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Use this endpoint to get statistics for certain entity IDs (story, campaign or message ID)\non your account according to a variety of aggregation options.\n\nPlease note that, according to the time interval you request in conjunction with the aggregation, our system will expand your requested interval to fit as many aggregations as possible. Please see the examples below:\n\n> Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-26T23:59:59Z` with a `MONTH` aggregation would return data fro"
+        },
+        {
+          "info": {
+            "name": "Get overall statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/overall",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Use this endpoint to get overall statistics for certain entity IDs (story, campaign or message ID)\non your account according to a particular time interval or since the first dispatch of a selected entity until the present."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

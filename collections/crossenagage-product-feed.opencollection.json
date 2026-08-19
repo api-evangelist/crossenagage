@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Product Feed API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "product-feed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get products with pagination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product",
+            "params": [
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "(optional) the page number. Example `1`."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "(optional) the number of products to be returned on one page. Example `100`"
+              }
+            ]
+          },
+          "docs": "When requesting a list of products, you may include the `pageNumber` and `pageSize` as parameters.\nBy default, you will fetch the first page with 10 products (displayed in Response: pageNumber 0).\n"
+        },
+        {
+          "info": {
+            "name": "Get a single product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "(required) the product SKU. Examples `123` or `LNK1230098`"
+              },
+              {
+                "name": "businessUnit",
+                "value": "",
+                "type": "query",
+                "description": "(optional) will be used as a part of the product identifier together with ‘sku’ when provided. Example `DE`"
+              }
+            ]
+          },
+          "docs": "Get a single product by `sku` or `sku` and `businessUnit`\n\n* In case, you’re using both `sku` and `businessUnit` as a combined identifier for your products, please provide both of them here.\n* If only `sku` is provided, we will look for a product with that `sku` and an empty `businessUnit`.\n"
+        },
+        {
+          "info": {
+            "name": "Updates or create a single product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/product/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "(required) the part of the product identifier. Examples `123` or `LNK1230098`"
+              }
+            ]
+          },
+          "docs": "* To create a new product include `sku` or `sku` and `businessUnit` to the JSON body.\n* To update information about a product include `sku` or `sku` and `businessUnit` of that product to the JSON body. All properties will be updated, missing properties will be removed.\n* Custom attributes can be added as a string type to the product.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a single product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/product/:sku",
+            "params": [
+              {
+                "name": "sku",
+                "value": "",
+                "type": "path",
+                "description": "(required) a part of the product identifier. Examples `123` or `LNK1230098`"
+              },
+              {
+                "name": "businessUnit",
+                "value": "",
+                "type": "query",
+                "description": "(optional) will be used as a part of the product identifier together with ‘sku’ when provided. Example `DE`"
+              }
+            ]
+          },
+          "docs": "Delete a single product by `sku` or `sku` and `businessUnit`\n * A product will be deleted if `sku` or `sku` and `businessUnit` match a product in the system.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

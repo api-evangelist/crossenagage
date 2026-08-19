@@ -1,0 +1,62 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "File Attachment API",
+        "version": "",
+        "description": "The File Attachments API is designed to help you attach files in messages sent to clients through stories\nor campaigns. Please note that this is a paid add-on. If you'd like to trial & purchase this feature, please reach\nout to your customer success representative.\n\n#### Versioning\n\nThe versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. \nTo use this API please provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your API key, please log into the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find the value in the **System setup -> API keys** section\nin the `Public API key`. For example:\n\n* `X-XNG-AuthToken`: `3fe00023932f9903`\n\n#### Date format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n#### Error handling\n\nWhen exporting data from CrossEngage, please use the below practices related to error handling:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any \n5xx server error is returned when retrying export requests. These errors can occur if a server is \ngetting overloaded. Exponential backoff can help alleviate these kinds of problems during periods \nof high volume of requests or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation."
+    },
+    "host": "api.crossengage.io",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/files/{fileName}": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Upload a file",
+                "operationId": "Upload a file",
+                "description": "Use this endpoint to upload a single file to the cloud storage",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "fileName",
+                        "in": "path",
+                        "description": "name of the file as it is to be saved in cloud storage",
+                        "required": true,
+                        "x-example": "welcome.pdf",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "consumes": []
+            }
+        }
+    },
+    "definitions": {
+        "Files": {}
+    },
+    "securityDefinitions": {},
+    "tags": []
+}

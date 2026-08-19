@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: the "Authentication" and "Headers" sections of the six CrossEngage API contracts on Apiary, cross-checked
+  against openapi/ (6 specs)
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: XngAuthToken
+  type: apiKey
+  in: header
+  parameter: X-XNG-AuthToken
+  description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings
+    -> System setup -> API keys (Master API key or Public API key depending on the API).
+  sources:
+  - openapi/crossenagage-file-attachments-v1-openapi.yml
+  - openapi/crossenagage-raw-export-v1-openapi.yml
+  - openapi/crossenagage-statistics-v1-openapi.yml
+  - openapi/crossenagage-user-management-v1-openapi.yml
+  - openapi/crossenagage-user-management-v2-openapi.yml
+docs: https://usermanagementv2.docs.apiary.io/
+note: 'CrossEngage uses static header authentication only — no OAuth, no OIDC, no mTLS. Two key TIERS
+  exist and they are not interchangeable: the MASTER API key authorises User Management (v1 and v2), Product
+  Feed and Raw Export; the PUBLIC API key authorises Statistics and File Attachments. Both are issued
+  inside the authenticated app under Settings -> System setup -> API keys; there is no self-serve signup,
+  key rotation endpoint or programmatic key issuance. A second header, X-XNG-ApiVersion, is required on
+  every call and is a version selector rather than a credential — it is modelled as a parameter, not a
+  securityScheme.'
+key_tiers:
+- tier: Master API key
+  header: X-XNG-AuthToken
+  apis:
+  - User Management v1
+  - User Management v2
+  - Product Feed v1
+  - Raw Export v1
+  source: https://usermanagementv2.docs.apiary.io/, https://productfeedapiv1.docs.apiary.io/, https://userseventsexportapiv1.docs.apiary.io/
+- tier: Public API key
+  header: X-XNG-AuthToken
+  apis:
+  - Statistics v1
+  - File Attachments v1
+  source: https://statisticsapi1.docs.apiary.io/, https://fileattachmentsv1.docs.apiary.io/
+required_headers:
+- header: X-XNG-AuthToken
+  role: credential
+  required: true
+- header: X-XNG-ApiVersion
+  role: version selector
+  required: true
+  values:
+    User Management: 1 or 2
+    Product Feed: '1'
+    Raw Export: '2'
+    Statistics: '2'
+    File Attachments: '2'
+gaps:
+- no OAuth 2.0 or OIDC surface
+- no scopes or granular permissions on the API key
+- no programmatic key rotation or issuance
+- no /.well-known/oauth-authorization-server (404 on all four hosts)
+- no mTLS
+- no signed-request option
+obtaining_credentials:
+  self_serve: false
+  requires_account: true
+  path: CrossEngage app (https://app.crossengage.io) -> Settings -> System setup -> API keys

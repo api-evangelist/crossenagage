@@ -1,20 +1,65 @@
-generated: '2026-07-18'
-method: searched
-note: >-
-  Probed the /.well-known/ discovery surface on the API and documentation hosts.
-  No documents were served (all 404). Absence is valid, recorded data.
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes 2026-08-13
+note: 'Probed the /.well-known/ discovery surface on all four CrossEngage hosts: the API host, the Apiary-backed
+  API reference host, the GitBook product documentation host and the application host. Every path returned
+  404. This file records a verified ABSENCE — no WellKnown or SecurityTxt pointer is emitted in apis.yml,
+  because the provider serves no document at any of these paths.'
+served_documents: 0
 hosts:
 - host: https://api.crossengage.io
   documents:
-  - {path: /.well-known/security.txt, status: 404}
-  - {path: /.well-known/openid-configuration, status: 404}
-  - {path: /.well-known/oauth-authorization-server, status: 404}
-  - {path: /.well-known/api-catalog, status: 404}
-  - {path: /.well-known/ai-plugin.json, status: 404}
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
 - host: https://api.documentation.crossengage.io
   documents:
-  - {path: /.well-known/security.txt, status: 404}
-  - {path: /.well-known/openid-configuration, status: 404}
-  - {path: /.well-known/oauth-authorization-server, status: 404}
-  - {path: /.well-known/api-catalog, status: 404}
-  - {path: /.well-known/ai-plugin.json, status: 404}
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://documentation.crossengage.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://app.crossengage.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404

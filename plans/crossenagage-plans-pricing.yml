@@ -1,0 +1,35 @@
+generated: '2026-08-13'
+method: searched
+source: https://spotler.com/en-de/activatepro (HTTP 403, Cloudflare managed challenge) + https://documentation.crossengage.io/llms.txt
+plan_count: 0
+currency: null
+plans: []
+note: 'CrossEngage publishes no self-serve plans or list pricing. The product is sold as Spotler Activate
+  Pro through a sales process — crossengage.io 301s to spotler.com/en-de/activatepro, there is no sign-up
+  flow, no free tier and no trial; the API is customer-only (keys are issued inside the authenticated
+  app under Settings -> System setup). The 219-page public documentation index contains no pricing page.
+  We could not read the Spotler pricing pages ourselves: every spotler.com URL returned HTTP 403 behind
+  a Cloudflare managed browser challenge on 2026-08-13, including with a browser user-agent. Recorded
+  as an honest zero rather than omitted.'
+commercial_model:
+  motion: sales-led
+  self_serve: false
+  free_tier: false
+  trial: false
+  add_ons:
+  - name: File Attachments API
+    note: 'The File Attachment contract states it is a paid add-on: "please note that this is a paid add-on.
+      If you''d like to trial & purchase this feature, please reach out to your customer success representative."'
+    source: https://fileattachmentsv1.docs.apiary.io/
+  contact: sales@spotler.com
+evidence:
+- url: https://spotler.com/en-de/activatepro
+  status: 403
+- url: https://spotler.com/en-de/pricing
+  status: 403
+- url: https://crossengage.io/
+  status: 403
+  note: 301 -> https://spotler.com/en-de/activatepro?popup=xe, then Cloudflare challenge
+- url: https://documentation.crossengage.io/llms.txt
+  status: 200
+  note: complete 219-page documentation index; no pricing or plans page listed

@@ -1,0 +1,2205 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "User Management API V1",
+        "version": "",
+        "description": "The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.\n\n## Authentication\n\nCrossEngage uses **header authentication**.\nTo obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.\n\n## Versions\n\nThe API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.\n\n## Headers\n\nTo use the CrossEngage API, define the following header values for each call made:\n`X-XNG-AuthToken`, `X-XNG-ApiVersion`.\n\n## Date Format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n## Error Handling\n\nResume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:\n\n* `500 Internal Server Error`\n\n* `502 Bad Gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry CrossEngage API requests in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.\n\n* For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests."
+    },
+    "host": "api.crossengage.io",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/users/attributes": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Successful creation of attribute",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "id": "111",
+                                "name": "traits.example",
+                                "attributeType": "ARRAY",
+                                "success": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "attributeType": {
+                                    "type": "string"
+                                },
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "id": "111",
+                                "name": "traits.example",
+                                "attributeType": "ARRAY",
+                                "success": true
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Attribute was not processed due to a validation error (see response)",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "requestId": "c2a20133-ecdd-4e43-8abd-943e5911737e",
+                                "message": "No enum constant com.crossengage.attribute.AttributeType.ARRAaY"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "requestId": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "requestId": "c2a20133-ecdd-4e43-8abd-943e5911737e",
+                                "message": "No enum constant com.crossengage.attribute.AttributeType.ARRAaY"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create attribute",
+                "operationId": "Create attribute",
+                "description": "User attributes are called traits in CrossEngage. \nPlease create all user attributes with the\n`traits` prefix, for example, `traits.firstName`. Please note\nthat attributes cannot be created with the following protected suffixes: \"_date\", \"_float\", \"_bool\", \"_string\", \"_nested\", \"_int\".\n<br/><br/>When having to create a new attribute, please check the attribute list via the <strong>Fetch Attribute List</strong> endpoint to verify whether a similar or same attribute is available.",
+                "tags": [
+                    "User Attribute Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/definitions/simpleAtrribute"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "description": "The name of the child attribute"
+                                        },
+                                        "attributeType": {
+                                            "type": "string",
+                                            "description": "The type of the child attribute"
+                                        },
+                                        "parentName": {
+                                            "type": "string",
+                                            "description": "The name of the parent attribute"
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "attributeType",
+                                        "parentName"
+                                    ],
+                                    "example": {
+                                        "name": "exampleChild",
+                                        "attributeType": "STRING",
+                                        "parentName": "traits.exampleParent"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "attributes": [
+                                    {
+                                        "id": 1001,
+                                        "name": "traits.example",
+                                        "attributeType": "STRING"
+                                    },
+                                    {
+                                        "id": 1002,
+                                        "name": "traits.example2",
+                                        "attributeType": "ARRAY"
+                                    }
+                                ],
+                                "total": "200"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "attributes": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "attributeType": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "id",
+                                            "name",
+                                            "attributeType"
+                                        ]
+                                    }
+                                },
+                                "total": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "attributes": [
+                                    {
+                                        "id": 1001,
+                                        "name": "traits.example",
+                                        "attributeType": "STRING"
+                                    },
+                                    {
+                                        "id": 1002,
+                                        "name": "traits.example2",
+                                        "attributeType": "ARRAY"
+                                    }
+                                ],
+                                "total": "200"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Fetch attribute list",
+                "operationId": "Fetch attribute list",
+                "description": "This endpoint fetches all existing user attributes.",
+                "tags": [
+                    "User Attribute Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The number of the first element.",
+                        "required": false,
+                        "x-example": "0",
+                        "type": "number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of elements to be returned. Default value is 10, maximum is 100.",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "number"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": []
+            }
+        },
+        "/users/attributes/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "id": "1234",
+                                "name": "traits.example",
+                                "attributeType": "STRING"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "attributeType": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "id": "1234",
+                                "name": "traits.example",
+                                "attributeType": "STRING"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "404": {
+                        "description": "The attribute with the requested `id` does not exist",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Fetch attribute",
+                "operationId": "Fetch attribute",
+                "description": "Fetch a specific user attribute by its `id`. To find an\nattribute `id`, please use the [Fetch attribute list](#fetchAttrList)\ncall.",
+                "tags": [
+                    "User Attribute Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "`id` of the attribute",
+                        "required": true,
+                        "x-example": "123",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": []
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "Attribute successfully deleted",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "409": {
+                        "description": "Attribute in use in at least one campaign or has active \nnested attributes. Otherwise, the `id` entered in the\nrequest body does not match the `id` \nprovided in the request path.",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete attribute",
+                "operationId": "Delete attribute",
+                "description": "In order to delete an attributes in CrossEngage, you need to know its `id`. \nTo find it out, please use [Fetch attribute list](#fetchAttrList) endpoint and search its `id` value.\n\nNote that deleting an attribute does not result in the removal of that attribute value from individual users.\nTo modify individual users, it is necessary to update their profiles.",
+                "tags": [
+                    "User Attribute Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "`id` of the attribute",
+                        "required": true,
+                        "x-example": "123",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "consumes": []
+            }
+        },
+        "/leads/": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "The lead was processed successfully",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "updated": [
+                                    {
+                                        "id": "1234",
+                                        "xngId": "1234",
+                                        "success": true
+                                    }
+                                ],
+                                "deleted": []
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "updated": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                },
+                                "deleted": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "example": {
+                                "updated": [
+                                    {
+                                        "id": "1234",
+                                        "xngId": "1234",
+                                        "success": true
+                                    }
+                                ],
+                                "deleted": []
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lead was not processed due to a validation error (see response)",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "updated": [
+                                    {
+                                        "xngId": "xng-id",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "deleted": []
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "updated": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            },
+                                            "errors": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "field": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "deleted": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "example": {
+                                "updated": [
+                                    {
+                                        "xngId": "xng-id",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "deleted": []
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create & update a lead",
+                "operationId": "Create & update a lead",
+                "description": "This endpoint lets you create or update leads.\nThe system searches for existing leads based on records with email \naddresses and optionally business units. \nIn case a record with the requested identifiers exists, the lead is updated. \nOtherwise, a new lead will be created.",
+                "tags": [
+                    "Lead management"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "The lead's email"
+                                },
+                                "businessUnit": {
+                                    "type": "string",
+                                    "description": "The business unit of the lead"
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "The lead's first name"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "The lead's last name"
+                                },
+                                "gender": {
+                                    "type": "string",
+                                    "description": "The lead's gender"
+                                },
+                                "createdAt": {
+                                    "type": "string",
+                                    "description": "The date the user was created in your database"
+                                }
+                            },
+                            "required": [
+                                "email"
+                            ],
+                            "example": {
+                                "updated": [
+                                    {
+                                        "id": "1234",
+                                        "email": "john.doe@crossengage.io",
+                                        "businessUnit": "US",
+                                        "firstName": "John",
+                                        "lastName": "Doe",
+                                        "age": 21,
+                                        "gender": "male"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "User has been created or updated successfully",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "id": "1234",
+                                "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                                "email": "john.doe@crossengage.io",
+                                "businessUnit": "DE",
+                                "success": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "xngId": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "businessUnit": {
+                                    "type": "string"
+                                },
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "id": "1234",
+                                "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                                "email": "john.doe@crossengage.io",
+                                "businessUnit": "DE",
+                                "success": true
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User was not processed due to a validation error (see response)",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                                "email": "john.doe+crossengage.io",
+                                "businessUnit": "unit",
+                                "success": false,
+                                "errors": [
+                                    {
+                                        "field": "email",
+                                        "type": "WRONG_VALUE"
+                                    }
+                                ]
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "xngId": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "businessUnit": {
+                                    "type": "string"
+                                },
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "field": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                                "email": "john.doe+crossengage.io",
+                                "businessUnit": "unit",
+                                "success": false,
+                                "errors": [
+                                    {
+                                        "field": "email",
+                                        "type": "WRONG_VALUE"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "409": {
+                        "description": "`id` sent in the request body does not match the `id` paramater entered in the request path",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create & update a user",
+                "operationId": "Create & update a user",
+                "description": "This endpoint lets you create or update a specific user by `id`.",
+                "tags": [
+                    "User profile management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database.",
+                        "required": true,
+                        "x-example": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "The id of the user in your database"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "The user's email."
+                                },
+                                "businessUnit": {
+                                    "type": "string",
+                                    "description": "The business unit of the user."
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "The user's first name."
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "The user's last name."
+                                },
+                                "birthday": {
+                                    "type": "string",
+                                    "description": "The user's birthday."
+                                },
+                                "gender": {
+                                    "type": "string",
+                                    "description": "The user's gender."
+                                },
+                                "createdAt": {
+                                    "type": "string",
+                                    "description": "The date the user was created in your database."
+                                }
+                            },
+                            "required": [
+                                "id"
+                            ],
+                            "example": {
+                                "email": "john.doe@crossengage.io",
+                                "firstName": "John",
+                                "lastName": "Doe",
+                                "birthday": "1982-08-30",
+                                "createdAt": "2015-10-02T08:23:53Z",
+                                "gender": "male",
+                                "businessUnit": "DE"
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "email": "john.doe@crossengage.io",
+                                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                "xngId": "123e4567-e89b-12d3-a456-426655440000",
+                                "firstName": "John",
+                                "lastName": "Doe",
+                                "birthday": "1982-08-30",
+                                "createdAt": "2015-10-02T08:23:53Z",
+                                "gender": "male"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "xngId": {
+                                    "type": "string"
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "string"
+                                },
+                                "createdAt": {
+                                    "type": "string"
+                                },
+                                "gender": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "email": "john.doe@crossengage.io",
+                                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                "xngId": "123e4567-e89b-12d3-a456-426655440000",
+                                "firstName": "John",
+                                "lastName": "Doe",
+                                "birthday": "1982-08-30",
+                                "createdAt": "2015-10-02T08:23:53Z",
+                                "gender": "male"
+                            }
+                        }
+                    }
+                },
+                "summary": "Fetch a user",
+                "operationId": "Fetch a user",
+                "description": "This endpoint lets you fetch a specific user by `id`.",
+                "tags": [
+                    "User profile management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database.",
+                        "required": true,
+                        "x-example": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete a user",
+                "operationId": "Delete a user",
+                "description": "This endpoint lets you delete a specific user by `id`.",
+                "tags": [
+                    "User profile management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database.",
+                        "required": true,
+                        "x-example": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/users/batch": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "updated": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                                        "success": true
+                                    }
+                                ],
+                                "deleted": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                                        "success": true
+                                    }
+                                ]
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "updated": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                },
+                                "deleted": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "updated": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                                        "success": true
+                                    }
+                                ],
+                                "deleted": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                                        "success": true
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "updated": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "id",
+                                                "type": "NOT_NULL"
+                                            },
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "deleted": [
+                                    {
+                                        "id": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                                        "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "id",
+                                                "type": "NOT_NULL"
+                                            },
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "updated": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            },
+                                            "errors": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "field": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "field",
+                                                        "type"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "deleted": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "xngId": {
+                                                "type": "string"
+                                            },
+                                            "success": {
+                                                "type": "boolean"
+                                            },
+                                            "errors": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "field": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "field",
+                                                        "type"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "updated": [
+                                    {
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "id",
+                                                "type": "NOT_NULL"
+                                            },
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "deleted": [
+                                    {
+                                        "id": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                                        "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                                        "success": false,
+                                        "errors": [
+                                            {
+                                                "field": "id",
+                                                "type": "NOT_NULL"
+                                            },
+                                            {
+                                                "field": "email",
+                                                "type": "WRONG_FORMAT"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "summary": "Create & update or delete users in bulk",
+                "operationId": "Create & update or delete users in bulk",
+                "description": "The maximum number of users that can be reached as per one call is 1000. \nShould you need to change more user profiles, please consider dividing them in \nsuccessive calls.",
+                "tags": [
+                    "User profile management"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "The id of the user in your database"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "The user's email."
+                                },
+                                "businessUnit": {
+                                    "type": "string",
+                                    "description": "The business unit of the user."
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "The user's first name."
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "The user's last name."
+                                },
+                                "birthday": {
+                                    "type": "string",
+                                    "description": "The user's birthday."
+                                },
+                                "gender": {
+                                    "type": "string",
+                                    "description": "The user's gender."
+                                },
+                                "createdAt": {
+                                    "type": "string",
+                                    "description": "The date the user was created in your database."
+                                }
+                            },
+                            "required": [
+                                "id"
+                            ],
+                            "example": {
+                                "updated": [
+                                    {
+                                        "email": "john.doe@crossengage.io",
+                                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                                        "firstName": "John",
+                                        "lastName": "Doe",
+                                        "birthday": "1982-08-30",
+                                        "createdAt": "2015-10-02T08:23:53Z",
+                                        "gender": "male"
+                                    }
+                                ],
+                                "deleted": [
+                                    {
+                                        "email": "janice.doe@crossengage.io",
+                                        "id": "62968d37-91f5-46f3-bd62-2432510f1a23",
+                                        "firstName": "Janice",
+                                        "lastName": "Doe",
+                                        "birthday": "1987-06-15",
+                                        "createdAt": "2015-10-02T08:23:53Z",
+                                        "gender": "female"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/events": {
+            "post": {
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "400": {
+                        "description": "Wrong format of the request (see response)",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "field": "event",
+                                "type": "UNKNOWN_VALUE"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "field": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "field": "event",
+                                "type": "UNKNOWN_VALUE"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Send an event",
+                "operationId": "Send an event",
+                "description": "Events are individually assigned to users. You can send up to \n50 events per request. However, sending one single \nevent per request is the most common practice.\n\nPlease note that the **management of custom event property is not yet possible via API**.\nIn order to create a custom properties, please contact your customer experience manager.",
+                "tags": [
+                    "Event management"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "The id of the user in your database"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "*Required* if `id` is not available"
+                                },
+                                "events": {
+                                    "type": "object",
+                                    "properties": {
+                                        "event": {
+                                            "type": "string",
+                                            "description": "Name of the event class"
+                                        },
+                                        "properties": {
+                                            "type": "object",
+                                            "properties": {
+                                                "stringExample": {
+                                                    "type": "string",
+                                                    "description": "An name example of a landing page name"
+                                                },
+                                                "integerExample": {
+                                                    "type": "number",
+                                                    "description": "A stock quantity example"
+                                                },
+                                                "floatExample": {
+                                                    "type": "number",
+                                                    "description": "A price example"
+                                                },
+                                                "ArrayExample": {
+                                                    "type": "array",
+                                                    "description": "A taggs array example"
+                                                },
+                                                "cart": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "sku": {
+                                                            "type": "string",
+                                                            "description": "Product SKU"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "description": "Name of the product"
+                                                        },
+                                                        "price": {
+                                                            "type": "number",
+                                                            "description": "Product price"
+                                                        }
+                                                    },
+                                                    "description": "An example of a user cart object"
+                                                }
+                                            },
+                                            "description": "List of event properties. For example:"
+                                        }
+                                    },
+                                    "description": "List of events for this user"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "events"
+                            ],
+                            "example": {
+                                "id": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                                "events": [
+                                    {
+                                        "event": "Completed Order",
+                                        "properties": {
+                                            "cart": {
+                                                "total": 0,
+                                                "currency": "EUR",
+                                                "products": [
+                                                    {
+                                                        "id": "507f1f77bcf86cd879439023",
+                                                        "sku": "61979589",
+                                                        "name": "Zegna Shirt",
+                                                        "price": 150,
+                                                        "quantity": 1,
+                                                        "category": "Shirts",
+                                                        "hasZipper": false
+                                                    },
+                                                    {
+                                                        "id": "507f1f77bcf86cd799439011",
+                                                        "sku": "51979501",
+                                                        "name": "Levi Jeans",
+                                                        "price": 100,
+                                                        "quantity": 1,
+                                                        "category": "Jeans",
+                                                        "hasZipper": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/users/{id}/recipient-status": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Example server response",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "blacklisted": false,
+                                "optOutAll": false,
+                                "optOutChannels": []
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "blacklisted": {
+                                    "type": "boolean"
+                                },
+                                "optOutAll": {
+                                    "type": "boolean"
+                                },
+                                "optOutChannels": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "example": {
+                                "blacklisted": false,
+                                "optOutAll": false,
+                                "optOutChannels": []
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Get a user's status",
+                "operationId": "Get a user's status",
+                "description": "Check the overall status of a particular user.",
+                "tags": [
+                    "Opt-out management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database",
+                        "required": true,
+                        "x-example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/users/{id}/optout-status": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "optOut": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "optOut": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "optOut": true
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "404": {
+                        "description": "This user does not exist",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update a user's opt out status",
+                "operationId": "Update a user's opt out status",
+                "description": "Update a specific user's overall opt out status or for a specific channel.",
+                "tags": [
+                    "Opt-out management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database",
+                        "required": true,
+                        "x-example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                        "type": "string"
+                    },
+                    {
+                        "name": "channelType",
+                        "in": "query",
+                        "description": "The specific channel you'd like to update",
+                        "required": false,
+                        "x-example": "MAIL",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "optOut": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "optOut": true
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "optOut": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "optOut": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "optOut": true
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "404": {
+                        "description": "This user does not exist",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Read a user's opt out status",
+                "operationId": "Read a user's opt out status",
+                "description": "Read a specific user's overall opt out status or for a specific channel.",
+                "tags": [
+                    "Opt-out management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database",
+                        "required": true,
+                        "x-example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                        "type": "string"
+                    },
+                    {
+                        "name": "channelType",
+                        "in": "query",
+                        "description": "The specific channel you'd like to update",
+                        "required": false,
+                        "x-example": "MAIL",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/users/{id}/blacklist-status": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "blacklisted": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "blacklisted": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "blacklisted": true
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "404": {
+                        "description": "This user does not exist",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update a user's blacklist status",
+                "operationId": "Update a user's blacklist status",
+                "description": "",
+                "tags": [
+                    "Opt-out management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database",
+                        "required": true,
+                        "x-example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "blacklisted": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "blacklisted": true
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json;charset=UTF-8": {
+                                "blacklisted": true
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "blacklisted": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "example": {
+                                "blacklisted": true
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong or missing credentials",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "404": {
+                        "description": "This user does not exist",
+                        "headers": {},
+                        "examples": {}
+                    },
+                    "500": {
+                        "description": "Unknown error on our side",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Read a user's blacklist status",
+                "operationId": "Read a user's blacklist status",
+                "description": "",
+                "tags": [
+                    "Opt-out management"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user in your database",
+                        "required": true,
+                        "x-example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 1",
+                        "required": false,
+                        "x-example": "1",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. Your API Key",
+                        "required": false,
+                        "x-example": "Your API Key",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json;charset=UTF-8"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Attributes": {},
+        "Attribute management": {},
+        "Leads": {},
+        "Individual user management": {},
+        "Bulk user management": {},
+        "Sending events": {},
+        "Status Endpoint": {},
+        "Opt Out Endpoint": {},
+        "Blacklist Endpoint": {},
+        "simpleAtrribute": {
+            "type": "object",
+            "required": [
+                "name",
+                "attributeType"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "traits.example",
+                    "description": "The name of the user attribute"
+                },
+                "attributeType": {
+                    "type": "string",
+                    "example": "STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY",
+                    "description": "The type of the user attribute"
+                },
+                "nestedType": {
+                    "type": "string",
+                    "example": "STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT",
+                    "description": "The type of the nested attribute that will be added. Only applicable for array or object type."
+                }
+            }
+        },
+        "childAtrribute": {
+            "type": "object",
+            "required": [
+                "name",
+                "attributeType",
+                "parentName"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "traits.exampleChild",
+                    "description": "The name of the child attribute"
+                },
+                "attributeType": {
+                    "type": "string",
+                    "example": "STRING",
+                    "description": "The type of the child attribute"
+                },
+                "parentName": {
+                    "type": "string",
+                    "example": "traits.exampleParent",
+                    "description": "The name of the parent attribute"
+                }
+            }
+        },
+        "leadTraits": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@crossengage.io",
+                    "description": "The lead's email"
+                },
+                "businessUnit": {
+                    "type": "string",
+                    "example": "DE",
+                    "description": "The business unit of the lead"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John",
+                    "description": "The lead's first name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe",
+                    "description": "The lead's last name"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "male",
+                    "description": "The lead's gender"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2015-10-02T08:23:53Z",
+                    "description": "The date the user was created in your database"
+                }
+            }
+        },
+        "userTraits": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                    "description": "The id of the user in your database"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@crossengage.io",
+                    "description": "The user's email."
+                },
+                "businessUnit": {
+                    "type": "string",
+                    "example": "DE",
+                    "description": "The business unit of the user."
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John",
+                    "description": "The user's first name."
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe",
+                    "description": "The user's last name."
+                },
+                "birthday": {
+                    "type": "string",
+                    "example": "1982-08-30",
+                    "description": "The user's birthday."
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "male",
+                    "description": "The user's gender."
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2015-10-02T08:23:53Z",
+                    "description": "The date the user was created in your database."
+                }
+            }
+        },
+        "Events": {
+            "type": "object",
+            "required": [
+                "id",
+                "events"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                    "description": "The id of the user in your database"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@crossengage.io",
+                    "description": "*Required* if `id` is not available"
+                },
+                "events": {
+                    "type": "object",
+                    "properties": {
+                        "event": {
+                            "type": "string",
+                            "example": "\"event\": \"Viewed Page\"",
+                            "description": "Name of the event class"
+                        },
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "stringExample": {
+                                    "type": "string",
+                                    "example": "'EU Landing Page'",
+                                    "description": "An name example of a landing page name"
+                                },
+                                "integerExample": {
+                                    "type": "number",
+                                    "example": 150,
+                                    "description": "A stock quantity example"
+                                },
+                                "floatExample": {
+                                    "type": "number",
+                                    "example": 23.99,
+                                    "description": "A price example"
+                                },
+                                "ArrayExample": {
+                                    "type": "array",
+                                    "items": {},
+                                    "description": "A taggs array example"
+                                },
+                                "cart": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sku": {
+                                            "type": "string",
+                                            "example": "51979501",
+                                            "description": "Product SKU"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Zegna Shirt",
+                                            "description": "Name of the product"
+                                        },
+                                        "price": {
+                                            "type": "number",
+                                            "example": 150,
+                                            "description": "Product price"
+                                        }
+                                    },
+                                    "description": "An example of a user cart object"
+                                }
+                            },
+                            "description": "List of event properties. For example:"
+                        }
+                    },
+                    "description": "List of events for this user"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {},
+    "tags": [
+        {
+            "name": "User Attribute Management"
+        },
+        {
+            "name": "Lead management"
+        },
+        {
+            "name": "User profile management"
+        },
+        {
+            "name": "Event management"
+        },
+        {
+            "name": "Opt-out management"
+        }
+    ]
+}

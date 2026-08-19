@@ -1,0 +1,393 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Product Feed API
+  description: "The Product feed API allows you to fetch, upload, edit and delete your products in real-time.\
+    \ It should be used together with the File Upload functionality in case more frequent updates are\
+    \ necessary.\nAll default attributes are described in the [Product data feed/Available properties\
+    \ documentation](https://documentation.crossengage.io/feeds/product).\n######\nFor test purposes,\
+    \ you can try the Postman collection. The collection contains all the calls needed. [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f6c14ba49835c19dbd7)\n\
+    #### Versioning\nThe API version is defined in the header `X-XNG-ApiVersion`. To use the product API\
+    \ provide version **1**.\n#### Authentication\nCrossEngage uses **header authentication**. To get\
+    \ your Master API key, please log in to the [app](https://app.crossengage.io) and navigate to **Settings**.\
+    \ You will find it in the **System setup -> API keys** section in the `Master API key` value.\nThe\
+    \ following is an example of the format of an authentication header:\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n\
+    #### Date Format\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time),\
+    \ with a special UTC designator (\\\"Z\\\") For more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\
+    #### Error Handling\nFollowing errors are possible:\n* `401 Unauthorized access is not allowed`\n\
+    * `500 Internal Server Error`\n* `502 Bad gateway`\n* `503 Service Unavailable`\n* `504 Gateway Timeout`\n\
+    \nResume or retry uploads that fail due to connection interruptions or any `5xx` errors\n\n #####\
+    \ How to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff)\
+    \ strategy if an export request returns a 5xx server error. These errors can occur if a server is\
+    \ overloaded. Exponential backoff can alleviate such problems during periods of high request volume\
+    \ or heavy network traffic.\n* Other kinds of requests should not be handled by exponential backoff\
+    \ but you can still retry a number of them. When retrying these requests, limit the number of times\
+    \ you retry them. For example your code could limit to ten retries or less before reporting the error\
+    \ to our team for investigation."
+host: api.crossengage.io
+schemes:
+- https
+tags:
+- name: product-feed
+basePath: /product-feed/v1
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /product:
+    get:
+      tags:
+      - product-feed
+      summary: Get products with pagination
+      description: 'When requesting a list of products, you may include the `pageNumber` and `pageSize`
+        as parameters.
+
+        By default, you will fetch the first page with 10 products (displayed in Response: pageNumber
+        0).
+
+        '
+      operationId: getProductsPage
+      parameters:
+      - name: pageNumber
+        description: (optional) the page number. Example `1`.
+        in: query
+        type: integer
+        format: int32
+        required: false
+        default: 0
+      - name: pageSize
+        description: (optional) the number of products to be returned on one page. Example `100`
+        in: query
+        type: integer
+        format: int32
+        required: false
+        default: 10
+      responses:
+        200:
+          description: A list of products with pagination
+          schema:
+            $ref: '#/definitions/ProductPage'
+  /product/{sku}:
+    get:
+      tags:
+      - product-feed
+      summary: Get a single product
+      description: 'Get a single product by `sku` or `sku` and `businessUnit`
+
+
+        * In case, you’re using both `sku` and `businessUnit` as a combined identifier for your products,
+        please provide both of them here.
+
+        * If only `sku` is provided, we will look for a product with that `sku` and an empty `businessUnit`.
+
+        '
+      operationId: getProductBySku
+      parameters:
+      - name: sku
+        description: (required) the product SKU. Examples `123` or `LNK1230098`
+        in: path
+        type: string
+        required: true
+      - name: businessUnit
+        description: (optional) will be used as a part of the product identifier together with ‘sku’ when
+          provided. Example `DE`
+        in: query
+        type: string
+        required: false
+      responses:
+        200:
+          description: A single product
+          schema:
+            $ref: '#/definitions/Product'
+        404:
+          description: The product was not found by `sku` and `business unit`
+    put:
+      tags:
+      - product-feed
+      summary: Updates or create a single product
+      description: '* To create a new product include `sku` or `sku` and `businessUnit` to the JSON body.
+
+        * To update information about a product include `sku` or `sku` and `businessUnit` of that product
+        to the JSON body. All properties will be updated, missing properties will be removed.
+
+        * Custom attributes can be added as a string type to the product.
+
+        '
+      operationId: updateOrCreateProduct
+      parameters:
+      - name: sku
+        description: (required) the part of the product identifier. Examples `123` or `LNK1230098`
+        in: path
+        type: string
+        required: true
+      - name: body
+        description: (required) it should be in JSON format
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        202:
+          description: Update was scheduled
+        400:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/Error'
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+      - product-feed
+      summary: Delete a single product
+      description: "Delete a single product by `sku` or `sku` and `businessUnit`\n * A product will be\
+        \ deleted if `sku` or `sku` and `businessUnit` match a product in the system.\n"
+      operationId: deleteProductBySku
+      parameters:
+      - name: sku
+        description: (required) a part of the product identifier. Examples `123` or `LNK1230098`
+        in: path
+        type: string
+        required: true
+      - name: businessUnit
+        description: (optional) will be used as a part of the product identifier together with ‘sku’ when
+          provided. Example `DE`
+        in: query
+        type: string
+        required: false
+      responses:
+        202:
+          description: Product deletion was scheduled
+definitions:
+  Error:
+    description: Error response
+    type: object
+    readOnly: true
+    properties:
+      message:
+        description: error message
+        type: string
+        example: Input validation failed
+      key:
+        description: 'Dot-separated error key (for example `error.input-validation`).
+
+          '
+        type: string
+        example: error.input-validation
+      args:
+        description: 'arguments for the key (example: min=2, max=10, value="some string value" etc.)
+
+          '
+        type: object
+        additionalProperties:
+          type: string
+      errors:
+        description: list of parameter-related or field-related errors. One field may have several errors.
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem'
+  ErrorItem:
+    type: object
+    readOnly: true
+    properties:
+      source:
+        description: param/field name or path (for instance SomeObject.someField.someOtherField)
+        type: string
+        example: productDTO.sku
+      key:
+        description: 'Dot-separated error key (for example `error.constraint-violation.Size`).
+
+          '
+        type: string
+        example: error.constraint-violation.NotNull
+      message:
+        description: error message
+        type: string
+        example: must not be null
+      args:
+        description: 'arguments for key (example: min=2, max=10, value="some string value" etc.)
+
+          '
+        type: object
+        additionalProperties:
+          type: string
+  Product:
+    type: object
+    description: 'Product data. The unique identifier for the product is a combination of `sku` and `businessUnit`.
+
+      `sku` is the only required field. `businessUnit` is optional.
+
+      Additional fields, not present in the current specification, may be added.
+
+      There is only one limitation - those fields should be of string type.
+
+      '
+    properties:
+      id:
+        type: string
+        description: Original product id.
+        example: 123
+      sku:
+        type: string
+        description: Product SKU. `sku` together with `businessUnit` serves as a unique product identifier.
+          Required.
+        maxLength: 200
+        example: 56874
+      businessUnit:
+        description: Product business unit. `businessUnit` together with `sku` serves as a unique product
+          identifier. Optional.
+        example: DE
+        type: string
+        maxLength: 200
+      title:
+        description: A product's title.
+        type: string
+        example: Data-Decision-Delivery Pillow
+      description:
+        description: A product's description.
+        type: string
+        example: Extra cozy pillow
+      link:
+        description: Absolute URL to a product's page.
+        type: string
+        example: https://demo.crossengage.io/product/data-decision-delivery-pillow/
+      bigImageLink:
+        description: Absolute URL to a product's larger image.
+        type: string
+        example: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
+      smallImageLink:
+        description: Absolute URL to a product's thumbnail image.
+        type: string
+        example: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
+      category:
+        description: Product category.
+        type: string
+        example: Pilow
+      price:
+        description: The price of the product without currency.
+        type: number
+        format: double
+        example: 10.0
+      salesPrice:
+        description: The advertised sale price of the product.
+        type: number
+        format: double
+        example: 8.5
+      salesPriceEffectiveDate:
+        type: string
+        example: the sale will run until Friday
+      discount:
+        description: The difference between the original price and the discounted price (if set). e.g
+          `-20%` or `20 €`
+        type: string
+        example: -15%
+      currency:
+        description: The currency of the prices.
+        type: string
+        example: €
+      stockQuantity:
+        description: The number of items in stock.
+        type: integer
+        format: int32
+        example: 120
+      enabled:
+        description: Represents whether or not the product can be used in marketing communications.
+        type: integer
+        format: int32
+        example: 1
+      attributes:
+        description: An object representing additional product attributes not covered by the default set.
+          All additional attributes must be written in `camel-сase` format. e.g. `{ "colour":"Black",
+          "material":"Plush" }`
+        type: object
+        additionalProperties:
+          type: string
+        example:
+          colour: White
+          clothMaterial: Plush
+      createdAt:
+        type: string
+        format: date-time
+        readOnly: true
+        description: The timestamp of when the product was created, this cannot be edited
+        example: '2020-01-02T16:00:03.449Z'
+      updatedAt:
+        type: string
+        format: date-time
+        readOnly: true
+        description: The timestamp of when the product was updated, this cannot be edited
+        example: '2020-04-21T17:00:03.449Z'
+    required:
+    - sku
+    example:
+      id: 123
+      sku: 56874
+      businessUnit: DE
+      title: Data-Decision-Delivery Pillow
+      description: Extra cozy pillow
+      link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
+      bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
+      smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
+      category: Pilow
+      price: 10
+      salesPrice: 8.5
+      salesPriceEffectiveDate: the sale will run until Friday
+      discount: -15%
+      currency: €
+      stockQuantity: 120
+      enabled: 1
+      attributes:
+        colour: Black
+        material: Plush
+      createdAt: '2020-01-02T16:00:03.449Z'
+      updatedAt: '2020-04-21T17:00:03.449Z'
+  ProductPage:
+    description: a standard page object
+    properties:
+      pageNumber:
+        type: integer
+        format: int32
+        readOnly: true
+        example: 0
+      pageSize:
+        example: 10
+        type: integer
+        format: int32
+        readOnly: true
+      totalElements:
+        example: 1
+        type: integer
+        format: int32
+        readOnly: true
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+    example:
+      pageNumber: 0
+      pageSize: 10
+      totalElements: 1
+      content:
+      - id: 123
+        sku: 56874
+        businessUnit: DE
+        title: Data-Decision-Delivery Pillow
+        description: Extra cozy pillow
+        link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
+        bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
+        smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
+        category: Pilow
+        price: 10.0
+        salesPrice: 8.5
+        salesPriceEffectiveDate: the sale will run until Friday
+        discount: -15%
+        currency: €
+        stockQuantity: 120
+        enabled: 1
+        attributes:
+          colour: Black
+          material: Plush
+        createdAt: '2020-01-02T16:00:03.449Z'
+        updatedAt: '2020-04-21T17:00:03.449Z'

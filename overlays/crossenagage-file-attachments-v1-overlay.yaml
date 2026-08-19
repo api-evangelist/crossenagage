@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for File Attachment API
+  version: 1.0.0
+extends: openapi/crossenagage-file-attachments-v1-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-source: blueprint/crossenagage-file-attachments-v1.apib
+    x-apievangelist-conversion: apib2swagger conversion of the provider-published API Blueprint
+- target: $.securityDefinitions
+  update:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication, documented in the API Blueprint under "Authentication".
+- target: $.paths.*.*.operationId
+  description: operationIds normalized to camelCase; the conversion emitted human-readable sentences that
+    are not valid identifiers
+- target: $.paths.*.*.parameters
+  description: Added the X-XNG-ApiVersion required header parameter documented in the blueprint "Versioning"/"Headers"
+    sections

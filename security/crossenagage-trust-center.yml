@@ -1,16 +1,45 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 probe: true
 source: https://trust.spotler.com/
 url: https://trust.spotler.com/
-note: >-
-  CrossEngage was acquired by Spotler; its security/compliance posture is now
-  published at the Spotler Trust Center (crossengage.io redirects to
-  spotler.com/en-de/activatepro).
+note: CrossEngage was acquired by Spotler; its security and compliance posture is published at the Spotler
+  Trust Center, which covers all Spotler products. crossengage.io itself 301s to spotler.com/en-de/activatepro.
+  The trust centre publishes an ISO/IEC 27001:2022 certificate, a sub-processor list, a DPA, an information
+  security policy, a responsible disclosure policy and a service-levels statement.
 certifications:
 - ISO/IEC 27001:2022
 - CSA STAR Certification
 - GDPR
+documents:
+- name: ISO/IEC 27001:2022 certificate
+  url: https://trust.spotler.com/iso-iec-27001-2022
+  type: certification
+- name: Responsible Disclosure
+  url: https://trust.spotler.com/responsible-disclosure
+  type: security-policy
+- name: Information Security Policy
+  url: https://trust.spotler.com/information-security-policy
+  type: policy
+- name: Service Levels
+  url: https://trust.spotler.com/service-levels
+  type: policy
+- name: Sub-Processors
+  url: https://trust.spotler.com/
+  type: privacy
+- name: Data Processing Agreement
+  url: https://trust.spotler.com/
+  type: privacy
+contact: infosec@spotler.com
 evidence:
 - source: https://trust.spotler.com/
-  keywords: [iso/iec 27001:2022, csa star certification, gdpr, trust center]
+  http_status: 200
+  fetched: '2026-08-13'
+  keywords:
+  - trust center
+  - iso/iec 27001:2022
+  - csa star
+  - gdpr
+  - responsible disclosure
+  - sub-processors
+  - data processing agreement

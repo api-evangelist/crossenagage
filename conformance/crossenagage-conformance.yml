@@ -1,6 +1,9 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://trust.spotler.com/
+source: https://trust.spotler.com/ + openapi/ (6 harvested specs)
+note: Compliance posture is published by Spotler, which acquired CrossEngage; the technical standards
+  rows are now derived from real harvested contracts rather than left unknown, as they were before the
+  API Blueprints and the Product Feed Swagger were located.
 standards:
 - id: iso-27001
   conforms: true
@@ -10,17 +13,54 @@ standards:
   evidence: CSA STAR Certification published at trust.spotler.com
 - id: gdpr
   conforms: true
-  evidence: GDPR compliance stated at trust.spotler.com (EU/Berlin-based provider)
+  evidence: GDPR compliance stated at trust.spotler.com; EU/Berlin-based provider, data residency in the
+    EU
 - id: soc2
   conforms: false
-  evidence: not published at trust.spotler.com as of probe date
+  evidence: not published at trust.spotler.com as of 2026-08-13
 - id: pci-dss
   conforms: false
 - id: hipaa
   conforms: false
 - id: oauth2
-  conforms: unknown
-  evidence: no machine-readable OpenAPI available; API docs are JS-rendered
+  conforms: false
+  evidence: No OAuth surface. All six contracts authenticate with a static X-XNG-AuthToken API key header;
+    no oauth2 securityScheme in any spec and no /.well-known/oauth-authorization-server (404 on all four
+    hosts).
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on all four hosts
 - id: rfc9457-problem-details
-  conforms: unknown
-  evidence: error format not machine-verifiable from published docs
+  conforms: false
+  evidence: Errors use a vendor JSON envelope with a numeric CrossEngage code (1-10), not application/problem+json
+    — see errors/crossenagage-error-codes.yml
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header documented in any contract; v1 and v2 of User Management are
+    published side by side with no dated retirement
+- id: openapi
+  conforms: true
+  evidence: Product Feed API is published by CrossEngage as a Swagger 2.0 document at productfeedapiv1.docs.apiary.io/api-description-document
+- id: api-blueprint
+  conforms: true
+  evidence: Five of six APIs are published as API Blueprint FORMAT 1A documents on Apiary; retained verbatim
+    in blueprint/
+- id: json-schema
+  conforms: true
+  evidence: Swagger 2.0 definitions across the six contracts carry 57 schema definitions
+- id: iso8601
+  conforms: true
+  evidence: '"Date Format" section of every contract mandates ISO 8601 UTC with the Z designator'
+- id: pagination
+  conforms: true
+  evidence: 'Two published schemes: pageNumber/pageSize (Product Feed, Raw Export) and offset/limit with
+    a documented max of 100 (User Management v1 attributes)'
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key header or contract documented in any of the six specs or the product documentation.
+    PUT /users and PUT /product/{sku} are naturally idempotent by resource identity, but there is no replay-safe
+    contract for the POST batch and event operations.
+- id: webhooks
+  conforms: true
+  evidence: Outbound webhook channel for campaign messages plus an export-completion callback destination
+    — see asyncapi/crossenagage-webhooks.yml

@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "User Management API v2",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Profile Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single user with id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user in your database."
+              }
+            ]
+          },
+          "docs": "Get a single user with id"
+        },
+        {
+          "info": {
+            "name": "Delete a single user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user in your database."
+              }
+            ]
+          },
+          "docs": "Please note, DELETE request for already deleted or non-existent users \nwill always return success."
+        },
+        {
+          "info": {
+            "name": "Get a single user with email and bu",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/email/:email/bu/:bu",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "Email of the user."
+              },
+              {
+                "name": "bu",
+                "value": "",
+                "type": "path",
+                "description": "Business Unit of the user."
+              }
+            ]
+          },
+          "docs": "Get a single user with email and bu"
+        },
+        {
+          "info": {
+            "name": "Create/update a single user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/users",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "It's required to provide both `id` and `email` in every query.\n\nIf you will provide an `email`, which is different from the one, \ncurrently stored for this user, it will be updated.\n\nIf you will provide a new `id`, but already existing `email`, \nyou will get a processing error and the user will not be created."
+        },
+        {
+          "info": {
+            "name": "Create/update/delete multiple users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users/batch",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "For more information about how individual users are processed,\nplease check the \n[delete a single user](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/getdelete-a-single-user/delete-a-single-user) \nand \n[create/update](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/createupdate-a-single-user) \na single user sections of this doc."
+        },
+        {
+          "info": {
+            "name": "Retrieve status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/track/:trackingId",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

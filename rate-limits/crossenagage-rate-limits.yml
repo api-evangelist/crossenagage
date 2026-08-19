@@ -1,0 +1,41 @@
+generated: '2026-08-13'
+method: searched
+source: the six CrossEngage API contracts on Apiary + https://documentation.crossengage.io/llms.txt (complete
+  documentation index, 219 pages — no rate-limit page exists)
+limit_count: 0
+note: 'CrossEngage publishes NO request-rate limits. Searched all six API contracts and the full 219-page
+  product documentation index for rate limit, throttling, quota, 429 and Retry-After: zero hits. No response
+  header signals consumption, and no 429 response is declared on any of the 37 operations. What the provider
+  does publish are PAYLOAD-SIZE caps, recorded below — these are not rate limits and an agent cannot use
+  them to pace itself. The documented failure guidance is exponential backoff on 5xx, which is the only
+  throttling signal available.'
+limits: []
+response_headers:
+  rate_limit_headers: null
+  retry_after: false
+  observed: false
+  note: Live probes of https://api.crossengage.io return Server, X-Request-ID, HSTS and CORS headers only
+    — no RateLimit-*, X-RateLimit-* or Retry-After.
+exhaustion_status: null
+payload_limits:
+- scope: per request
+  endpoint: POST /users/batch
+  limit: 1000
+  unit: users
+  error: CrossEngage code 9 (Max batch request size violation)
+  source: https://usermanagementv2.docs.apiary.io/
+- scope: per request
+  endpoint: POST /statistics/detailed
+  limit: 30
+  unit: entities
+  source: https://statisticsapi1.docs.apiary.io/
+- scope: per request
+  endpoint: POST /statistics/overall
+  limit: 30
+  unit: entities
+  source: https://statisticsapi1.docs.apiary.io/
+- scope: per request
+  endpoint: GET /users/attributes
+  limit: 100
+  unit: records (limit parameter maximum)
+  source: https://usermanagementv1.docs.apiary.io/

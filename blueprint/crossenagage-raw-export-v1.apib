@@ -1,0 +1,371 @@
+FORMAT: 1A
+HOST: https://api.crossengage.io/
+
+# Raw Export API
+
+This asynchronous API enables export of user & event data from CrossEngage.
+
+Because sometimes events might come out of order or later than expected, 
+to avoid inconsistencies or skipped data, we enforce a time gap for the data, that we export. 
+With this setting we won't export any events with a timestamp later than **3 hours** before export start time.
+
+#### Versioning
+The API version is defined in the header `X-XNG-ApiVersion`. 
+To use the export API provide version **2**.
+
+#### Authentication
+CrossEngage uses **header authentication**.
+To get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate
+to **Settings**. You will find it in the **System setup -> API keys** section
+in the `Master API key` value.
+
+The following is an example of the format of an authentication header:
+
+* `X-XNG-AuthToken`: `1ab00011122c1234`
+
+#### Date Format
+Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+Please note, that Segment Buider in the CrossEngage App is using your local time zone.
+This means that if you'd like your Export API data to align with your Segment data,
+you need to use that same time zone when requesting your export via API. 
+
+#### Data Availability
+The data freshness for exported data is 3 hours relative to the export completion time.
+
+#### Error Handling
+When exporting data from CrossEngage, note the following error handling practices:
+
+Resume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:
+* `500 Internal Server Error`
+* `502 Bad gateway`
+* `503 Service Unavailable`
+* `504 Gateway Timeout`
+
+How to retry requests made to CrossEngage in case of errors:
+* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy 
+if an export request returns a 5xx server error. These errors can occur if a server is 
+overloaded. Exponential backoff can alleviate such problems during periods 
+of high request volume or heavy network traffic.
+* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. 
+When retrying these requests, limit the number of times you retry them. For example your code could limit to ten 
+retries or less before reporting the error to our team for investigation.
+
+## Destinations [/destination{?type}]
+These endpoints fetch export and callback destinations and their associated details.
+
+In order to use the Export API you must provide an (S)FTP destination 
+to which the export files will be uploaded. 
+If you have already set up such an integration in the CrossEngage platform, 
+these endpoints will return it with the type `EXPORT`. You can obtain this destination’s ID 
+from the results of this call for use in requesting an export. 
+
+If you have not yet set up a suitable (S)FTP integration, log in to the CrossEngage platform, 
+navigate to **Settings -> Integrations -> Add a new integration** 
+and select CrossEngage **(S)FTP Upload** as the integration type.
+
+Optionally you can also use a callback destination. 
+It's a webhook which will be called after your export is completed. 
+Callback destination is a webhook integration, which should meet the following requirements:
+* Method `POST`
+* Content type `JSON`
+* Basic authentication
+
+Otherwise it will not appear in the destinations list. 
+An attempt to use an invalid destination during export creation will lead to a validation error.
+
+The same as with `EXPORT` type destinations, the currently set-up destinations will be returned 
+by these endpoints. You can use one of them or create a new one.
+
+Here is the structure of webhook request body:
+* **exportId**: ID of your export
+* **exportDestinationId**: export destination
+* **callbackDestinationId**: export callback destination
+* **status**: export status (`FINISHED` or `FAILED`)
+* **finishedAt**: export end time
+
+
+    **Example of a callback request:**
+
+        {
+            "exportId": "5d90695a-c61f-453a-bd2d-7c4f0b8536cf",
+            "exportDestinationId": "c88c0ddf-d3e3-4190-b1f8-df3dfbc7238f",
+            "callbackDestinationId": "9f86d4c8-d902-497d-8d78-53ce184ac3ce",
+            "status": "FINISHED",
+            "finishedAt": "2019-08-07T12:24:06.772Z"
+        }
+
+
+### Get all destinations and their details [GET]
+
++ Parameters
+    + type (enum[string], optional) - _Optional_. Type of destination that should be returned. When not provided all destinations will be returned.
+        + Members
+            + `EXPORT`
+            + `CALLBACK`
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (destinationsResponse)
+
+### Get a certain destination and its details [GET /destination/{id}]
+
++ Parameters
+    + id (string, required) - _Required_. ID of a destination to be returned.
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    
++ Response 200 (application/json)
+
+    + Attributes (destination)
+
+## Event classes [/event-class]
+
+This endpoint provides information about mapping between legacy and new event types.
+If you want to filter events by their name when requesting an export, 
+please find a matching new event name using this endpoint.
+
+### Get all event classes [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
++ Response 200 (application/json)
+
+    + Attributes (eventClassResponse)
+
+## Managing Exports [/export{?type}{?status}{?pageNumber}{?pageSize}]
+
+These endpoints allow to fetch exports and their associated details, 
+as well as to request or cancel new exports.
+
+When you send an Export Request, our server will validate its parameters 
+and return the request it will process. Because unknown and invalid parameters may be ignored, 
+be sure to thoroughly check that the version of the request our server returns to you 
+corresponds with your expectations. In some cases this initial processing may take several 
+minutes, so  your Request Export call may not be immediately visible via an Export Details call.
+
+We limit the number of active exports to 2 per company.
+If you would like to run another export, you can either wait for one of the previously requested to finish, 
+or cancel it manually.
+
+Every export has one of the following statuses:
+* **WAITING** - Your export request was processed by our system and is now waiting to be executed.
+* **RUNNING** - Export is currently in progress. Depending on the size and the filters used, this 
+could take as long as several hours.
+* **FINISHED** - Export was completed. Requested data is exported to your chosen destination 
+in multiple gzipped file parts using the `id` of the export for the file name definition  
+e.g. `1ee25bc0-21aa-4759-8716-8397b6997e98.part1.json.gz`, 
+`1ee25bc0-21aa-4759-8716-8397b6997e98.part2.json.gz`.
+Note that some of the exported files may be empty. This is a normal situation, 
+which occurs as a result of work and data distribution between parallel workers for processing your export.
+The files will be located in an `export` folder. If this folder does not yet exists, it will be created.
+* **CANCELED** - Export was canceled manually. 
+Note that you can only cancel exports with statuses WAITING or RUNNING.
+
+
+**Note:** the field `legacyXng` is obsolited and will be removed in future versions.
+
+
+### Get all exports and their details [GET]
+
++ Parameters
+    + status: FINISHED (array[enum[string]], optional) - _Optional_. Export status filter. By default only active exports are returned (`WAITING` and `RUNNING`)
+        + Members
+            + `WAITING` - Export is waiting for execution
+            + `RUNNING` - Export is currently in progress
+            + `FINISHED` - Export was completed
+            + `CANCELED` - Export was canceled by you
+    + pageNumber:3 (integer, optional) - _Optional_. page number.
+        + Default: 0
+    + pageSize:25 (integer, optional) - _Optional_. page size.
+        + Default: 10
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+
+
++ Response 200 (application/json)
+    
+    + Attributes (exports)
+
+
+### Get a certain export's details [GET /export/{exportId}]
+
++ Parameters
+    + exportId: `1ee25bc0-21aa-4759-8716-8397b6997e98` (string, required) - _Required_. `id` of an export
+    
++ Request (application/json)
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 200 (application/json)
+
+    Export details and status.
+    
+    + Attributes (exportStatusResponse)
+
+### Request an export(events) [POST]
+
++ Attributes (eventExportRequest)
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 200 (application/json)
+
+    Export job scheduled. 
+    
+    + Attributes (exportStatusResponse)
+  
+### Request an export(users) [POST]
+
++ Attributes (userExportRequest)
+
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 200 (application/json)
+
+    Export job scheduled. 
+    
+    + Attributes (exportStatusResponse)
+### Cancel an export [DELETE /export/{exportId}]
+
++ Parameters
+    + exportId: `1ee25bc0-21aa-4759-8716-8397b6997e98` (string, required) - _Required_. `id` of an export
+    
++ Request (application/json)
+
+    + Headers
+    
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 200 (application/json)
+
+    Export job stopped.
+    
+    + Body 
+
+
+# Data Structures
+
+## destinationsResponse(array[destination])
+
+## destination(object)
++ id: `b393489f-7d76-41c2-bb2f-f965ab997d2e` (string, fixed) - ID of a destination.
++ name: `My destination name` (string) - Name of a destination. 
++ type (enum[string], fixed) - Type of a destination.
+    + Members
+        + `EXPORT`
+        + `CALLBACK`
++ destination: `https://api-stg.xng.rocks/events`, `ft01-dev-sxb.xng.rocks/myFolder` (string) - Destination url or folder. 
++ createdAt: `2019-08-21T12:10:47Z` - ISO 8601 formatted string representing creation date of a destination. 
++ updatedAt: `2019-08-21T12:11:47Z` - ISO 8601 formatted string representing last modification date of destination settings. 
+
+## eventClass(object)
++ name: `message.viewed` (string) - Name of an event.
++ legacyName: `mail.open` (string) - Legacy name of an event.
++ channel: `mail` (string) - Event channel.
+
+## eventClassResponse(array[eventClass])
+
+## userExportRequest(object)
++ exportDestinationId: `fec9ce18-a152-4fec-ab69-1b22606a015e` (string, required) - _Required_. ID of a destination used for saving the export data.
++ callbackDestinationId: `4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0` (string, optional) - _Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent.
++ rawExport: true (boolean, required) _Required_. Flag differentiating between export services.
++ outputFormat: `PARQUET` (string, optional) - _Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON. 
++ outputSuffix: `PARQUET` (string, optional) - _Optional_. String that will be appended to the File-Name.
++ segmentId: `67` (string, optional) - _Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export.
++ attributes (object, required) - _Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object.
+    + enabled: true (boolean, optional) - _Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported.
+    + filter (object, optional) - _Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported. 
+        + action (enum, required) - _Required_. Action to be done using the names array. Required when using the `filter` object. 
+            + Members
+                + `INCLUDE` - Export only the attributes passed through the `names` property.
+                + `EXCLUDE` - Export all attributes except for those passed through the `names` property.
+        + names (array[string], required) - _Required_. User attribute names that will be used together with the action for the export. 
+            + traits.firstName
+            + traits.lastName
+            + traits.email
++ events (object, required) - _Required_. Export settings for event data. Can be used in conjunction with the `attributes` object. 
+    + enabled: false (boolean, optional) - _Optional_. When not provided takes default value `false` as events will not be exported with the raw user export.
+
+## eventExportRequest(object)
++ exportDestinationId: `fec9ce18-a152-4fec-ab69-1b22606a015e` (string, required) - _Required_. ID of a destination used for saving the export data.
++ callbackDestinationId: `4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0` (string, optional) - _Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent.
++ rawExport: true (boolean, required) _Required_. Flag differentiating between export services.
++ outputFormat: `PARQUET` (string, optional) - _Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON. 
++ outputSuffix: `PARQUET` (string, optional) - _Optional_. String that will be appended to the File-Name.
++ segmentId: `67` (string, optional) - _Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export.
++ attributes (object, required) - _Required_. Export settings for user attributes. Can be used in conjunction with the `events` object.
+    + enabled: false (boolean, optional) - _Optional_. When not provided takes default value `false` as attributes will not be exported in the raw event export.
++ events (object, required) - _Required_. Export settings for event data. Can be used in conjunction with the `attributes` object. 
+    + enabled: true (boolean, optional) - _Optional_. This toggles event data export. When not provided takes default value `false` so that events will not be exported.
+    + filter (object, optional) - _Optional_. The `filter` object allows you to include or exclude event classes from the export. When not provided, all event classes and their data will be exported. 
+        + action (enum, required) - _Required_. Action to be done using the names array. Required when using the `filter` object. 
+         + Members
+            + `INCLUDE` - Export only the event classes passed through the names property.
+            + `EXCLUDE` - Export all event classes except for those passed through the names property.
+        + names (array[string], required) - _Required_. Event class names that will be used together with the action for the export. 
+            + session.started
+            + session.finished
+    + interval (object, required) - _Optional_. Time interval that will be used to filter the event data exported. Always considering hourly starting points.
+        + startDate: `2019-09-03T00:00:00.00Z` (string, required) - _Required_. ISO 8601 string representing start date used for the event data filter. Required when using the `interval` object.
+        + endDate: `2019-09-04T00:00:00.00Z` (string, required) - _Required_. ISO 8601 string representing end date used for the event data filter. Required when using the `interval` object. 
+
+## exportResponse(object)
++ id: `1ee25bc0-21aa-4759-8716-8397b6997e98` (string) - ID of a requested export. 
++ Include userExportRequest
+
+## exportStatusResponse(object)
++ status (enum[string]) - Status of an export. 
+    - Sample: `WAITING`
+    + Members
+        + `WAITING` - Export is waiting for execution
+        + `RUNNING` - Export is currently in progress
+        + `FINISHED` - Export was completed
+        + `CANCELED` - Export was canceled by you
++ outputFormat: `JSON` (string) - Data format of the exported data. Currently on JSON is suppoted.
++ requestedAt: `2019-09-04T15:30:53.298Z` (string) - ISO 8601 formatted string representing the export request date and time.
++ startedAt: `2019-09-04T15:36:53.298Z` (string) - ISO 8601 formatted string representing the export start date and time.
++ finishedAt: `2019-09-04T15:37:53.298Z` (string) - ISO 8601 formatted string representing the export finish date and time.
++ Include exportResponse
+
+## exports(array[exportStatusResponse])

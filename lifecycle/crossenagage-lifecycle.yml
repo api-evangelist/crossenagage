@@ -1,19 +1,62 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://api.documentation.crossengage.io/
+source: https://documentation.crossengage.io/data-and-engagement-platform/help-and-support/system-status
+  + the six Apiary contracts + https://crossengage.statuspage.io/api/v2/summary.json + https://trust.spotler.com/service-levels
 versioning:
-  scheme: uri-path
-  current: v2
-  observed: [v1.0, v2.0]
-  docs: https://api.documentation.crossengage.io/user-management-v2/
-  note: >-
-    User Management API is published in two path versions (v1.0 and v2.0);
-    v1.0 remains documented alongside v2.0.
-status_page: https://status.spotler.com/
+  scheme: request-header
+  header: X-XNG-ApiVersion
+  current: '2'
+  observed:
+  - '1'
+  - '2'
+  docs: https://usermanagementv2.docs.apiary.io/
+  note: CrossEngage versions by REQUEST HEADER, not by URI path — a detail that was recorded incorrectly
+    before the blueprints were harvested. Every call must send X-XNG-ApiVersion; User Management accepts
+    1 or 2, File Attachments and Statistics require 2, Product Feed and Raw Export require 1 and 2 respectively.
+    The Product Feed Swagger is the one exception with a versioned basePath (/product-feed/v1) alongside
+    the header.
+status_page: https://status.crossengage.io/
+status_page_detail:
+  url: https://status.crossengage.io/
+  alias: https://crossengage.statuspage.io/
+  api: https://crossengage.statuspage.io/api/v2/summary.json
+  probed: '2026-08-13'
+  http_status: 200
+  page_name: ActivatePro
+  history: https://crossengage.statuspage.io/history
+  components_include:
+  - API v1.0
+  - API v2.0
+  - Export API
+  - Web tracking
+  - Segmentation
+  - Campaign Dispatch
+  - Realtime campaign dispatch
+  - Customer Prediction Platform
+  note: CrossEngage runs its own Atlassian Statuspage with per-API components, distinct from the Spotler
+    group status page at status.spotler.com.
 deprecation:
   policy_url: null
-  sunset_header: unknown
-  note: No formal deprecation/sunset policy located in public docs.
+  sunset_header: false
+  note: No deprecation or sunset policy is published. User Management v1 is still fully documented alongside
+    v2 with no retirement date; the v2 contract recommends v2 ("So it is recommended to use v2") but does
+    not deprecate v1. No Sunset or Deprecation response header appears in any contract.
 sla:
-  url: null
+  url: https://trust.spotler.com/service-levels
+  uptime_target: 99.9%
+  formal_sla: false
+  note: 'Spotler publishes a Service Levels statement covering all its products, including CrossEngage
+    / Activate Pro. It states plainly: "While we do not offer a formal Service Level Agreement (SLA) by
+    default, we apply internal standards" — an annual uptime AIM of 99.9% excluding scheduled maintenance,
+    continuous monitoring with TechOps alerting, a split between scheduled adaptive and unscheduled corrective
+    maintenance, and incident communication through the status page. Fetched 2026-08-13, HTTP 200. This
+    is a published target, not a contractual commitment.'
 deprecated_operations: []
+legacy_surfaces:
+- surface: User Management API v1
+  status: superseded-but-supported
+  evidence: 'v2 contract: "So it is recommended to use v2"; v1 remains published and its statuspage component
+    "API v1.0" is still monitored'
+- surface: Web Tracking SDK v1
+  status: legacy
+  evidence: Documentation labels it "Web Tracking v1 (Legacy)" and publishes a v1 -> v2 migration guide

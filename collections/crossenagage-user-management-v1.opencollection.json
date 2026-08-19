@@ -1,0 +1,471 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "User Management API v1",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Attribute Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch attribute list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/attributes",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of the first element."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of elements to be returned. Default value is 10, maximum is 100."
+              }
+            ]
+          },
+          "docs": "This endpoint fetches all existing user attributes."
+        },
+        {
+          "info": {
+            "name": "Create attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users/attributes",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "User attributes are called traits in CrossEngage. \nPlease create all user attributes with the\n`traits` prefix, for example, `traits.firstName`. Please note\nthat attributes cannot be created with the following protected suffixes: \"_date\", \"_float\", \"_bool\", \"_string\", \"_nested\", \"_int\".\n<br/><br/>When having to create a new attribute, please check the attribute list via the <strong>Fetch Attribute List</strong> endpoint to verify whether a similar or same attribute is available."
+        },
+        {
+          "info": {
+            "name": "Fetch attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/attributes/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`id` of the attribute"
+              }
+            ]
+          },
+          "docs": "Fetch a specific user attribute by its `id`. To find an\nattribute `id`, please use the [Fetch attribute list](#fetchAttrList)\ncall."
+        },
+        {
+          "info": {
+            "name": "Delete attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/attributes/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "`id` of the attribute"
+              }
+            ]
+          },
+          "docs": "In order to delete an attributes in CrossEngage, you need to know its `id`. \nTo find it out, please use [Fetch attribute list](#fetchAttrList) endpoint and search its `id` value.\n\nNote that deleting an attribute does not result in the removal of that attribute value from individual users.\nTo modify individual users, it is necessary to update their profiles."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Lead management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create & update a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/leads/",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint lets you create or update leads.\nThe system searches for existing leads based on records with email \naddresses and optionally business units. \nIn case a record with the requested identifiers exists, the lead is updated. \nOtherwise, a new lead will be created."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User profile management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database."
+              }
+            ]
+          },
+          "docs": "This endpoint lets you fetch a specific user by `id`."
+        },
+        {
+          "info": {
+            "name": "Create & update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/users/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database."
+              }
+            ]
+          },
+          "docs": "This endpoint lets you create or update a specific user by `id`."
+        },
+        {
+          "info": {
+            "name": "Delete a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database."
+              }
+            ]
+          },
+          "docs": "This endpoint lets you delete a specific user by `id`."
+        },
+        {
+          "info": {
+            "name": "Create & update or delete users in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users/batch",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The maximum number of users that can be reached as per one call is 1000. \nShould you need to change more user profiles, please consider dividing them in \nsuccessive calls."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Event management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/events",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Events are individually assigned to users. You can send up to \n50 events per request. However, sending one single \nevent per request is the most common practice.\n\nPlease note that the **management of custom event property is not yet possible via API**.\nIn order to create a custom properties, please contact your customer experience manager."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Opt-out management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a user's status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id/recipient-status",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database"
+              }
+            ]
+          },
+          "docs": "Check the overall status of a particular user."
+        },
+        {
+          "info": {
+            "name": "Read a user's opt out status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id/optout-status",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database"
+              },
+              {
+                "name": "channelType",
+                "value": "",
+                "type": "query",
+                "description": "The specific channel you'd like to update"
+              }
+            ]
+          },
+          "docs": "Read a specific user's overall opt out status or for a specific channel."
+        },
+        {
+          "info": {
+            "name": "Update a user's opt out status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/users/:id/optout-status",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database"
+              },
+              {
+                "name": "channelType",
+                "value": "",
+                "type": "query",
+                "description": "The specific channel you'd like to update"
+              }
+            ]
+          },
+          "docs": "Update a specific user's overall opt out status or for a specific channel."
+        },
+        {
+          "info": {
+            "name": "Read a user's blacklist status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id/blacklist-status",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database"
+              }
+            ]
+          },
+          "docs": "Read a user's blacklist status"
+        },
+        {
+          "info": {
+            "name": "Update a user's blacklist status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/users/:id/blacklist-status",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user in your database"
+              }
+            ]
+          },
+          "docs": "Update a user's blacklist status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

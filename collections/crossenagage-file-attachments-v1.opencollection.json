@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "File Attachment API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "File Attachment API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/files/:fileName",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "path",
+                "description": "name of the file as it is to be saved in cloud storage"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to upload a single file to the cloud storage"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

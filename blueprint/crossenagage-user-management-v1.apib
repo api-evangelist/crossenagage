@@ -1,0 +1,983 @@
+FORMAT: 1A
+HOST: https://api.crossengage.io
+
+# User Management API V1
+
+The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.
+
+## Authentication
+CrossEngage uses **header authentication**.
+To obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.
+
+## Versions
+The API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.
+
+## Headers
+
+To use the CrossEngage API, define the following header values for each call made:
+`X-XNG-AuthToken`, `X-XNG-ApiVersion`.
+
+## Date Format
+Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+## Error Handling
+Resume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:
+* `500 Internal Server Error`
+* `502 Bad Gateway`
+* `503 Service Unavailable`
+* `504 Gateway Timeout`
+
+How to retry CrossEngage API requests in case of errors:
+* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.
+* For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests.
+
+# Group User Attribute Management 
+
+
+## Attributes [/users/attributes]
+
+
+### Create attribute [POST]
+User attributes are called traits in CrossEngage. 
+Please create all user attributes with the
+`traits` prefix, for example, `traits.firstName`. Please note
+that attributes cannot be created with the following protected suffixes: "_date", "_float", "_bool", "_string", "_nested", "_int".
+<br/><br/>When having to create a new attribute, please check the attribute list via the <strong>Fetch Attribute List</strong> endpoint to verify whether a similar or same attribute is available.
++ Attributes (simpleAtrribute, fixed-type) 
+
++ Request (application/json)
+Create a primitive attribute
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+    
+    + Body
+    
+            {
+                "name":"traits.example",
+                "attributeType":"STRING"
+            }      
+
++ Response 200 (application/json;charset=UTF-8)
+
+    String attribute successfully created
+
+    + Body
+
+            {
+                "id": "111",
+                "name": "traits.example",
+                "attributeType": "STRING",
+                "success": true
+            }
+
++ Request (application/json)
+
+    Create an array attribute
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+    
+    + Body
+    
+            {
+                "name":"traits.exampleParent",
+                "attributeType":"ARRAY",
+                "nestedType":"STRING"
+            }      
+
++ Response 200 (application/json;charset=UTF-8)
+
+    Array attribute successfully created
+
+    + Body
+    
+            {
+                "id": 305,
+                "name": "traits.exampleParent",
+                "attributeType": "ARRAY",
+                "nestedType": "STRING",
+                "success": true
+            }
+
+
++ Request (application/json)
+
+    Create a nested attribute
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Attributes (childAtrribute) 
+    
+    + Body
+    
+            {  
+               "name":"exampleChild",
+               "attributeType":"STRING",
+               "parentName": "traits.exampleParent"
+            }
+
++ Response 200 (application/json;charset=UTF-8)
+
+    Successful creation of attribute
+
+    + Body
+
+            {
+                "id": "111",
+                "name": "traits.example",
+                "attributeType": "ARRAY",
+                "success": true
+            }
+
++ Response 400 (application/json;charset=UTF-8)
+
+   Attribute was not processed due to a validation error (see response) 
+
+    + Body
+    
+            {
+                "requestId": "c2a20133-ecdd-4e43-8abd-943e5911737e",
+                "message": "No enum constant com.crossengage.attribute.AttributeType.ARRAaY"
+            }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+    
+
+### Fetch attribute list [GET /users/attributes{?offset,limit}] 
+This endpoint fetches all existing user attributes. 
+
++ Parameters
+    + offset: `0` (number, optional) - The number of the first element.
+    + limit: `2` (number, optional) - Number of elements to be returned. Default value is 10, maximum is 100.
+
++ Request
+
+    + Headers
+            
+                X-XNG-ApiVersion: 1
+                X-XNG-AuthToken: Your API Key
+            
++ Response 200 (application/json;charset=UTF-8)
+
+        {
+            "attributes": [{
+                "id": 1001,
+                "name": "traits.example",
+                "attributeType": "STRING"
+                },
+                {
+                "id": 1002,
+                "name": "traits.example2",
+                "attributeType": "ARRAY"
+                }],
+            "total": "200"
+        }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+## Attribute management [/users/attributes/{id}]
+This endpoint lets you fetch or delete an attribute according to
+its `id`.
+
++ Parameters
+    + id: `123` (string, required) - `id` of the attribute
+
+### Fetch attribute [GET] 
+
+Fetch a specific user attribute by its `id`. To find an
+attribute `id`, please use the [Fetch attribute list](#fetchAttrList)
+call.
+
++ Request
+
+    + Headers
+            
+                X-XNG-ApiVersion: 1
+                X-XNG-AuthToken: Your API Key
+
++ Response 200 (application/json;charset=UTF-8)
+
+        {
+            "id": "1234",
+            "name": "traits.example",
+            "attributeType": "STRING"
+        } 
+
++ Response 404 
+
+    The attribute with the requested `id` does not exist
+    
+    + Body
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+### Delete attribute [DELETE]
+
+In order to delete an attributes in CrossEngage, you need to know its `id`. 
+To find it out, please use [Fetch attribute list](#fetchAttrList) endpoint and search its `id` value.
+
+Note that deleting an attribute does not result in the removal of that attribute value from individual users.
+To modify individual users, it is necessary to update their profiles.
+
++ Request
+
+    + Headers
+            
+                X-XNG-ApiVersion: 1
+                X-XNG-AuthToken: Your API Key
+  
+
++ Response 204
+
+    Attribute successfully deleted
+
+    + Body
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+    
++ Response 409
+ 
+    Attribute in use in at least one campaign or has active 
+    nested attributes. Otherwise, the `id` entered in the
+    request body does not match the `id` 
+    provided in the request path.
+    
+    + Body
+    
+            [{
+                "id": 1234,
+                "name": "traits.example",
+                "usageType": "GOAL_CONDITION"
+            }]
+            
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+# Group Lead management 
+
+## Leads [/leads/]
+Leads are users that don't possess customer ID also known as `id` in CrossEngage. 
+Usually, these are prospects and newsletter subscribers who have an email address attached 
+to their profile that serves as a primary identifier.
+
+To promote a lead to a customer, all you need to do is to create a user with the same
+email address (or email and business unit). CrossEngage automatically merges the profiles
+when there is a match.
+
+### Create & update a lead [POST]
+This endpoint lets you create or update leads.
+The system searches for existing leads based on records with email 
+addresses and optionally business units. 
+In case a record with the requested identifiers exists, the lead is updated. 
+Otherwise, a new lead will be created.
+
++ Request (application/json)
+
+    + Attributes (leadTraits)  
+    
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Body
+    
+            {  
+               "updated":[  
+                  {  
+                     "id": "1234",
+                     "email":"john.doe@crossengage.io",
+                     "businessUnit":"US",
+                     "firstName":"John",
+                     "lastName":"Doe",
+                     "age": 21,
+                     "gender":"male"
+                  }
+               ]
+            }
++ Response 200 (application/json;charset=UTF-8) 
+The lead was processed successfully
+
+    + Body
+    
+            {
+                "updated": [
+                    {
+                        "id": "1234",
+                        "xngId": "1234",
+                        "success": true
+                    }
+                 ],
+                 "deleted": []
+            }
+
++ Response 400 (application/json;charset=UTF-8) 
+Lead was not processed due to a validation error (see response)
+
+    + Body
+    
+            {
+                "updated": [{
+                    "xngId": "xng-id",
+                    "success": false,
+                    "errors": [{
+                        "field": "email",
+                        "type": "WRONG_FORMAT"
+                    }]
+                }],
+                "deleted": []
+            }
+            
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+    
+
+# Group User profile management 
+
+## Individual user management [/users/{id}]
+In CrossEngage, users are created and updated using the same method. 
+The primary key used in both scenarios is `id` which is usually a customer ID in your database. 
+Should it not be available for certain users, please consider creating them as leads instead - see Introduction to Leads Calls.
+
++ Parameters
+    + id: `fb85fe50-a528-11e7-abc4-cec278b6b50a` (string, required) - The id of the user in your database.
+
+### Create & update a user [PUT]
+This endpoint lets you create or update a specific user by `id`.
+
++ Request (application/json)
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Attributes (userTraits) 
+    
+    + Body
+    
+            {
+                "email": "john.doe@crossengage.io",
+                "firstName": "John",
+                "lastName": "Doe",
+                "birthday": "1982-08-30",
+                "createdAt": "2015-10-02T08:23:53Z",
+                "gender": "male",
+                "businessUnit": "DE"
+            }
+
+
++ Response 200 (application/json;charset=UTF-8) 
+User has been created or updated successfully
+
+    + Body
+    
+                {
+                    "id": "1234",
+                    "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                    "email": "john.doe@crossengage.io",
+                    "businessUnit": "DE",
+                    "success": true
+                }
+
++ Response 400 (application/json;charset=UTF-8)
+
+    User was not processed due to a validation error (see response)
+
+    + Body
+            
+                {
+                    "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                    "xngId": "asdgaw223-sf122-48211-1231-3155dff2",
+                    "email": "john.doe+crossengage.io",
+                    "businessUnit": "unit",
+                    "success": false,
+                    "errors": [{
+                        "field": "email",
+                        "type": "WRONG_VALUE"
+                    }]
+                }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+    
++ Response 409
+ 
+    `id` sent in the request body does not match the `id` paramater entered in the request path
+    
+    + Body
+    
+            {
+                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                "xngId": null,
+                "email": "----------",
+                "businessUnit": "DE",
+                "success": false,
+                "errors": [
+                    {
+                        "field": "id",
+                        "type": "user_IDS_MISMATCH"
+                    }
+                ]
+            }
+        
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+    
+
+### Fetch a user [GET]
+This endpoint lets you fetch a specific user by `id`.
+
++ Request (application/json)
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+
++ Response 200 (application/json;charset=UTF-8) 
+
+            {
+                "email": "john.doe@crossengage.io",
+                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                "xngId": "123e4567-e89b-12d3-a456-426655440000",
+                "firstName": "John",
+                "lastName": "Doe",
+                "birthday": "1982-08-30",
+                "createdAt": "2015-10-02T08:23:53Z",
+                "gender": "male"
+            }
+
+### Delete a user [DELETE]
+This endpoint lets you delete a specific user by `id`.
+
++ Request (application/json)
+
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+
++ Response 204 
+
+## Bulk user management [/users/batch]
+This endpoint allows you to perform a number of operations with multiple users
+by sending a single call. The best application of bulk operations is creating, 
+updating and/or deleting users at the same time.
+
+### Create & update or delete users in bulk [POST]
+The maximum number of users that can be reached as per one call is 1000. 
+Should you need to change more user profiles, please consider dividing them in 
+successive calls.
+
++ Request (application/json)
+
+    + Attributes (userTraits)  
+    
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Body
+    
+            {
+                "updated": [{
+                    "email": "john.doe@crossengage.io",
+                    "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "birthday": "1982-08-30",
+                    "createdAt": "2015-10-02T08:23:53Z",
+                    "gender": "male"
+                }],
+                "deleted": [{
+                    "email": "janice.doe@crossengage.io",
+                    "id": "62968d37-91f5-46f3-bd62-2432510f1a23",
+                    "firstName": "Janice",
+                    "lastName": "Doe",
+                    "birthday": "1987-06-15",
+                    "createdAt": "2015-10-02T08:23:53Z",
+                    "gender": "female"
+                }]
+            }
+            
++ Response 200 (application/json;charset=UTF-8) 
+
+            {
+                "updated": [
+                    {
+                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                        "success": true
+                    }
+                ],
+                "deleted": [
+                    {
+                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                        "success": true
+                    }
+                ]
+            }
+            
++ Response 400 (application/json;charset=UTF-8) 
+
+        {
+            "updated": [{
+                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                "xngId": "088818b3-445e-41a6-a7e1-cf86c8cdfbe4",
+                "success": false,
+                "errors": [{
+                    "field": "id",
+                    "type": "NOT_NULL"
+                }, {
+                    "field": "email",
+                    "type": "WRONG_FORMAT"
+                }]
+            }],
+            "deleted": [{
+                "id": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+                "xngId": "ae86796f-8aca-4f65-a5dc-dea9a269f2a5",
+                "success": false,
+                "errors": [{
+                    "field": "id",
+                    "type": "NOT_NULL"
+                }, {
+                    "field": "email",
+                    "type": "WRONG_FORMAT"
+                }]
+            }]
+        }
+
+
+# Group Event management 
+
+## Sending events [/events]
+Event sending via API serves the following purposes:
+- Marketing automation for either transactional or commercial communication
+- User segmentation based on behavioural data 
+- Collection of analytical insights for the improvement of pricing, UX or any specific business purpose 
+
+### Send an event [POST]
+Events are individually assigned to users. You can send up to 
+50 events per request. However, sending one single 
+event per request is the most common practice.
+
+Please note that the **management of custom event property is not yet possible via API**.
+In order to create a custom properties, please contact your customer experience manager.
+
+
++ Request (application/json)
+
+    + Attributes (Events)  
+    
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Body
+    
+            {
+               "id": "78ad0e3e-19e6-4ec1-84a7-b2c860c05387",
+               "events": [{
+                    "event": "Completed Order",  
+                    "properties": {
+                        "cart": {
+                            "total": 0,
+                            "currency": "EUR",
+                            "products": [
+                                {
+                                    "id": "507f1f77bcf86cd879439023",
+                                    "sku": "61979589",
+                                    "name": "Zegna Shirt",
+                                    "price": 150,
+                                    "quantity": 1,
+                                    "category": "Shirts",
+                                    "hasZipper": false
+                                },
+                                {
+                                    "id": "507f1f77bcf86cd799439011",
+                                    "sku": "51979501",
+                                    "name": "Levi Jeans",
+                                    "price": 100,
+                                    "quantity": 1,
+                                    "category": "Jeans",
+                                    "hasZipper": true
+                                }]
+                        }
+                    }
+                }]
+            }
+
++ Response 202 (application/json;charset=UTF-8)
+
+
+
++ Response 400 (application/json;charset=UTF-8) 
+    
+    Wrong format of the request (see response)
+    
+    + Body
+        
+            {
+                "field": "event",
+                "type": "UNKNOWN_VALUE"
+            }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+ 
+
+# Group Opt-out management
+
+## Status Endpoint [/users/{id}/recipient-status]
+We highly recommend usage of opt-out and blacklist mechanisms. 
+They ensure that users who have opted out or that have been blacklisted are never contacted.
+If you do not use these mechanisms you operate at your own risk.
+
+A recipient's status is the cumulative information about communication channels that a specific user accepts messages in.
+
++ Parameters
+    + id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
+
+
+### Get a user's status [GET]
+Check the overall status of a particular user.
+
++ Request (application/json)
+
+    + Parameters
+        + id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
+        
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    
++ Response 200 (application/json;charset=UTF-8)
+    
+    Example server response
+
+    + Body
+    
+            {
+                "blacklisted":false,
+                "optOutAll":false,
+                "optOutChannels":[]
+            }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+## Opt Out Endpoint [/users/{id}/optout-status{?channelType}]
+You can opt a user out from a specific channel or from all messaging. 
+The list of possible parameter values for the channel type are: `MAIL`, `BROWSER_NOTIFICATION`, `ONSITE_DISPLAY`, `EXIT_INTENT`,
+ `PUSH_NOTIFICATION`, `DIRECT_MAIL` and `SMS`.
+
++ Parameters
+    + id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
+    + channelType: `MAIL` (string, optional) - The specific channel you'd like to update
+
+### Update a user's opt out status  [PUT]
+Update a specific user's overall opt out status or for a specific channel.
+
+
++ Request (application/json)
+        
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    + Body
+    
+            {
+                "optOut": true
+            }
+
++ Response 200 (application/json;charset=UTF-8)
+
+    + Body
+    
+            {
+                "optOut": true
+            }
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+    
++ Response 404
+ 
+    This user does not exist
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+### Read a user's opt out status [GET]
+Read a specific user's overall opt out status or for a specific channel.
+
++ Request (application/json)
+        
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+    
++ Response 200 (application/json;charset=UTF-8)
+
+    + Body
+    
+            {
+                "optOut": true
+            }
+
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+
++ Response 404
+ 
+    This user does not exist
+    
+    + Body
+ 
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+## Blacklist Endpoint [/users/{id}/blacklist-status]
+This endpoint allows you to read and update a user's blacklist status.
+
++ Parameters
+    + id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
+
+### Update a user's blacklist status [PUT]
+
+
++ Request (application/json)
+        
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+    
+    + Body
+    
+            {
+                "blacklisted": true
+            }
+            
++ Response 200 (application/json;charset=UTF-8)
+
+    + Body
+    
+            {
+                "blacklisted": true
+            }
+
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+
++ Response 404
+ 
+    This user does not exist
+    
+    + Body
+
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+### Read a user's blacklist status [GET]
+
++ Request (application/json)
+        
+    + Headers
+        
+            X-XNG-ApiVersion: 1
+            X-XNG-AuthToken: Your API Key
+            
+
++ Response 200 (application/json;charset=UTF-8)
+
+    + Body
+    
+            {
+                "blacklisted": true
+            }
+
+
++ Response 401
+ 
+    Wrong or missing credentials
+    
+    + Body
+
++ Response 404
+ 
+    This user does not exist
+    
+    + Body
+
++ Response 500
+    
+    Unknown error on our side
+ 
+    + Body
+
+
+
+
+# Data Structures
+
+## simpleAtrribute (object)
++ name: `traits.example` (string, required) - The name of the user attribute
++ attributeType: `STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY` (string, required) - The type of the user attribute
++ nestedType: `STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT` (string, optional) - The type of the nested attribute that will be added. Only applicable for array or object type.
+
+## childAtrribute (object)
++ name: `traits.exampleChild` (string, required) - The name of the child attribute
++ attributeType: `STRING` (string, required) - The type of the child attribute
++ parentName: `traits.exampleParent` (string, required) - The name of the parent attribute
+
+## leadTraits (object)
++ email: `john.doe@crossengage.io` (string, required) - The lead's email
++ businessUnit: `DE` (string, optional) - The business unit of the lead
++ firstName: `John` (string, optional) - The lead's first name
++ lastName: `Doe` (string, optional) - The lead's last name
++ gender: `male` (string, optional) - The lead's gender
++ createdAt: `2015-10-02T08:23:53Z` (string, optional) - The date the user was created in your database
+
+## userTraits (object)
++ id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
++ email: `john.doe@crossengage.io` (string, optional) - The user's email.
++ businessUnit: `DE` (string, optional) - The business unit of the user.
++ firstName: `John` (string, optional) - The user's first name.
++ lastName: `Doe` (string, optional) - The user's last name.
++ birthday: `1982-08-30` (string, optional) - The user's birthday.
++ gender: `male` (string, optional) - The user's gender.
++ createdAt: `2015-10-02T08:23:53Z` (string, optional) - The date the user was created in your database.
+
+## Events (object)
++ id: `78ad0e3e-19e6-4ec1-84a7-b2c860c05387` (string, required) - The id of the user in your database
++ email: `john.doe@crossengage.io` (string, optional) - *Required* if `id` is not available
++ events (object, required) - List of events for this user
+    + event: `"event": "Viewed Page"` (string,optional) - Name of the event class
+    + properties (object, optional) - List of event properties. For example:
+        + stringExample: 'EU Landing Page' (string, optional) - An name example of a landing page name
+        + integerExample: 150 (number, optional) - A stock quantity example
+        + floatExample: 23.99 (number, optional) - A price example
+        + ArrayExample: ["happy", "new", 20] (array, optional) - A taggs array example
+        + cart (object, optional) - An example of a user cart object
+            + sku: `51979501` (string, optional) - Product SKU
+            + name: `Zegna Shirt` (string, optional) - Name of the product
+            + price: `150` (number, optional) - Product price

@@ -1,0 +1,490 @@
+FORMAT: 1A
+HOST: https://api.crossengage.io/
+
+# User Management API v2
+
+## What is different in v2 comparing to v1?
+In [v1 documentation](https://usermanagementv1.docs.apiary.io) you can find following sections:
+* User Attribute Management
+* Lead management
+* User profile management
+* Event management
+* Opt-out management
+
+In v2 currently we only have **User profile management**.
+The main difference here is that v1 is synchronous and v2 is asynchronous.
+
+Managing users asynchronously has a number of advantages, 
+such as better stability and performance under load,
+which means that you will not get processing timeouts even in times of high load.
+We are also working hard on optimizing the performance of v2 
+and we expect it to be substantially faster, than v1.
+
+So it is recommended to use v2.
+
+## Authentication
+CrossEngage uses **header authentication**.
+To get your API key, please log into the [app](https://app.crossengage.io) and navigate
+to **Settings -> System setup**. You will find the value in the **API keys** section
+in the **Master API key** field.
+
+## Versioning
+The versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. 
+To use this API please provide version **2**.
+
+## Headers
+To use the CrossEngage API, please provide the following header values 
+with each call you make:
+
+* `X-XNG-AuthToken`
+* `X-XNG-ApiVersion`
+
+## Error handling
+In case of request errors, CrossEngage generates custom error codes within an error JSON response,
+to better describe what exactly caused an error. Here a possible codes:
+* 1 - Invalid JSON
+* 2 - Invalid field value, or missing a required field
+* 3 - Invalid attribute type
+* 4 - Invalid Email Format
+* 5 - Invalid Phone Format
+* 6 - Unknown Attribute
+* 7 - Identifier Mismatch
+* 8 - Invalid Business Unit Format
+* 9 - Max batch request size violation
+* 10 - Request processing failed, please contact support
+
+For error response examples, please check the specific endpoints sections.
+
+When calling CrossEngage API, please use the following practices 
+related to error handling.
+
+Retry calls that fail due to connection interruptions or any `5xx` errors, 
+including:
+* `500 Internal Server Error`
+* `502 Bad gateway`
+* `503 Service Unavailable`
+* `504 Gateway Timeout`
+
+How to retry requests made to CrossEngage API in case of errors:
+* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) 
+strategy if any HTTP 5xx error is returned when calling the API. 
+These errors can occur if a server is getting overloaded. 
+Exponential backoff can help alleviate these kinds of problems during periods 
+of high volume of requests or heavy network traffic.
+* Other kinds of error responses should not be handled with exponential backoff 
+but you can still retry a number of them. 
+When retrying these requests, limit the number of times you do that. 
+For example your code could limit to ten retries or less before reporting an error.
+
+# Group User Profile Management
+
+## Get/Delete a Single User [/users/{id}]
+
+The primary key used for all scenarios here is `id` which is a customer ID 
+in your database (also known as `id`),
+which should be unique across all your users (even in different business units). 
+Should it not be available for certain users, 
+please consider creating them as 
+[leads with the APIv1](https://usermanagementv1.docs.apiary.io/#reference/lead-management/leads) 
+instead.
+
++ Parameters
+    + id: `fb85fe50-a528-11e7-abc4-cec278b6b50a` (string, required) - ID of the user in your database.
+
+### Get a single user with id [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+            
+
++ Response 200 (application/json;charset=UTF-8) 
+
+            {
+                "email": "john.doe@crossengage.io",
+                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                "xngId": "123e4567-e89b-12d3-a456-426655440000",
+                "firstName": "John",
+                "lastName": "Doe",
+                "birthday": "1982-08-30",
+                "createdAt": "2015-10-02T08:23:53Z",
+                "gender": "male"
+            }
+
++ Response 404
+
+    User with a given `id` was not found.
+
+    + Body
+
+### Delete a single user [DELETE]
+
+Please note, DELETE request for already deleted or non-existent users 
+will always return success.
+
++ Request (application/json)
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 202
+
+    Request was accepted and will be processed asynchronously. 
+    Use 
+    [request tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking) 
+    endpoint with the provided tracking ID in order to check the request status.
+
+    + Body
+
+            {
+                "trackingId":"2e312089-a987-45c6-adbd-b904bc4dfc97"
+            }
+
+## Get a Single User with email and bu [/users/email/{email}/bu/{bu}]
+
+This endpoint allows you to get a user by 'email' and 'bu'. The email is mandatory and bu is optional. 
+The parameters are case insensitive. 
+
+Note: A user is only returned in case of an exact match. 
+
++ Parameters
+    + email: `example@crossengage.io` (string, required) - Email of the user.
+    + bu: `BU` (string, optional) - Business Unit of the user.
+
+### Get a single user with email and bu [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+            
+
++ Response 200 (application/json;charset=UTF-8) 
+
+            {
+                "email": "john.doe@crossengage.io",
+                "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                "xngId": "123e4567-e89b-12d3-a456-426655440000",
+                "firstName": "John",
+                "lastName": "Doe",
+                "birthday": "1982-08-30",
+                "createdAt": "2015-10-02T08:23:53Z",
+                "gender": "male"
+            }
+
++ Response 404
+
+    User with a given input was not found.
+
+    + Body
+
+## Create/Update a Single User [/users]
+
+The same API endpoint is used for both creating and updating a user profile.
+
+If already existing `id` is provided, user will be updated, 
+if the `id` was not found, a new user with this `id` will be created.
+
+In case of user update, only the provided fields will be updated,
+that means if you would like to just change a couple of user attributes, 
+you don't have to provide a whole user profile,
+it's enough to just specify the fields, you would like to change.
+
+`id` should be unique across all your users (even in different business units). 
+In case you will try to create a user with the same `id`, but a different 
+`businessUnit', already existing user will be updated.
+
+### Create/update a single user [PUT]
+
+It's required to provide both `id` and `email` in every query.
+
+If you will provide an `email`, which is different from the one, 
+currently stored for this user, it will be updated.
+
+If you will provide a new `id`, but already existing `email`, 
+you will get a processing error and the user will not be created.
+
++ Request (application/json)
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
+    + Attributes (UserAttributes) 
+    
+    + Body
+
+            {
+                "id": "31d29083-b3ad-4864-9d0c-dc20a9fa72c8",
+                "email": "john.doe@crossengage.io",
+                "firstName": "John",
+                "lastName": "Doe",
+                "birthday": "1982-08-30",
+                "createdAt": "2015-10-02T08:23:53Z",
+                "gender": "male",
+                "businessUnit": "DE"
+            }
+
++ Response 202 (application/json;charset=UTF-8) 
+
+    Request was accepted and will be processed asynchronously. 
+    Use 
+    [Request Tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking)
+    endpoint with the provided tracking ID 
+    in order to check request status.
+
+    + Body
+
+            {
+                "trackingId":"2e312089-a987-45c6-adbd-b904bc4dfc97"
+            }
+
++ Response 400 (application/json;charset=UTF-8)
+
+    Request was not processed due to a validation error (see response).
+    
+    Please see the 
+    [Error Handling section](https://usermanagementv2.docs.apiary.io/#introduction/error-handling)
+    for possible validation errors.
+
+    + Body
+
+            {
+                "errors": [
+                    {
+                        "code": "6",
+                        "title": "Unknown Attribute",
+                        "details": "Attribute \"lastName\" does not exist",
+                        "info": "https://docs.crossengage.io/errors#6",
+                        "source": {
+                            "pointer": "/lastName"
+                        }
+                    },
+                    {
+                        "code": "2",
+                        "title": "Invalid Field",
+                        "details": "Invalid field value, or missing a required field "email"",
+                        "info": "https://docs.crossengage.io/errors#2",
+                        "source": {
+                            "pointer": "/email"
+                        }
+                    }
+                ]
+            }
+
++ Response 401
+ 
+    Wrong or missing credentials.
+    
+    + Body
+    
++ Response 500
+    
+    Unknown error on our side.
+ 
+    + Body
+
+## Bulk User Management [/users/batch]
+
+Allows to create, update and/or delete multiple users at a time. 
+
+The maximum number of users that can be reached per one call is 1000. 
+Should you need to manage more user profiles, please consider 
+dividing them into multiple API calls.
+
+Bulk operations are asynchronous, this means that all requests go into a queue, 
+from which they will be processed depending on the system load.
+Use 
+[Request Tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking)
+endpoint to get status of your request.
+
+### Create/update/delete multiple users [POST]
+
+For more information about how individual users are processed,
+please check the 
+[delete a single user](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/getdelete-a-single-user/delete-a-single-user) 
+and 
+[create/update](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/createupdate-a-single-user) 
+a single user sections of this doc.
+
++ Request (application/json)
+
+    + Headers
+        
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+    
+    + Attributes (UserBatchAttributes)
+    
+    + Body
+
+            {
+                "updated": [
+                    {
+                        "email": "john.doe@crossengage.io",
+                        "id": "fb85fe50-a528-11e7-abc4-cec278b6b50a",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "birthday": "1982-08-30",
+                        "createdAt": "2015-10-02T08:23:53Z",
+                        "gender": "male"
+                    }
+                ],
+                "deleted": [
+                    {
+                        "email": "jane.doe@crossengage.io",
+                        "id": "1234",
+                        "firstName": "Jane",
+                        "lastName": "Doe",
+                        "birthday": "1982-08-30",
+                        "createdAt": "2015-10-02T08:23:53Z",
+                        "gender": "female"
+                    }
+                ]
+            }
+
++ Response 202 (application/json)
+
+    Request was accepted and will be processed asynchronously. 
+    Use 
+    [Request Tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking)
+    endpoint with the provided tracking ID in order to check the request status.
+
+    + Body
+
+            {
+                "trackingId":"2e312089-a987-45c6-adbd-b904bc4dfc97"
+            }
+
++ Response 202 (application/json)
+
+    In case of validation error(s) for any elements in batch. 
+    All valid entries will be processed. Use 
+    [Request Tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking)
+    endpoint with the provided tracking ID in order to check the request status.
+    
+    Please see the 
+    [Error Handling section](https://usermanagementv2.docs.apiary.io/#introduction/error-handling)
+    for possible validation errors.
+    
+    + Attributes (UserAttributesError)
+    
+    + Body
+
+            {
+                "trackingId": "fb84780b-2f03-4fd7-a4bc-4ae7f17b85eb",
+                "errors": [
+                    {
+                        "code": "4",
+                        "title": "Invalid Email Format",
+                        "details": "Invalid email "lovecrossengage.io". The email address must be in the addr-spec format as defined in RFC 5322",
+                        "info": "https://docs.crossengage.io/errors#4",
+                        "source": {
+                            "pointer": "/updated/0/email"
+                        }
+                    }
+                ],
+            }
+    
++ Response 400 (application/json)
+
+    In case of max batch request size violation
+    
+    + Body
+
+            {
+                "errors": [
+                    {
+                        "code": "9",
+                        "title": "Max batch request size violation",
+                        "details": "Max batch request size is 1,000, but was 5,000",
+                        "info": "https://docs.crossengage.io/errors#9",
+                        "source": {
+                            "pointer": "/updated"
+                        }
+                    }
+                ]
+            }
+
+## Request tracking  [/users/track/{trackingId}]
+
+Allows to check status of the following types of requests:
+* [Single user create/update](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/createupdate-a-single-user)
+* [Single user delete](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/getdelete-a-single-user/delete-a-single-user)
+* [Bulk user create/update/delete](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/bulk-user-management)
+
+The trackingId will be accessible during 24 hours after it was generated by our system.
+
+### Retrieve status [GET]
+
++ Request (application/json)
+
+    + Headers
+        
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Attributes
+
+        + stage - **PENDING** - request waiting to be processed, **PROCESSED** - request already processed
+        + total - Total number of users in the bulk request
+        + success - Number of users who were processed sucesfully
+        + error - Number of users who can't be processed due to errors
+    
+    + Body
+
+            {
+                "stage": "PROCESSED",
+                "total": 2,
+                "success": 1,
+                "error": 1
+            }
+
++ Response 404 (application/json)
+
+    Requested tracking information was not found because trackingId is unknown or expired.
+
+    + Body
+
+# Data Structures
+
+## UserBatchAttributes (object)
+
++ updated (array[UserAttributes], optional) - A list of users to batch create/update
++ deleted (array[UserAttributes], optional) - A list of users to batch delete
+
+## UserAttributes (object)
+
++ id: `31d29083-b3ad-4864-9d0c-dc20a9fa72c8` (string, required) - User identifier in your database
++ email: `john.doe@crossengage.io` (string, required) - User e-mail
++ businessUnit: `DE` (string) - Your company's business unit, to which this user is attached, only relevant if you have multiple business units set up in your CrossEngage account, in other cases, it may be null
++ lastName: `Doe` (string) - Custom user's attribute
++ age: `25` (number) - Custom user's attribute
++ ... - Any other custom user attributes defined for your company
+
+## UserAttributesError (object)
+
++ errors (array[ErrorObj], required) - errors
+
+## ErrorObj (object)
+
++ code (string, required) - Internal code to uniquely identify the error type. Please see the 
+    [Error Handling section](https://usermanagementv2.docs.apiary.io/#introduction/error-handling)
+    for possible validation errors.
++ title (string) - Human readable string to describe the error type
++ details (string) - Human readable string to describe specific details of the error
++ info (string) - For future use, currently not implemented.
++ source (object) - Contains information about what caused the error
+    + pointer (string) - JSON pointer to the attribute that caused the error

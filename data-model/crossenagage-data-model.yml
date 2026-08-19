@@ -1,0 +1,495 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ (6 specs, 37 operations, 57 schema definitions)
+note: 'Entity graph derived from the schema definitions and $ref links in the harvested CrossEngage contracts,
+  plus id-suffixed field names (marked medium confidence). The conceptual model the product documentation
+  describes — User -> Events -> Products (catalogue) -> Segments -> Campaigns/Stories -> Messages — is
+  only partly reachable through the public API: users, events, products, exports and statistics are exposed;
+  segments, campaigns, stories and templates are app-only surfaces with no public REST operations.'
+docs: https://documentation.crossengage.io/data-and-engagement-platform/data-model
+core_domains:
+- domain: Customer data
+  entities:
+  - User
+  - UserAttributes
+  - Lead
+  apis:
+  - User Management v1
+  - User Management v2
+  identifiers: externalId (customer-owned id) plus email + business unit (bu) as an alternate lookup key
+- domain: Product catalogue
+  entities:
+  - Product
+  - ProductPage
+  apis:
+  - Product Feed v1
+  identifiers: sku
+- domain: Events
+  entities:
+  - Event
+  apis:
+  - User Management v1 (POST /events)
+  identifiers: event name + user id
+- domain: Data export
+  entities:
+  - destination
+  - exportResponse
+  - exportStatusResponse
+  - eventClass
+  apis:
+  - Raw Export v1
+  identifiers: exportId, destinationId (UUID)
+- domain: Reporting
+  entities:
+  - kpi
+  - entity
+  - statisticsDetailedResponse
+  apis:
+  - Statistics v1
+  identifiers: kpi id, entity id (campaign/message/story)
+- domain: Assets
+  entities:
+  - File
+  apis:
+  - File Attachments v1
+  identifiers: fileName
+entity_count: 52
+relationship_count: 8
+entities:
+- entity: Files
+  source: openapi/crossenagage-file-attachments-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Error
+  source: openapi/crossenagage-product-feed-openapi.yml
+  type: object
+  fields:
+  - message
+  - key
+  - args
+  - errors
+  field_count: 4
+- entity: ErrorItem
+  source: openapi/crossenagage-product-feed-openapi.yml
+  type: object
+  fields:
+  - source
+  - key
+  - message
+  - args
+  field_count: 4
+- entity: Product
+  source: openapi/crossenagage-product-feed-openapi.yml
+  type: object
+  fields:
+  - id
+  - sku
+  - businessUnit
+  - title
+  - description
+  - link
+  - bigImageLink
+  - smallImageLink
+  - category
+  - price
+  - salesPrice
+  - salesPriceEffectiveDate
+  - discount
+  - currency
+  - stockQuantity
+  - enabled
+  - attributes
+  - createdAt
+  - updatedAt
+  field_count: 19
+- entity: ProductPage
+  source: openapi/crossenagage-product-feed-openapi.yml
+  type: null
+  fields:
+  - pageNumber
+  - pageSize
+  - totalElements
+  - content
+  field_count: 4
+- entity: Destinations
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Event classes
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Managing Exports
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: destinationsResponse
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: array
+  fields: []
+  field_count: 0
+- entity: destination
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  - name
+  - type
+  - destination
+  - createdAt
+  - updatedAt
+  field_count: 6
+- entity: eventClass
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - name
+  - legacyName
+  - channel
+  field_count: 3
+- entity: eventClassResponse
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: array
+  fields: []
+  field_count: 0
+- entity: userExportRequest
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - exportDestinationId
+  - callbackDestinationId
+  - rawExport
+  - outputFormat
+  - outputSuffix
+  - segmentId
+  - attributes
+  - events
+  field_count: 8
+- entity: eventExportRequest
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - exportDestinationId
+  - callbackDestinationId
+  - rawExport
+  - outputFormat
+  - outputSuffix
+  - segmentId
+  - attributes
+  - events
+  field_count: 8
+- entity: exportResponse
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  field_count: 1
+- entity: exportStatusResponse
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: object
+  fields:
+  - status
+  - outputFormat
+  - requestedAt
+  - startedAt
+  - finishedAt
+  field_count: 5
+- entity: exports
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  type: array
+  fields: []
+  field_count: 0
+- entity: KPI management
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Statistics
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: kpi
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  - name
+  - formula
+  - type
+  - createdAt
+  - updatedAt
+  field_count: 6
+- entity: kpiList
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: array
+  fields: []
+  field_count: 0
+- entity: entity
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  - channel
+  - type
+  field_count: 3
+- entity: statisticsResponseEntity
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - entity
+  field_count: 1
+- entity: kpiResponsePaylodResult
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - startDate
+  - endDate
+  field_count: 2
+- entity: kpiResonsePaylodResultTotals
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - startDate
+  - endDate
+  - kpi
+  field_count: 3
+- entity: statisticsDetailedRequest
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - entities
+  - kpiIds
+  - interval
+  - aggregation
+  field_count: 4
+- entity: statisticsDetailedResponse
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - interval
+  - detailed
+  - overall
+  field_count: 3
+- entity: statisticsOverallRequest
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: object
+  fields:
+  - entities
+  - kpiIds
+  - interval
+  field_count: 3
+- entity: statisticsOverallResponse
+  source: openapi/crossenagage-statistics-v1-openapi.yml
+  type: array
+  fields: []
+  field_count: 0
+- entity: Attributes
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Attribute management
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Leads
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Individual user management
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Bulk user management
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Sending events
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Status Endpoint
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Opt Out Endpoint
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Blacklist Endpoint
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: simpleAtrribute
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: object
+  fields:
+  - name
+  - attributeType
+  - nestedType
+  field_count: 3
+- entity: childAtrribute
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: object
+  fields:
+  - name
+  - attributeType
+  - parentName
+  field_count: 3
+- entity: leadTraits
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: object
+  fields:
+  - email
+  - businessUnit
+  - firstName
+  - lastName
+  - gender
+  - createdAt
+  field_count: 6
+- entity: userTraits
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  - email
+  - businessUnit
+  - firstName
+  - lastName
+  - birthday
+  - gender
+  - createdAt
+  field_count: 8
+- entity: Events
+  source: openapi/crossenagage-user-management-v1-openapi.yml
+  type: object
+  fields:
+  - id
+  - email
+  - events
+  field_count: 3
+- entity: Get/Delete a Single User
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Get a Single User with email and bu
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Create/Update a Single User
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Bulk User Management
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: Request tracking
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: null
+  fields: []
+  field_count: 0
+- entity: UserBatchAttributes
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: object
+  fields:
+  - updated
+  - deleted
+  field_count: 2
+- entity: UserAttributes
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: object
+  fields:
+  - id
+  - email
+  - businessUnit
+  - lastName
+  - age
+  - '...'
+  field_count: 6
+- entity: UserAttributesError
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: object
+  fields:
+  - errors
+  field_count: 1
+- entity: ErrorObj
+  source: openapi/crossenagage-user-management-v2-openapi.yml
+  type: object
+  fields:
+  - code
+  - title
+  - details
+  - info
+  - source
+  field_count: 5
+relationships:
+- from: Error
+  to: ErrorItem
+  kind: has_many
+  via: errors
+  source: openapi/crossenagage-product-feed-openapi.yml
+- from: ProductPage
+  to: Product
+  kind: has_many
+  via: content
+  source: openapi/crossenagage-product-feed-openapi.yml
+- from: userExportRequest
+  to: exportDestination
+  kind: belongs_to
+  via: exportDestinationId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name
+- from: userExportRequest
+  to: callbackDestination
+  kind: belongs_to
+  via: callbackDestinationId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name
+- from: userExportRequest
+  to: segment
+  kind: belongs_to
+  via: segmentId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name
+- from: eventExportRequest
+  to: exportDestination
+  kind: belongs_to
+  via: exportDestinationId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name
+- from: eventExportRequest
+  to: callbackDestination
+  kind: belongs_to
+  via: callbackDestinationId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name
+- from: eventExportRequest
+  to: segment
+  kind: belongs_to
+  via: segmentId
+  source: openapi/crossenagage-raw-export-v1-openapi.yml
+  confidence: medium
+  note: inferred from an id-suffixed field name

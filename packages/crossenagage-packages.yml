@@ -1,0 +1,80 @@
+generated: '2026-08-13'
+method: searched
+source: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2/setup-without-a-tag-manager.md
+  + https://github.com/CrossEngage + npm registry search
+note: 'No first-party CrossEngage REST API client library is published to npm, PyPI, RubyGems, Packagist,
+  crates.io, NuGet, Maven Central or pkg.go.dev. Searched the npm registry for "crossengage" (4 results,
+  all internal tooling: eslint config, a commitizen adapter, two Angular UI helpers — none is an API client)
+  and enumerated all 23 public repos in the github.com/CrossEngage org (infrastructure tools, Angular
+  components and Google Tag Manager templates; no SDK). The only client-side distribution the provider
+  ships is the Web Tracking SDK, served unversioned from its own CDN path rather than a package registry.'
+packages:
+- language: javascript
+  registry: cdn
+  name: CrossEngage Web Tracking SDK (ce.js)
+  url: https://app.crossengage.io/xng/ce.js
+  install: '<script> snippet loading https://app.crossengage.io/xng/ce.js, initialised with ce({ apiKey:
+    ''<web-tracking-key>'' })'
+  official: true
+  version: null
+  published: null
+  note: 'Checked 2026-08-13: HTTP 200, application/javascript, 106,437 bytes. The distribution URL is
+    UNPINNED — it carries no version segment and no registry metadata endpoint exists, so a consumer cannot
+    tell which build they are loading and neither can we. Internal bundle strings show embedded dependency
+    versions only, not an SDK version, so version is recorded null rather than guessed.'
+  docs: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2/setup-without-a-tag-manager
+- language: javascript
+  registry: github
+  name: gtm-tracking-sdk
+  url: https://github.com/CrossEngage/gtm-tracking-sdk
+  install: Import the template into Google Tag Manager
+  official: true
+  version: null
+  published: '2021-06-16'
+  note: Google Tag Manager custom template that loads the CrossEngage Tracking SDK snippet. Distributed
+    as a GitHub repository, not a package registry, so there is no version metadata endpoint to query;
+    `published` is the last push date reported by the GitHub API.
+- language: javascript
+  registry: github
+  name: gtm-tracking-sdk-event
+  url: https://github.com/CrossEngage/gtm-tracking-sdk-event
+  install: Import the template into Google Tag Manager
+  official: true
+  version: null
+  published: '2021-10-13'
+  note: GTM custom template that triggers a CrossEngage Tracking SDK event. GitHub-distributed; no registry
+    metadata endpoint.
+- language: javascript
+  registry: github
+  name: analytics.js-integration-xng
+  url: https://github.com/CrossEngage/analytics.js-integration-xng
+  install: git clone / vendor into an analytics.js build
+  official: true
+  version: null
+  published: '2017-06-12'
+  note: Segment analytics.js integration for CrossEngage. Never published to npm; last pushed 2017 and
+    is effectively dormant.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=crossengage
+  status: 200
+  first_party_api_client: false
+  found:
+  - ng-custom-title 0.0.1 (2017-06-14)
+  - eslint-config-crossengage 1.0.0 (2015-12-23)
+  - eslint-config-test 2.1.1 (2015-12-22)
+  - xng-conventional-changelog 1.0.3 (2020-10-16)
+- registry: pypi
+  query: https://pypi.org/pypi/crossengage/json
+  status: 404
+  first_party_api_client: false
+- registry: github
+  query: https://api.github.com/orgs/CrossEngage/repos
+  status: 200
+  first_party_api_client: false
+  public_repos: 23
+sdk_count: 1
+currency_finding: The only shipped client artifact (the Web Tracking SDK) is served from an unpinned CDN
+  URL and every GitHub-distributed helper was last pushed between 2017 and 2021, while the REST APIs themselves
+  are live and the Apiary contracts were last updated 2024-11-28. There is no dated, registry-published
+  client library against which API currency can be measured.

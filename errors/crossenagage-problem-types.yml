@@ -1,0 +1,156 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ (6 specs derived from the CrossEngage Apiary contracts)
+format: vendor-json
+note: CrossEngage does not use RFC 9457 application/problem+json. Errors are returned as a vendor JSON
+  envelope carrying a numeric CrossEngage error code, an HTTP status, a title and a details string — see
+  errors/crossenagage-error-codes.yml for the code registry. Every entry below is a 4xx/5xx response that
+  genuinely appears in a harvested contract.
+status_summary:
+  '400': 8
+  '401': 13
+  '404': 9
+  '409': 2
+  '415': 1
+  '500': 13
+problems:
+- status: 404
+  title: The product was not found by `sku` and `business unit`
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#getProductBySku
+- status: 400
+  title: Validation error
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#updateOrCreateProduct
+- status: 415
+  title: Unsupported Media Type
+  source_operation: openapi/crossenagage-product-feed-openapi.yml#updateOrCreateProduct
+- status: 400
+  title: Attribute was not processed due to a validation error (see response)
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createAttribute
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createAttribute
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createAttribute
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttributeList
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttributeList
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttribute
+- status: 404
+  title: The attribute with the requested `id` does not exist
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttribute
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#fetchAttribute
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#deleteAttribute
+- status: 409
+  title: "Attribute in use in at least one campaign or has active \nnested attributes. Otherwise, the\
+    \ `id` entered in the\nrequest b"
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#deleteAttribute
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#deleteAttribute
+- status: 400
+  title: Lead was not processed due to a validation error (see response)
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateALead
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateALead
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateALead
+- status: 400
+  title: User was not processed due to a validation error (see response)
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateAUser
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateAUser
+- status: 409
+  title: '`id` sent in the request body does not match the `id` paramater entered in the request path'
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateAUser
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateAUser
+- status: 400
+  title: Bad Request
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#createUpdateOrDeleteUsersInBulk
+- status: 400
+  title: Wrong format of the request (see response)
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#sendAnEvent
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#sendAnEvent
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#sendAnEvent
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#getAUserSStatus
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#getAUserSStatus
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSOptOutStatus
+- status: 404
+  title: This user does not exist
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSOptOutStatus
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSOptOutStatus
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSOptOutStatus
+- status: 404
+  title: This user does not exist
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSOptOutStatus
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSOptOutStatus
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSBlacklistStatus
+- status: 404
+  title: This user does not exist
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSBlacklistStatus
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#updateAUserSBlacklistStatus
+- status: 401
+  title: Wrong or missing credentials
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSBlacklistStatus
+- status: 404
+  title: This user does not exist
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSBlacklistStatus
+- status: 500
+  title: Unknown error on our side
+  source_operation: openapi/crossenagage-user-management-v1-openapi.yml#readAUserSBlacklistStatus
+- status: 404
+  title: User with a given `id` was not found.
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#getASingleUserWithId
+- status: 404
+  title: User with a given input was not found.
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#getASingleUserWithEmailAndBu
+- status: 400
+  title: "Request was not processed due to a validation error (see response).\n\nPlease see the \n[Error\
+    \ Handling section](https://us"
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateASingleUser
+- status: 401
+  title: Wrong or missing credentials.
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateASingleUser
+- status: 500
+  title: Unknown error on our side.
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateASingleUser
+- status: 400
+  title: In case of max batch request size violation
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#createUpdateDeleteMultipleUsers
+- status: 404
+  title: Requested tracking information was not found because trackingId is unknown or expired.
+  source_operation: openapi/crossenagage-user-management-v2-openapi.yml#retrieveStatus

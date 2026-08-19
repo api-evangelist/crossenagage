@@ -1,0 +1,161 @@
+{
+  "item": [
+    {
+      "id": "33138306-08f4-4b18-a64f-398e91299968",
+      "name": "File Attachment API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd28cf1c-49aa-4a11-9a97-83ea5c9bd910",
+          "name": "Upload a file",
+          "request": {
+            "name": "Upload a file",
+            "description": {
+              "content": "Use this endpoint to upload a single file to the cloud storage",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "files",
+                ":fileName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fileName",
+                  "description": "(Required) name of the file as it is to be saved in cloud storage"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "74ffc68c-9b78-454b-b17c-1597914930ed",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    ":fileName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fileName",
+                      "description": "(Required) name of the file as it is to be saved in cloud storage"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crossengage.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-XNG-AuthToken"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d3c2a5fc-25de-46bc-a162-f175c4d0a414",
+    "name": "File Attachment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The File Attachments API is designed to help you attach files in messages sent to clients through stories\nor campaigns. Please note that this is a paid add-on. If you'd like to trial & purchase this feature, please reach\nout to your customer success representative.\n\n#### Versioning\n\nThe versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. \nTo use this API please provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your API key, please log into the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find the value in the **System setup -> API keys** section\nin the `Public API key`. For example:\n\n* `X-XNG-AuthToken`: `3fe00023932f9903`\n\n#### Date format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n#### Error handling\n\nWhen exporting data from CrossEngage, please use the below practices related to error handling:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any \n5xx server error is returned when retrying export requests. These errors can occur if a server is \ngetting overloaded. Exponential backoff can help alleviate these kinds of problems during periods \nof high volume of requests or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation.",
+      "type": "text/plain"
+    }
+  }
+}

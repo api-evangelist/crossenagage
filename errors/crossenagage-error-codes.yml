@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+source: https://usermanagementv2.docs.apiary.io/api-description-document (section "Error handling") +
+  https://usermanagementv1.docs.apiary.io/api-description-document
+envelope:
+  shape: JSON object with an errors/error array
+  fields:
+  - code (numeric CrossEngage error code)
+  - title (short description)
+  - details (human-readable detail, may quote the violated bound)
+  example_documented: '{"code": 9, "title": "Max batch request size violation", "details": "Max batch
+    request size is 1,000, but was 5,000"}'
+note: CrossEngage publishes a numeric error-code registry inside its API Blueprints rather than as a separate
+  error reference page. Codes 1-10 are documented verbatim below; they are returned alongside the HTTP
+  status.
+error_codes:
+- code: 1
+  meaning: Invalid JSON
+  action: Fix the request body syntax; do not retry unchanged.
+- code: 2
+  meaning: Invalid field value, or missing a required field
+  action: Validate the payload against the operation schema before retrying.
+- code: 3
+  meaning: Invalid attribute type
+  action: Match the attribute type configured on the account (see fetchAttributeList).
+- code: 4
+  meaning: Invalid Email Format
+  action: Normalize the email before sending.
+- code: 5
+  meaning: Invalid Phone Format
+  action: Normalize the phone number before sending.
+- code: 6
+  meaning: Unknown Attribute
+  action: Create the attribute first (createAttribute) or contact support to have it provisioned.
+- code: 7
+  meaning: Identifier Mismatch
+  action: The identifier in the path and the body disagree; reconcile them.
+- code: 8
+  meaning: Invalid Business Unit Format
+  action: Use a business unit configured on the account.
+- code: 9
+  meaning: Max batch request size violation
+  action: Split the batch; the documented maximum is 1,000 users per call.
+- code: 10
+  meaning: Request processing failed, please contact support
+  action: Retry with exponential backoff, then contact support@crossengage.io.
+retry_guidance:
+  documented: true
+  retryable_statuses:
+  - 500
+  - 502
+  - 503
+  - 504
+  strategy: Exponential backoff for 5xx only. Other error classes should be retried a bounded number of
+    times (the docs suggest ten or fewer) and must not use exponential backoff.
+  source: '"Error handling" section of the User Management v1/v2, Product Feed, Raw Export, Statistics
+    and File Attachment contracts'

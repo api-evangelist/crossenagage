@@ -1,0 +1,4307 @@
+{
+  "item": [
+    {
+      "id": "a386335a-24f4-48d4-ba82-6d3bf2512222",
+      "name": "User Attribute Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "275cfbba-4e1d-4cef-98e2-a37d2931c5c6",
+          "name": "Create attribute",
+          "request": {
+            "name": "Create attribute",
+            "description": {
+              "content": "User attributes are called traits in CrossEngage. \nPlease create all user attributes with the\n`traits` prefix, for example, `traits.firstName`. Please note\nthat attributes cannot be created with the following protected suffixes: \"_date\", \"_float\", \"_bool\", \"_string\", \"_nested\", \"_int\".\n<br/><br/>When having to create a new attribute, please check the attribute list via the <strong>Fetch Attribute List</strong> endpoint to verify whether a similar or same attribute is available.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"attributeType\": \"<string>\",\n  \"nestedType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "54c509fd-c17f-4e43-b130-04df92f92a7d",
+              "name": "Successful creation of attribute",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"traits.example\",\n  \"attributeType\": \"STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY\",\n  \"nestedType\": \"STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"id\": \"111\",\n  \"name\": \"traits.example\",\n  \"attributeType\": \"ARRAY\",\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4823849a-b689-4fa2-b1b0-3e0bd4ef9a3d",
+              "name": "Attribute was not processed due to a validation error (see response)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"traits.example\",\n  \"attributeType\": \"STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY\",\n  \"nestedType\": \"STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"c2a20133-ecdd-4e43-8abd-943e5911737e\",\n  \"message\": \"No enum constant com.crossengage.attribute.AttributeType.ARRAaY\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a740091-c34a-4874-b80d-67c6d3a4a05b",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"traits.example\",\n  \"attributeType\": \"STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY\",\n  \"nestedType\": \"STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5c4074c3-5945-416b-b2f1-de824ebd9ee5",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"traits.example\",\n  \"attributeType\": \"STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY\",\n  \"nestedType\": \"STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6591204b-5715-4356-86ee-2a6a0117b2a7",
+          "name": "Fetch attribute list",
+          "request": {
+            "name": "Fetch attribute list",
+            "description": {
+              "content": "This endpoint fetches all existing user attributes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<number>",
+                  "description": "The number of the first element."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Number of elements to be returned. Default value is 10, maximum is 100."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cff1b0c4-72ec-4fdb-a0a6-3da496d17b9f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"attributes\": [\n    {\n      \"id\": 1001,\n      \"name\": \"traits.example\",\n      \"attributeType\": \"STRING\"\n    },\n    {\n      \"id\": 1002,\n      \"name\": \"traits.example2\",\n      \"attributeType\": \"ARRAY\"\n    }\n  ],\n  \"total\": \"200\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9e766a6-11d5-482a-bced-c4df27a032d4",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31c9b0cc-5a5b-487c-acbf-5ab0a427335b",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d47914a-0ade-4423-8efd-1a440b607d34",
+          "name": "Fetch attribute",
+          "request": {
+            "name": "Fetch attribute",
+            "description": {
+              "content": "Fetch a specific user attribute by its `id`. To find an\nattribute `id`, please use the [Fetch attribute list](#fetchAttrList)\ncall.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "attributes",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `id` of the attribute"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "519efdd5-7484-42aa-8f77-f3cf54b09784",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"id\": \"1234\",\n  \"name\": \"traits.example\",\n  \"attributeType\": \"STRING\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3579d035-f550-4f48-8d77-46f75646db99",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "10165f01-ea33-4e2c-83d7-71ef96399938",
+              "name": "The attribute with the requested `id` does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2f5e52d8-840a-47dc-9fdb-5bea6890b018",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f7f9f58-639f-4307-aba4-31df5f59ce54",
+          "name": "Delete attribute",
+          "request": {
+            "name": "Delete attribute",
+            "description": {
+              "content": "In order to delete an attributes in CrossEngage, you need to know its `id`. \nTo find it out, please use [Fetch attribute list](#fetchAttrList) endpoint and search its `id` value.\n\nNote that deleting an attribute does not result in the removal of that attribute value from individual users.\nTo modify individual users, it is necessary to update their profiles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "attributes",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `id` of the attribute"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cff47f55-7f35-4b09-8c2b-2ad27797e172",
+              "name": "Attribute successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff3ab736-f263-433b-90cd-c103c663ac54",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87589452-8752-49a3-889a-621eb7cc7306",
+              "name": "Attribute in use in at least one campaign or has active \nnested attributes. Otherwise, the `id` entered in the\nrequest body does not match the `id` \nprovided in the request path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4b2c9842-c515-4be9-a2b3-5d2f87adbf96",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "attributes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a1ea5b28-6ea3-4227-a588-70281834068f",
+      "name": "Lead management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "920373cd-e49b-48d9-bfc9-877c245d1bf3",
+          "name": "Create & update a lead",
+          "request": {
+            "name": "Create & update a lead",
+            "description": {
+              "content": "This endpoint lets you create or update leads.\nThe system searches for existing leads based on records with email \naddresses and optionally business units. \nIn case a record with the requested identifiers exists, the lead is updated. \nOtherwise, a new lead will be created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "leads",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6398fd1c-4c65-4f80-a8f1-1535b5f7d826",
+              "name": "The lead was processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"updated\": [\n    {\n      \"id\": \"1234\",\n      \"xngId\": \"1234\",\n      \"success\": true\n    }\n  ],\n  \"deleted\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10fd3c9e-98f1-4bd6-b158-d6df11955a9c",
+              "name": "Lead was not processed due to a validation error (see response)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"updated\": [\n    {\n      \"xngId\": \"xng-id\",\n      \"success\": false,\n      \"errors\": [\n        {\n          \"field\": \"email\",\n          \"type\": \"WRONG_FORMAT\"\n        }\n      ]\n    }\n  ],\n  \"deleted\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98ae8db9-d892-47df-bcdf-05056eb9d2cc",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1d1d6d53-8a0b-4fa4-814e-138c3f2715a9",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "268c096a-0f44-453f-86aa-28337586d923",
+      "name": "User profile management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c31da245-2406-4201-96ea-7430145a3a16",
+          "name": "Create & update a user",
+          "request": {
+            "name": "Create & update a user",
+            "description": {
+              "content": "This endpoint lets you create or update a specific user by `id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2915a0a-29cf-4b35-a624-475a1b258690",
+              "name": "User has been created or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"id\": \"1234\",\n  \"xngId\": \"asdgaw223-sf122-48211-1231-3155dff2\",\n  \"email\": \"john.doe@crossengage.io\",\n  \"businessUnit\": \"DE\",\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4d58fac-b161-442a-843a-fdc14bfc4de9",
+              "name": "User was not processed due to a validation error (see response)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"id\": \"fb85fe50-a528-11e7-abc4-cec278b6b50a\",\n  \"xngId\": \"asdgaw223-sf122-48211-1231-3155dff2\",\n  \"email\": \"john.doe+crossengage.io\",\n  \"businessUnit\": \"unit\",\n  \"success\": false,\n  \"errors\": [\n    {\n      \"field\": \"email\",\n      \"type\": \"WRONG_VALUE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c3ce445-edc6-40af-9b56-59ac3badae00",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa6e08f4-866b-4b20-9372-db72c8a2210b",
+              "name": "`id` sent in the request body does not match the `id` paramater entered in the request path",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f33aa31-1548-4161-bd55-b0d171d64932",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "747883a0-1970-47cb-8abb-80ed658846a6",
+          "name": "Fetch a user",
+          "request": {
+            "name": "Fetch a user",
+            "description": {
+              "content": "This endpoint lets you fetch a specific user by `id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa31e465-e95b-443e-9055-294faf7c36ea",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"email\": \"john.doe@crossengage.io\",\n  \"id\": \"fb85fe50-a528-11e7-abc4-cec278b6b50a\",\n  \"xngId\": \"123e4567-e89b-12d3-a456-426655440000\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthday\": \"1982-08-30\",\n  \"createdAt\": \"2015-10-02T08:23:53Z\",\n  \"gender\": \"male\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84fd3af2-91fc-492a-957f-eaf3563f3f1c",
+          "name": "Delete a user",
+          "request": {
+            "name": "Delete a user",
+            "description": {
+              "content": "This endpoint lets you delete a specific user by `id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53a6b9ed-6582-4905-8de4-74eb3b94a6df",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ed2b117-1427-4742-9aba-8c51ea4a3c64",
+          "name": "Create & update or delete users in bulk",
+          "request": {
+            "name": "Create & update or delete users in bulk",
+            "description": {
+              "content": "The maximum number of users that can be reached as per one call is 1000. \nShould you need to change more user profiles, please consider dividing them in \nsuccessive calls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4656dcc8-a64f-4929-a645-03b7d0f2132f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"updated\": [\n    {\n      \"id\": \"fb85fe50-a528-11e7-abc4-cec278b6b50a\",\n      \"xngId\": \"088818b3-445e-41a6-a7e1-cf86c8cdfbe4\",\n      \"success\": true\n    }\n  ],\n  \"deleted\": [\n    {\n      \"id\": \"fb85fe50-a528-11e7-abc4-cec278b6b50a\",\n      \"xngId\": \"ae86796f-8aca-4f65-a5dc-dea9a269f2a5\",\n      \"success\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2261a53a-4814-44bf-9dc9-e817790a2f54",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"email\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"createdAt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"updated\": [\n    {\n      \"id\": \"fb85fe50-a528-11e7-abc4-cec278b6b50a\",\n      \"xngId\": \"088818b3-445e-41a6-a7e1-cf86c8cdfbe4\",\n      \"success\": false,\n      \"errors\": [\n        {\n          \"field\": \"id\",\n          \"type\": \"NOT_NULL\"\n        },\n        {\n          \"field\": \"email\",\n          \"type\": \"WRONG_FORMAT\"\n        }\n      ]\n    }\n  ],\n  \"deleted\": [\n    {\n      \"id\": \"78ad0e3e-19e6-4ec1-84a7-b2c860c05387\",\n      \"xngId\": \"ae86796f-8aca-4f65-a5dc-dea9a269f2a5\",\n      \"success\": false,\n      \"errors\": [\n        {\n          \"field\": \"id\",\n          \"type\": \"NOT_NULL\"\n        },\n        {\n          \"field\": \"email\",\n          \"type\": \"WRONG_FORMAT\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d1b7d47f-bb3d-4e3f-94b3-65985713bcea",
+      "name": "Event management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da037648-e90f-40ef-ad4e-6f39964854fc",
+          "name": "Send an event",
+          "request": {
+            "name": "Send an event",
+            "description": {
+              "content": "Events are individually assigned to users. You can send up to \n50 events per request. However, sending one single \nevent per request is the most common practice.\n\nPlease note that the **management of custom event property is not yet possible via API**.\nIn order to create a custom properties, please contact your customer experience manager.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"events\": {\n    \"event\": \"<string>\",\n    \"properties\": {\n      \"stringExample\": \"<string>\",\n      \"integerExample\": \"<number>\",\n      \"floatExample\": \"<number>\",\n      \"cart\": {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"price\": \"<number>\"\n      }\n    }\n  },\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f14aff51-507e-4618-836c-24fb5d00f01c",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"events\": {\n    \"event\": \"<string>\",\n    \"properties\": {\n      \"stringExample\": \"<string>\",\n      \"integerExample\": \"<number>\",\n      \"floatExample\": \"<number>\",\n      \"cart\": {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"price\": \"<number>\"\n      }\n    }\n  },\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "450feaf0-9d3c-4b28-bca2-b79fee0dd8ac",
+              "name": "Wrong format of the request (see response)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"events\": {\n    \"event\": \"<string>\",\n    \"properties\": {\n      \"stringExample\": \"<string>\",\n      \"integerExample\": \"<number>\",\n      \"floatExample\": \"<number>\",\n      \"cart\": {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"price\": \"<number>\"\n      }\n    }\n  },\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"field\": \"event\",\n  \"type\": \"UNKNOWN_VALUE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c66091d7-0ca1-4df5-b6c5-50c846fcefee",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"events\": {\n    \"event\": \"<string>\",\n    \"properties\": {\n      \"stringExample\": \"<string>\",\n      \"integerExample\": \"<number>\",\n      \"floatExample\": \"<number>\",\n      \"cart\": {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"price\": \"<number>\"\n      }\n    }\n  },\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1555530b-f83e-4f5d-9070-a6b90eec4bb1",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"events\": {\n    \"event\": \"<string>\",\n    \"properties\": {\n      \"stringExample\": \"<string>\",\n      \"integerExample\": \"<number>\",\n      \"floatExample\": \"<number>\",\n      \"cart\": {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"price\": \"<number>\"\n      }\n    }\n  },\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7d5c7885-8b8e-43ff-9bd8-b69a490502b7",
+      "name": "Opt-out management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f3684d0a-6198-4ae3-b526-c08f8eb27dad",
+          "name": "Get a user's status",
+          "request": {
+            "name": "Get a user's status",
+            "description": {
+              "content": "Check the overall status of a particular user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "recipient-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed5e237c-f36e-4cd2-b80e-7bc7cfe54bc6",
+              "name": "Example server response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "recipient-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"blacklisted\": false,\n  \"optOutAll\": false,\n  \"optOutChannels\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6027fec-10c5-4f34-b919-556cbfe5aee9",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "recipient-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3194994d-7c7d-487d-bbad-dab0a1f49f3d",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "recipient-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fd1fcc4-b85d-494c-b3ad-d89feed9d832",
+          "name": "Update a user's opt out status",
+          "request": {
+            "name": "Update a user's opt out status",
+            "description": {
+              "content": "Update a specific user's overall opt out status or for a specific channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "optout-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "channelType",
+                  "value": "<string>",
+                  "description": "The specific channel you'd like to update"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"optOut\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9b30d99a-781c-49c6-b203-65ad8bc864b4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"optOut\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"optOut\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09df913e-48f4-4db2-909d-cfae8a9cd23d",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"optOut\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7dce9892-7b20-4575-9f2f-8df57d23076e",
+              "name": "This user does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"optOut\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74fcc898-0fbd-4bf1-9025-7bb0d7ee8b3d",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"optOut\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e89047b5-3dea-443a-882f-352fa3b4c390",
+          "name": "Read a user's opt out status",
+          "request": {
+            "name": "Read a user's opt out status",
+            "description": {
+              "content": "Read a specific user's overall opt out status or for a specific channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "optout-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "channelType",
+                  "value": "<string>",
+                  "description": "The specific channel you'd like to update"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb619374-33d5-4427-8d52-91bc8232e5ae",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"optOut\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78a5ab25-50f3-48d0-bf20-1017854c5e5a",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ece6047-01cb-46ac-8d43-3ea4e6d73e4f",
+              "name": "This user does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7571154a-f03d-4233-8828-e6666f6a57f4",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "optout-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelType",
+                      "value": "MAIL"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8becbe0c-7aca-4c95-a6cb-64391100ef45",
+          "name": "Update a user's blacklist status",
+          "request": {
+            "name": "Update a user's blacklist status",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "blacklist-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"blacklisted\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e715ea8-0198-416e-8873-33e34a95bc18",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blacklisted\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"blacklisted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0726834-bef1-4d24-b922-45ed3a189d39",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blacklisted\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1619f859-6176-4888-badb-8008ad6acb2e",
+              "name": "This user does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blacklisted\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0446900e-89df-4446-b268-b662793230a8",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blacklisted\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22837a2f-445d-441c-8d30-a0cc86652157",
+          "name": "Read a user's blacklist status",
+          "request": {
+            "name": "Read a user's blacklist status",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "blacklist-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the user in your database"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 1",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. Your API Key",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json;charset=UTF-8"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "24c64f8b-95f0-43e9-b741-8f8f58d43cf9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                }
+              ],
+              "body": "{\n  \"blacklisted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db1a308d-a959-4158-a5c6-d8ffe5931312",
+              "name": "Wrong or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e2223f39-1f36-48fa-a220-658a56d496ba",
+              "name": "This user does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8bcabb0a-8f9a-4310-8bbe-85ff45f9f1f0",
+              "name": "Unknown error on our side",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "blacklist-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the user in your database"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 1",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "1"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. Your API Key",
+                    "key": "X-XNG-AuthToken",
+                    "value": "Your API Key"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crossengage.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-XNG-AuthToken"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "24eaf5ee-e1f3-4957-aaac-665cc5e46885",
+    "name": "User Management API v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.\n\n## Authentication\n\nCrossEngage uses **header authentication**.\nTo obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.\n\n## Versions\n\nThe API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.\n\n## Headers\n\nTo use the CrossEngage API, define the following header values for each call made:\n`X-XNG-AuthToken`, `X-XNG-ApiVersion`.\n\n## Date Format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n## Error Handling\n\nResume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:\n\n* `500 Internal Server Error`\n\n* `502 Bad Gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry CrossEngage API requests in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.\n\n* For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests.",
+      "type": "text/plain"
+    }
+  }
+}

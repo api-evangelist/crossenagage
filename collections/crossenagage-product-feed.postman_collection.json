@@ -1,0 +1,562 @@
+{
+  "item": [
+    {
+      "id": "fbb81cfc-f155-45d2-aad5-b4e40932bfc5",
+      "name": "product-feed",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "03e97353-404f-4cc2-b20e-3a0268a62290",
+          "name": "Get products with pagination",
+          "request": {
+            "name": "Get products with pagination",
+            "description": {
+              "content": "When requesting a list of products, you may include the `pageNumber` and `pageSize` as parameters.\nBy default, you will fetch the first page with 10 products (displayed in Response: pageNumber 0).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "(optional) the page number. Example `1`."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10",
+                  "description": "(optional) the number of products to be returned on one page. Example `100`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c7c812a-4dd7-4c74-88bd-50110414fb95",
+              "name": "A list of products with pagination",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 0,\n  \"pageSize\": 10,\n  \"totalElements\": 1,\n  \"content\": [\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"businessUnit\": \"DE\",\n      \"title\": \"Data-Decision-Delivery Pillow\",\n      \"description\": \"Extra cozy pillow\",\n      \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n      \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n      \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n      \"category\": \"Pilow\",\n      \"price\": 10,\n      \"salesPrice\": 8.5,\n      \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n      \"discount\": \"-15%\",\n      \"currency\": \"€\",\n      \"stockQuantity\": 120,\n      \"enabled\": 1,\n      \"attributes\": {\n        \"colour\": \"White\",\n        \"clothMaterial\": \"Plush\"\n      },\n      \"createdAt\": \"2020-01-02T16:00:03.449Z\",\n      \"updatedAt\": \"2020-04-21T17:00:03.449Z\"\n    },\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"businessUnit\": \"DE\",\n      \"title\": \"Data-Decision-Delivery Pillow\",\n      \"description\": \"Extra cozy pillow\",\n      \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n      \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n      \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n      \"category\": \"Pilow\",\n      \"price\": 10,\n      \"salesPrice\": 8.5,\n      \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n      \"discount\": \"-15%\",\n      \"currency\": \"€\",\n      \"stockQuantity\": 120,\n      \"enabled\": 1,\n      \"attributes\": {\n        \"colour\": \"White\",\n        \"clothMaterial\": \"Plush\"\n      },\n      \"createdAt\": \"2020-01-02T16:00:03.449Z\",\n      \"updatedAt\": \"2020-04-21T17:00:03.449Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccc5ee34-638c-4ade-94cc-e19c749a71b9",
+          "name": "Get a single product",
+          "request": {
+            "name": "Get a single product",
+            "description": {
+              "content": "Get a single product by `sku` or `sku` and `businessUnit`\n\n* In case, you’re using both `sku` and `businessUnit` as a combined identifier for your products, please provide both of them here.\n* If only `sku` is provided, we will look for a product with that `sku` and an empty `businessUnit`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                ":sku"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "businessUnit",
+                  "value": "<string>",
+                  "description": "(optional) will be used as a part of the product identifier together with ‘sku’ when provided. Example `DE`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sku",
+                  "description": "(Required) (required) the product SKU. Examples `123` or `LNK1230098`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5c4dd58d-2851-402b-a0c6-febbb93302bc",
+              "name": "A single product",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "businessUnit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) the product SKU. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sku\": \"string\",\n  \"id\": \"string\",\n  \"businessUnit\": \"DE\",\n  \"title\": \"Data-Decision-Delivery Pillow\",\n  \"description\": \"Extra cozy pillow\",\n  \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n  \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n  \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n  \"category\": \"Pilow\",\n  \"price\": 10,\n  \"salesPrice\": 8.5,\n  \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n  \"discount\": \"-15%\",\n  \"currency\": \"€\",\n  \"stockQuantity\": 120,\n  \"enabled\": 1,\n  \"attributes\": {\n    \"colour\": \"White\",\n    \"clothMaterial\": \"Plush\"\n  },\n  \"createdAt\": \"2020-01-02T16:00:03.449Z\",\n  \"updatedAt\": \"2020-04-21T17:00:03.449Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1600edc7-7793-477f-bad0-95592aedd97e",
+              "name": "The product was not found by `sku` and `business unit`",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "businessUnit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) the product SKU. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d9989e2-ba45-47ad-ac0b-dbacf4e7b399",
+          "name": "Updates or create a single product",
+          "request": {
+            "name": "Updates or create a single product",
+            "description": {
+              "content": "* To create a new product include `sku` or `sku` and `businessUnit` to the JSON body.\n* To update information about a product include `sku` or `sku` and `businessUnit` of that product to the JSON body. All properties will be updated, missing properties will be removed.\n* Custom attributes can be added as a string type to the product.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                ":sku"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sku",
+                  "description": "(Required) (required) the part of the product identifier. Examples `123` or `LNK1230098`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"<string>\",\n  \"id\": \"<string>\",\n  \"businessUnit\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"link\": \"<string>\",\n  \"bigImageLink\": \"<string>\",\n  \"smallImageLink\": \"<string>\",\n  \"category\": \"<string>\",\n  \"price\": \"<double>\",\n  \"salesPrice\": \"<double>\",\n  \"salesPriceEffectiveDate\": \"<string>\",\n  \"discount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"stockQuantity\": \"<integer>\",\n  \"enabled\": \"<integer>\",\n  \"attributes\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f423e6f9-2468-4c5c-9fa5-3964b5331cfd",
+              "name": "Update was scheduled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) the part of the product identifier. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sku\": \"<string>\",\n  \"id\": \"<string>\",\n  \"businessUnit\": \"DE\",\n  \"title\": \"Data-Decision-Delivery Pillow\",\n  \"description\": \"Extra cozy pillow\",\n  \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n  \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n  \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n  \"category\": \"Pilow\",\n  \"price\": 10,\n  \"salesPrice\": 8.5,\n  \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n  \"discount\": \"-15%\",\n  \"currency\": \"€\",\n  \"stockQuantity\": 120,\n  \"enabled\": 1,\n  \"attributes\": {\n    \"colour\": \"White\",\n    \"clothMaterial\": \"Plush\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "00ebe10f-0513-4041-925e-9cbac0db18e5",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) the part of the product identifier. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sku\": \"<string>\",\n  \"id\": \"<string>\",\n  \"businessUnit\": \"DE\",\n  \"title\": \"Data-Decision-Delivery Pillow\",\n  \"description\": \"Extra cozy pillow\",\n  \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n  \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n  \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n  \"category\": \"Pilow\",\n  \"price\": 10,\n  \"salesPrice\": 8.5,\n  \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n  \"discount\": \"-15%\",\n  \"currency\": \"€\",\n  \"stockQuantity\": 120,\n  \"enabled\": 1,\n  \"attributes\": {\n    \"colour\": \"White\",\n    \"clothMaterial\": \"Plush\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Input validation failed\",\n  \"key\": \"error.input-validation\",\n  \"args\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"errors\": [\n    {\n      \"source\": \"productDTO.sku\",\n      \"key\": \"error.constraint-violation.NotNull\",\n      \"message\": \"must not be null\",\n      \"args\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"source\": \"productDTO.sku\",\n      \"key\": \"error.constraint-violation.NotNull\",\n      \"message\": \"must not be null\",\n      \"args\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "054683b1-f4d8-40b0-ab8b-e10b1f567ac2",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) the part of the product identifier. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sku\": \"<string>\",\n  \"id\": \"<string>\",\n  \"businessUnit\": \"DE\",\n  \"title\": \"Data-Decision-Delivery Pillow\",\n  \"description\": \"Extra cozy pillow\",\n  \"link\": \"https://demo.crossengage.io/product/data-decision-delivery-pillow/\",\n  \"bigImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg\",\n  \"smallImageLink\": \"https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg\",\n  \"category\": \"Pilow\",\n  \"price\": 10,\n  \"salesPrice\": 8.5,\n  \"salesPriceEffectiveDate\": \"the sale will run until Friday\",\n  \"discount\": \"-15%\",\n  \"currency\": \"€\",\n  \"stockQuantity\": 120,\n  \"enabled\": 1,\n  \"attributes\": {\n    \"colour\": \"White\",\n    \"clothMaterial\": \"Plush\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Input validation failed\",\n  \"key\": \"error.input-validation\",\n  \"args\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"errors\": [\n    {\n      \"source\": \"productDTO.sku\",\n      \"key\": \"error.constraint-violation.NotNull\",\n      \"message\": \"must not be null\",\n      \"args\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"source\": \"productDTO.sku\",\n      \"key\": \"error.constraint-violation.NotNull\",\n      \"message\": \"must not be null\",\n      \"args\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f032134-d947-4bcd-9117-400761164529",
+          "name": "Delete a single product",
+          "request": {
+            "name": "Delete a single product",
+            "description": {
+              "content": "Delete a single product by `sku` or `sku` and `businessUnit`\n * A product will be deleted if `sku` or `sku` and `businessUnit` match a product in the system.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                ":sku"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "businessUnit",
+                  "value": "<string>",
+                  "description": "(optional) will be used as a part of the product identifier together with ‘sku’ when provided. Example `DE`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sku",
+                  "description": "(Required) (required) a part of the product identifier. Examples `123` or `LNK1230098`"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ce4fdc9-7187-41a1-b52a-d1c6a5c263a4",
+              "name": "Product deletion was scheduled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":sku"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "businessUnit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sku",
+                      "description": "(Required) (required) a part of the product identifier. Examples `123` or `LNK1230098`"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crossengage.io/product-feed/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2a0a8e3e-b993-46b9-80b0-5b3f06e94e12",
+    "name": "Product Feed API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Product feed API allows you to fetch, upload, edit and delete your products in real-time. It should be used together with the File Upload functionality in case more frequent updates are necessary.\nAll default attributes are described in the [Product data feed/Available properties documentation](https://documentation.crossengage.io/feeds/product).\n######\nFor test purposes, you can try the Postman collection. The collection contains all the calls needed. [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f6c14ba49835c19dbd7)\n#### Versioning\nThe API version is defined in the header `X-XNG-ApiVersion`. To use the product API provide version **1**.\n#### Authentication\nCrossEngage uses **header authentication**. To get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate to **Settings**. You will find it in the **System setup -> API keys** section in the `Master API key` value.\nThe following is an example of the format of an authentication header:\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n#### Date Format\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\\\"Z\\\") For more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n#### Error Handling\nFollowing errors are possible:\n* `401 Unauthorized access is not allowed`\n* `500 Internal Server Error`\n* `502 Bad gateway`\n* `503 Service Unavailable`\n* `504 Gateway Timeout`\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors\n\n ##### How to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. When retrying these requests, limit the number of times you retry them. For example your code could limit to ten retries or less before reporting the error to our team for investigation.",
+      "type": "text/plain"
+    }
+  }
+}

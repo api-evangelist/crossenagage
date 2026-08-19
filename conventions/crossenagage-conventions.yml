@@ -1,35 +1,122 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://api.crossengage.io/ (live response headers) + https://api.documentation.crossengage.io/
-note: >-
-  Cross-cutting conventions captured from live API response headers and the
-  published documentation surface. Only observed/documented behavior is
-  recorded; unverified aspects are left null (no fabrication). The API docs are
-  JS-rendered, so request/response body conventions could not be machine-read.
+source: the six CrossEngage API contracts on Apiary (User Management v1/v2, Product Feed, Raw Export,
+  Statistics, File Attachments) + https://documentation.crossengage.io/llms.txt + live response headers
+  on https://api.crossengage.io
+note: Rewritten from the harvested contracts. The previous round could read only live response headers
+  because the API reference renders client-side; the underlying API Blueprint and Swagger documents have
+  since been located on Apiary, so request/response conventions are now recorded from the provider text
+  rather than left unknown.
+authentication:
+  style: static API key in a request header
+  header: X-XNG-AuthToken
+  key_types:
+  - Master API key (User Management, Product Feed, Raw Export)
+  - Public API key (Statistics, File Attachments)
+  issued_in: CrossEngage app -> Settings -> System setup -> API keys
+  oauth: false
+  artifact: authentication/crossenagage-authentication.yml
+versioning:
+  style: request-header
+  header: X-XNG-ApiVersion
+  required: true
+  values_by_api:
+    User Management: 1 or 2
+    Product Feed: '1'
+    Raw Export: '2'
+    Statistics: '2'
+    File Attachments: '2'
+  note: Product Feed additionally carries a versioned basePath (/product-feed/v1). Everything else is
+    header-versioned off the api.crossengage.io root.
+  artifact: lifecycle/crossenagage-lifecycle.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or replay contract is documented in any of the six contracts or in the
+    product documentation. PUT /users, PUT /product/{sku} and PUT /files/{fileName} are idempotent by
+    resource identity, but POST /users/batch, POST /events and POST /export have no replay-safety mechanism.
+    An agent retrying a failed POST must expect duplicate side effects. This is a real gap, not an unknown.
+pagination:
+  styles:
+  - style: page-number
+    params:
+    - pageNumber
+    - pageSize
+    defaults: pageNumber 0, pageSize 10
+    apis:
+    - Product Feed v1 (GET /product)
+    - Raw Export v1 (GET /export)
+    response_fields:
+    - pageNumber
+    - pageSize
+    - totalElements
+    - totalPages
+    - content
+  - style: offset-limit
+    params:
+    - offset
+    - limit
+    defaults: offset 0, limit 10, maximum limit 100
+    apis:
+    - User Management v1 (GET /users/attributes)
+  note: The two schemes are inconsistent across the estate; a client must branch on which API it is calling.
+asynchrony:
+  model: accepted-then-tracked
+  note: User Management v2 and the Raw Export API are asynchronous. Write calls return 202 Accepted with
+    a trackingId; the caller polls GET /users/track/{trackingId} (v2) or GET /export/{exportId} (export)
+    for terminal status. The v2 contract states this explicitly as the difference from the synchronous
+    v1.
+  operations:
+  - createUpdateASingleUser
+  - createUpdateDeleteMultipleUsers
+  - retrieveStatus
+  - requestAnExportUsers
+  - getACertainExportSDetails
 request_tracing:
   header: X-Request-ID
-  behavior: >-
-    api.crossengage.io returns an X-Request-ID response header and exposes it
-    via Access-Control-Expose-Headers: X-Request-ID (observed on live probe).
   observed: true
-versioning:
-  style: uri-path
-  example: /user-management/v2
-  observed_versions: [v1.0, v2.0]
+  behavior: 'api.crossengage.io returns X-Request-ID on every response and exposes it through Access-Control-Expose-Headers:
+    X-Request-ID.'
+content_type: application/json
+date_format:
+  standard: ISO 8601
+  timezone: UTC with the Z designator
+  source: the "Date Format" section of every published contract
+error_envelope:
+  shape: vendor JSON with a numeric CrossEngage error code
+  fields:
+  - code
+  - title
+  - details
+  rfc9457: false
+  artifact: errors/crossenagage-error-codes.yml
+retries:
+  documented: true
+  strategy: exponential backoff for 5xx only; bounded retries (~10 max) for other classes
+  retryable_statuses:
+  - 500
+  - 502
+  - 503
+  - 504
+payload_limits:
+- scope: POST /users/batch (v1 and v2)
+  limit: 1,000 users per call
+  on_violation: HTTP 4xx with CrossEngage error code 9, "Max batch request size violation"
+- scope: POST /statistics/detailed and /statistics/overall
+  limit: 30 entities per request
+- scope: GET /users/attributes
+  limit: limit parameter maximum 100
+rate_limiting:
+  signaled: false
+  note: No rate-limit headers, no documented quota and no 429 response in any of the six contracts — see
+    rate-limits/crossenagage-rate-limits.yml.
 transport:
   https_only: true
   hsts: true
   hsts_max_age: 31536000
-content_type: application/json
-idempotency:
-  supported: unknown
-  note: No documented idempotency-key contract located.
-pagination:
-  style: unknown
-error_envelope:
-  shape: unknown
-rate_limiting:
-  signaled: unknown
 cross_links:
   lifecycle: lifecycle/crossenagage-lifecycle.yml
+  errors: errors/crossenagage-error-codes.yml
+  authentication: authentication/crossenagage-authentication.yml
+  rate_limits: rate-limits/crossenagage-rate-limits.yml
   security: security/crossenagage-domain-security.yml
+  data_model: data-model/crossenagage-data-model.yml

@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Raw Export API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Raw Export API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all destinations and their details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/destination",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "_Optional_. Type of destination that should be returned. When not provided all destinations will be returned."
+              }
+            ]
+          },
+          "docs": "Get all destinations and their details"
+        },
+        {
+          "info": {
+            "name": "Get a certain destination and its details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/destination/:id",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "_Required_. ID of a destination to be returned."
+              }
+            ]
+          },
+          "docs": "Get a certain destination and its details"
+        },
+        {
+          "info": {
+            "name": "Get all event classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/event-class",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all event classes"
+        },
+        {
+          "info": {
+            "name": "Get all exports and their details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/export",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "_Optional_. Export status filter. By default only active exports are returned (`WAITING` and `RUNNING`)"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "_Optional_. page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "_Optional_. page size."
+              }
+            ]
+          },
+          "docs": "Get all exports and their details"
+        },
+        {
+          "info": {
+            "name": "Request an export(users)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/export",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Request an export(users)"
+        },
+        {
+          "info": {
+            "name": "Get a certain export's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/export/:exportId",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "_Required_. `id` of an export"
+              }
+            ]
+          },
+          "docs": "Get a certain export's details"
+        },
+        {
+          "info": {
+            "name": "Cancel an export",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/export/:exportId",
+            "headers": [
+              {
+                "name": "X-XNG-ApiVersion",
+                "value": ""
+              },
+              {
+                "name": "X-XNG-AuthToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "_Required_. `id` of an export"
+              }
+            ]
+          },
+          "docs": "Cancel an export"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

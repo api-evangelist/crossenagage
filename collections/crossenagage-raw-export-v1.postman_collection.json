@@ -1,0 +1,874 @@
+{
+  "item": [
+    {
+      "id": "bee3cc62-0117-4d30-b455-be2e68da32f3",
+      "name": "Raw Export API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8ced5313-2504-4099-beb2-be0980668e10",
+          "name": "Get all destinations and their details",
+          "request": {
+            "name": "Get all destinations and their details",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "destination"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "_Optional_. Type of destination that should be returned. When not provided all destinations will be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5454f10e-95f3-421a-92d2-8cf5dbae1da6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"b393489f-7d76-41c2-bb2f-f965ab997d2e\",\n    \"name\": \"My destination name\",\n    \"type\": \"EXPORT\",\n    \"destination\": \"https://api-stg.xng.rocks/events\",\n    \"createdAt\": \"2019-08-21T12:10:47Z\",\n    \"updatedAt\": \"2019-08-21T12:11:47Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f43b9137-2872-4e45-b7c9-3c36c9f1acc7",
+          "name": "Get a certain destination and its details",
+          "request": {
+            "name": "Get a certain destination and its details",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "destination",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) _Required_. ID of a destination to be returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6a3441e-e80b-4130-8af5-36cf7fb40926",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "destination",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) _Required_. ID of a destination to be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"b393489f-7d76-41c2-bb2f-f965ab997d2e\",\n  \"name\": \"My destination name\",\n  \"type\": \"EXPORT\",\n  \"destination\": \"https://api-stg.xng.rocks/events\",\n  \"createdAt\": \"2019-08-21T12:10:47Z\",\n  \"updatedAt\": \"2019-08-21T12:11:47Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cadaed06-37a6-4e73-a8ee-f4cdec28541b",
+          "name": "Get all event classes",
+          "request": {
+            "name": "Get all event classes",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event-class"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aec3c0a4-08f1-4168-8abc-a8a9589d71ac",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-class"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"message.viewed\",\n    \"legacyName\": \"mail.open\",\n    \"channel\": \"mail\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecce217a-d7c8-421c-8ca2-8a6f840d8567",
+          "name": "Get all exports and their details",
+          "request": {
+            "name": "Get all exports and their details",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "_Optional_. Export status filter. By default only active exports are returned (`WAITING` and `RUNNING`)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "_Optional_. page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "10",
+                  "description": "_Optional_. page size."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa84db1c-0471-4051-994f-b47e189bf1f9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "FINISHED"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": \"WAITING\",\n    \"requestedAt\": \"2019-09-04T15:30:53.298Z\",\n    \"startedAt\": \"2019-09-04T15:36:53.298Z\",\n    \"finishedAt\": \"2019-09-04T15:37:53.298Z\",\n    \"id\": \"1ee25bc0-21aa-4759-8716-8397b6997e98\",\n    \"exportDestinationId\": \"fec9ce18-a152-4fec-ab69-1b22606a015e\",\n    \"callbackDestinationId\": \"4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0\",\n    \"rawExport\": true,\n    \"outputFormat\": \"PARQUET\",\n    \"outputSuffix\": \"PARQUET\",\n    \"segmentId\": \"67\",\n    \"attributes\": {\n      \"enabled\": true,\n      \"filter\": {\n        \"action\": \"INCLUDE\",\n        \"names\": [\n          \"traits.firstName\",\n          \"traits.lastName\",\n          \"traits.email\"\n        ]\n      }\n    },\n    \"events\": {\n      \"enabled\": false\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1657a3b8-0b39-4301-a03b-78d497a1d94c",
+          "name": "Request an export(users)",
+          "request": {
+            "name": "Request an export(users)",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exportDestinationId\": \"<string>\",\n  \"rawExport\": \"<boolean>\",\n  \"attributes\": {\n    \"enabled\": \"<boolean>\",\n    \"filter\": {\n      \"action\": \"<string>\",\n      \"names\": []\n    }\n  },\n  \"events\": {\n    \"enabled\": \"<boolean>\"\n  },\n  \"callbackDestinationId\": \"<string>\",\n  \"outputFormat\": \"<string>\",\n  \"outputSuffix\": \"<string>\",\n  \"segmentId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40cd0fbc-aa1f-4a1f-b748-c35a381c8232",
+              "name": "Export job scheduled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"exportDestinationId\": \"fec9ce18-a152-4fec-ab69-1b22606a015e\",\n  \"rawExport\": true,\n  \"attributes\": {\n    \"enabled\": true,\n    \"filter\": {\n      \"action\": \"<string>\",\n      \"names\": []\n    }\n  },\n  \"events\": {\n    \"enabled\": \"<boolean>\"\n  },\n  \"callbackDestinationId\": \"4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0\",\n  \"outputFormat\": \"PARQUET\",\n  \"outputSuffix\": \"PARQUET\",\n  \"segmentId\": \"67\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"WAITING\",\n  \"requestedAt\": \"2019-09-04T15:30:53.298Z\",\n  \"startedAt\": \"2019-09-04T15:36:53.298Z\",\n  \"finishedAt\": \"2019-09-04T15:37:53.298Z\",\n  \"id\": \"1ee25bc0-21aa-4759-8716-8397b6997e98\",\n  \"exportDestinationId\": \"fec9ce18-a152-4fec-ab69-1b22606a015e\",\n  \"callbackDestinationId\": \"4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0\",\n  \"rawExport\": true,\n  \"outputFormat\": \"PARQUET\",\n  \"outputSuffix\": \"PARQUET\",\n  \"segmentId\": \"67\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"filter\": {\n      \"action\": \"INCLUDE\",\n      \"names\": [\n        \"traits.firstName\",\n        \"traits.lastName\",\n        \"traits.email\"\n      ]\n    }\n  },\n  \"events\": {\n    \"enabled\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "298d3128-1355-4a28-809f-a1e35cec762c",
+          "name": "Get a certain export's details",
+          "request": {
+            "name": "Get a certain export's details",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                ":exportId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "exportId",
+                  "description": "(Required) _Required_. `id` of an export"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7fa04cd5-2f92-4992-afd5-27318418cbdf",
+              "name": "Export details and status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    ":exportId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exportId",
+                      "description": "(Required) _Required_. `id` of an export"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"WAITING\",\n  \"requestedAt\": \"2019-09-04T15:30:53.298Z\",\n  \"startedAt\": \"2019-09-04T15:36:53.298Z\",\n  \"finishedAt\": \"2019-09-04T15:37:53.298Z\",\n  \"id\": \"1ee25bc0-21aa-4759-8716-8397b6997e98\",\n  \"exportDestinationId\": \"fec9ce18-a152-4fec-ab69-1b22606a015e\",\n  \"callbackDestinationId\": \"4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0\",\n  \"rawExport\": true,\n  \"outputFormat\": \"PARQUET\",\n  \"outputSuffix\": \"PARQUET\",\n  \"segmentId\": \"67\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"filter\": {\n      \"action\": \"INCLUDE\",\n      \"names\": [\n        \"traits.firstName\",\n        \"traits.lastName\",\n        \"traits.email\"\n      ]\n    }\n  },\n  \"events\": {\n    \"enabled\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6cde3aa-d8d0-4147-99e1-7c3b63ad3352",
+          "name": "Cancel an export",
+          "request": {
+            "name": "Cancel an export",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                ":exportId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "exportId",
+                  "description": "(Required) _Required_. `id` of an export"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f10d78d1-14f0-4acd-b40e-1036aaf0c7fa",
+              "name": "Export job stopped.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    ":exportId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exportId",
+                      "description": "(Required) _Required_. `id` of an export"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crossengage.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-XNG-AuthToken"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "49f35d54-8358-49d0-a9cd-d5663120a810",
+    "name": "Raw Export API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This asynchronous API enables export of user & event data from CrossEngage.\n\nBecause sometimes events might come out of order or later than expected, \nto avoid inconsistencies or skipped data, we enforce a time gap for the data, that we export. \nWith this setting we won't export any events with a timestamp later than **3 hours** before export start time.\n\n#### Versioning\n\nThe API version is defined in the header `X-XNG-ApiVersion`. \nTo use the export API provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find it in the **System setup -> API keys** section\nin the `Master API key` value.\n\nThe following is an example of the format of an authentication header:\n\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n\n#### Date Format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\nPlease note, that Segment Buider in the CrossEngage App is using your local time zone.\nThis means that if you'd like your Export API data to align with your Segment data,\nyou need to use that same time zone when requesting your export via API.\n\n#### Data Availability\n\nThe data freshness for exported data is 3 hours relative to the export completion time.\n\n#### Error Handling\n\nWhen exporting data from CrossEngage, note the following error handling practices:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy \nif an export request returns a 5xx server error. These errors can occur if a server is \noverloaded. Exponential backoff can alleviate such problems during periods \nof high request volume or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation.",
+      "type": "text/plain"
+    }
+  }
+}

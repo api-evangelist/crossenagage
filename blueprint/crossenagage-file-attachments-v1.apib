@@ -1,0 +1,67 @@
+FORMAT: 1A
+HOST: https://api.crossengage.io/
+
+# File Attachment API
+
+The File Attachments API is designed to help you attach files in messages sent to clients through stories
+or campaigns. Please note that this is a paid add-on. If you'd like to trial & purchase this feature, please reach
+out to your customer success representative. 
+
+
+#### Versioning
+The versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. 
+To use this API please provide version **2**.
+
+#### Authentication
+CrossEngage uses **header authentication**.
+To get your API key, please log into the [app](https://app.crossengage.io) and navigate
+to **Settings**. You will find the value in the **System setup -> API keys** section
+in the `Public API key`. For example:
+
+* `X-XNG-AuthToken`: `3fe00023932f9903`
+
+#### Date format
+Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+#### Error handling
+When exporting data from CrossEngage, please use the below practices related to error handling:
+
+Resume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:
+* `500 Internal Server Error`
+* `502 Bad gateway`
+* `503 Service Unavailable`
+* `504 Gateway Timeout`
+
+How to retry requests made to CrossEngage in case of errors:
+* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any 
+5xx server error is returned when retrying export requests. These errors can occur if a server is 
+getting overloaded. Exponential backoff can help alleviate these kinds of problems during periods 
+of high volume of requests or heavy network traffic.
+* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. 
+When retrying these requests, limit the number of times you retry them. For example your code could limit to ten 
+retries or less before reporting the error to our team for investigation.
+
+## Files [/files]
+
+### Upload a file [PUT /files/{fileName}]
+
+Use this endpoint to upload a single file to the cloud storage
+
++ Parameters
+    + fileName: `welcome.pdf` (string, required) - name of the file as it is to be saved in cloud storage
+
++ Request
+
+    ...  
+    BINARY  
+    FILE  
+    CONTENTS  
+    ...
+
+    + Headers
+
+            X-XNG-ApiVersion: 2
+            X-XNG-AuthToken: YourAPIKey
+
++ Response 200

@@ -1,0 +1,740 @@
+swagger: '2.0'
+info:
+  title: Statistics API
+  version: '1.0'
+  description: "The Statistics API is designed to help you synchronously access all story, campaign &\
+    \ message statistics performance data available in CrossEngage.\n\n#### Versioning\n\nThe versions\
+    \ of our different endpoints are defined in the header `X-XNG-ApiVersion`. \nTo use this API please\
+    \ provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo\
+    \ get your API key, please log into the [app](https://app.crossengage.io) and navigate\nto **Settings**.\
+    \ You will find the value in the **System setup -> API keys** section\nin the `Public API key`. For\
+    \ example:\n\n* `X-XNG-AuthToken`: `3fe00023932f9903`\n\n#### Date format\n\nDates and times are expressed\
+    \ in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor\
+    \ more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n#### Error handling\n\
+    \nWhen exporting data from CrossEngage, please use the below practices related to error handling:\n\
+    \nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\
+    \n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway\
+    \ Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential\
+    \ backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any \n5xx server error is\
+    \ returned when retrying export requests. These errors can occur if a server is \ngetting overloaded.\
+    \ Exponential backoff can help alleviate these kinds of problems during periods \nof high volume of\
+    \ requests or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential\
+    \ backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number\
+    \ of times you retry them. For example your code could limit to ten \nretries or less before reporting\
+    \ the error to our team for investigation."
+  x-apib-source: https://statisticsapi1.docs.apiary.io/api-description-document
+host: api.crossengage.io
+basePath: /statistics
+schemes:
+- https
+paths:
+  /kpi:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+            - id: '213'
+              name: Conversion to View Rate
+              formula: CONVERSION / UNIQUE VIEWED * 100
+              type: PERCENTAGE
+              createdAt: 2015-08-05T08:40Z
+              updatedAt: 2015-08-05T08:40Z
+          schema:
+            type: array
+            items: {}
+      summary: Get all KPIs
+      operationId: getAllKPIs
+      description: Use this endpoint to get all of the KPIs available on your account and their details.
+      tags:
+      - Statistics API
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        type: string
+      produces:
+      - application/json
+      consumes:
+      - application/json
+  /kpi/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              id: '213'
+              name: Conversion to View Rate
+              formula: CONVERSION / UNIQUE VIEWED * 100
+              type: PERCENTAGE
+              createdAt: 2015-08-05T08:40Z
+              updatedAt: 2015-08-05T08:40Z
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+                enum:
+                - Sent
+                - Delivered
+                - Viewed
+                - Unique Viewed
+                - Clicked
+                - Unique Clicked
+                - Soft Bounced
+                - Hard Bounced
+                - Bounced
+                - Unsubscribed
+                - Marked as Spam
+                - Conversion
+                - Delivery Rate
+                - View to Delivery Rate
+                - Click to Delivery Rate
+                - Click-through-Rate (CTR)
+                - Bounce Rate
+                - Spam Rate
+                - Unsubscribe Rate
+                - Conversion to Delivery Rate
+                - Conversion to View Rate
+                - Conversion to Click Rate
+                - Not Sent due to Control Group
+                - Control Group Conversion
+                - Control Group Conversion Rate
+              formula:
+                type: string
+                enum:
+                - SENT
+                - DELIVERED
+                - VIEWED
+                - UNIQUE VIEWED
+                - CLICKED
+                - UNIQUE CLICKED
+                - SOFT BOUNCED
+                - HARD BOUNCED
+                - SOFT BOUNCED + HARD BOUNCED
+                - UNSUBSCRIBED
+                - MARKED AS SPAM
+                - CONVERSION
+                - DELIVERED / SENT * 100
+                - UNIQUE VIEWED / DELIVERED * 100
+                - UNIQUE CLICKED / DELIVERED * 100
+                - UNIQUE CLICKED / UNIQUE VIEWED * 100
+                - (SOFT BOUNCED + HARD BOUNCED) / (SOFT BOUNCED + HARD BOUNCED + DELIVERED) * 100
+                - MARKED AS SPAM / DELIVERED * 100
+                - UNSUBSCRIBED / DELIVERED * 100
+                - CONVERSION / DELIVERED * 100
+                - CONVERSION / UNIQUE VIEWED * 100
+                - CONVERSION / UNIQUE VIEWED * 100
+                - SENT_CONTROL_GROUP
+                - GOAL_COMPLETED_CONTROL_GROUP
+                - GOAL_COMPLETED_CONTROL_GROUP / SENT_CONTROL_GROUP * 100
+              type:
+                type: string
+                enum:
+                - INTEGER
+                - PERCENTAGE
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+      summary: Get a certain KPI
+      operationId: getACertainKPI
+      description: Use this endpoint to get the details of a certain KPI by ID.
+      tags:
+      - Statistics API
+      parameters:
+      - name: id
+        in: path
+        description: '`id` of a KPI'
+        required: true
+        x-example: '234'
+        type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        type: string
+      produces:
+      - application/json
+      consumes:
+      - application/json
+  /detailed:
+    post:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              interval:
+                startDate: '2018-08-24T00:00:00Z'
+                endDate: '2018-08-24T23:59:59Z'
+              detailed:
+              - entity:
+                  id: '245'
+                  channel: MAIL
+                  type: CAMPAIGN_CHANNEL
+                startDate: '2018-08-24T00:00:00Z'
+                endDate: '2018-08-24T23:59:59Z'
+                kpi:
+                  '23': '100.0'
+                  '25': '80.0'
+                  '31': NaN
+              overall:
+              - entity:
+                  id: '245'
+                  channel: MAIL
+                  type: CAMPAIGN_CHANNEL
+                startDate: '2018-08-24T00:00:00Z'
+                endDate: '2018-08-24T23:59:59Z'
+                kpi:
+                  '23': '100.0'
+                  '25': '80.0'
+                  '31': NaN
+          schema:
+            type: object
+            properties:
+              interval:
+                type: object
+                properties:
+                  startDate:
+                    type: string
+                    description: ISO 8601 formatted string representing the date and time for which statistics
+                      data will be computed from. Required when using the `interval` object.
+                  endDate:
+                    type: string
+                    description: ISO 8601 formatted string representing the date and time for which statistics
+                      data will be computed to. Required when using the `interval` object.
+                required:
+                - startDate
+                - endDate
+                description: Please note that, for the detailed endpoint, according to the time interval
+                  you request in conjunction with the aggregation, our system will expand your requested
+                  interval to fit as many aggregations as possible. The response will return the actual
+                  interval for which data is returned for.
+              detailed:
+                type: array
+                description: Array containing the requested statistics data returned divided by aggregation
+                  time unit selected.
+                items: {}
+              overall:
+                type: array
+                description: Array of KPI totals for each _entity_ for the truncated time period. If interval
+                  is not present, statistics data will be returned for the selected _entity_ overall (from
+                  their first dispatch and until the present day).
+                items: {}
+      summary: Get detailed statistics
+      operationId: getDetailedStatistics
+      description: 'Use this endpoint to get statistics for certain entity IDs (story, campaign or message
+        ID)
+
+        on your account according to a variety of aggregation options.
+
+
+        Please note that, according to the time interval you request in conjunction with the aggregation,
+        our system will expand your requested interval to fit as many aggregations as possible. Please
+        see the examples below:
+
+
+        > Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-26T23:59:59Z` with a `MONTH`
+        aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (returning
+        the entire month of August 2018).
+
+
+        > Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-31T23:59:59Z` with a `WEEK` aggregation
+        would return data from `2018-08-20T00:00:00Z` to `2018-09-02T23:59:59Z` (returning calendar Week
+        34 and 35 of 2018).'
+      tags:
+      - Statistics API
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        type: string
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            entities:
+              type: array
+              description: Maximum 30 entities may be used for a single request.
+            kpiIds:
+              type: array
+              description: The IDs of the KPIs that will be used to return statistics data for.
+            interval:
+              type: object
+              properties:
+                startDate:
+                  type: string
+                  description: ISO 8601 formatted string representing the date and time for which statistics
+                    data will be computed from. Required when using the `interval` object.
+                endDate:
+                  type: string
+                  description: ISO 8601 formatted string representing the date and time for which statistics
+                    data will be computed to. Required when using the `interval` object.
+              required:
+              - startDate
+              - endDate
+              description: 'Please note that, according to the time interval you request in conjunction
+                with the aggregation, our system will expand your requested interval to fit as many aggregations
+                as possible. For example:
+
+
+                Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-24T23:59:59Z` with a `MONTH`
+                aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (the
+                entire month of August).</li>
+
+                When _interval_ is not present, statistics data will be returned for the selected _entityIds_
+                overall (from their first dispatch and until the present day).'
+            aggregation:
+              type: string
+              enum:
+              - HOUR
+              - DAY
+              - WEEK
+              - MONTH
+              - YEAR
+              description: The aggregation time units that will be returned from your selected interval.
+                When a time unit is larger than the interval selected, no statistics data will be returned.
+          required:
+          - entities
+          - interval
+          - aggregation
+          example:
+            entities:
+            - id: '245'
+              channel: MAIL
+              type: CAMPAIGN_CHANNEL
+            kpiIds:
+            - '1'
+            - '12'
+            interval:
+              startDate: '2019-09-01T00:00:00Z'
+              endDate: '2019-09-30T23:59:59Z'
+            aggregation: WEEK
+      produces:
+      - application/json
+      consumes:
+      - application/json
+  /overall:
+    post:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+            - entity:
+                id: '245'
+                channel: MAIL
+                type: CAMPAIGN_CHANNEL
+              startDate: '2018-08-24T00:00:00Z'
+              endDate: '2018-08-24T23:59:59Z'
+              kpi:
+                '23': '100.0'
+                '25': '80.0'
+                '31': NaN
+          schema:
+            type: array
+            items: {}
+      summary: Get overall statistics
+      operationId: getOverallStatistics
+      description: 'Use this endpoint to get overall statistics for certain entity IDs (story, campaign
+        or message ID)
+
+        on your account according to a particular time interval or since the first dispatch of a selected
+        entity until the present.'
+      tags:
+      - Statistics API
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        type: string
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            entities:
+              type: array
+              description: Maximum 30 entities may be used for a single request.
+            kpiIds:
+              type: array
+              description: The IDs of the KPIs that will be used to return statistics data for.
+            interval:
+              type: object
+              properties:
+                startDate:
+                  type: string
+                  description: ISO 8601 formatted string representing the date and time for which statistics
+                    data will be computed from. Required when using the `interval` object.
+                endDate:
+                  type: string
+                  description: ISO 8601 formatted string representing the date and time for which statistics
+                    data will be computed to. Required when using the `interval` object.
+              required:
+              - startDate
+              - endDate
+              description: Interval for which overall statistics should be returned for.
+          required:
+          - entities
+          example:
+            entities:
+            - id: '245'
+              channel: MAIL
+              type: CAMPAIGN_CHANNEL
+            kpiIds:
+            - '1'
+            - '12'
+            interval:
+              startDate: '2018-08-24T00:00:00Z'
+              endDate: '2018-08-24T23:59:59Z'
+      produces:
+      - application/json
+      consumes:
+      - application/json
+definitions:
+  KPI management: {}
+  Statistics: {}
+  kpi:
+    type: object
+    properties:
+      id:
+        type: string
+        example: '213'
+      name:
+        type: string
+        enum:
+        - Sent
+        - Delivered
+        - Viewed
+        - Unique Viewed
+        - Clicked
+        - Unique Clicked
+        - Soft Bounced
+        - Hard Bounced
+        - Bounced
+        - Unsubscribed
+        - Marked as Spam
+        - Conversion
+        - Delivery Rate
+        - View to Delivery Rate
+        - Click to Delivery Rate
+        - Click-through-Rate (CTR)
+        - Bounce Rate
+        - Spam Rate
+        - Unsubscribe Rate
+        - Conversion to Delivery Rate
+        - Conversion to View Rate
+        - Conversion to Click Rate
+        - Not Sent due to Control Group
+        - Control Group Conversion
+        - Control Group Conversion Rate
+      formula:
+        type: string
+        enum:
+        - SENT
+        - DELIVERED
+        - VIEWED
+        - UNIQUE VIEWED
+        - CLICKED
+        - UNIQUE CLICKED
+        - SOFT BOUNCED
+        - HARD BOUNCED
+        - SOFT BOUNCED + HARD BOUNCED
+        - UNSUBSCRIBED
+        - MARKED AS SPAM
+        - CONVERSION
+        - DELIVERED / SENT * 100
+        - UNIQUE VIEWED / DELIVERED * 100
+        - UNIQUE CLICKED / DELIVERED * 100
+        - UNIQUE CLICKED / UNIQUE VIEWED * 100
+        - (SOFT BOUNCED + HARD BOUNCED) / (SOFT BOUNCED + HARD BOUNCED + DELIVERED) * 100
+        - MARKED AS SPAM / DELIVERED * 100
+        - UNSUBSCRIBED / DELIVERED * 100
+        - CONVERSION / DELIVERED * 100
+        - CONVERSION / UNIQUE VIEWED * 100
+        - CONVERSION / UNIQUE VIEWED * 100
+        - SENT_CONTROL_GROUP
+        - GOAL_COMPLETED_CONTROL_GROUP
+        - GOAL_COMPLETED_CONTROL_GROUP / SENT_CONTROL_GROUP * 100
+      type:
+        type: string
+        enum:
+        - INTEGER
+        - PERCENTAGE
+      createdAt:
+        type: string
+        example: 2015-08-05T08:40Z
+      updatedAt:
+        type: string
+        example: 2015-08-05T08:40Z
+  kpiList:
+    type: array
+    items: {}
+  entity:
+    type: object
+    required:
+    - type
+    properties:
+      id:
+        type: string
+        example: '245'
+        description: Represents the ID of the entity (CAMPAIGN, MESSAGE, STORY, EXPERIMENT or VARIATION
+          IDs) that will be used to return statistics data for. Required when requesting statistics for
+          all entities except for `COMPANY_CHANNEL`.
+      channel:
+        type: string
+        enum:
+        - BROWSER_NOTIFICATION
+        - DIRECT_MAIL
+        - EXIT_INTENT
+        - INSTANT_MESSAGING
+        - MAIL
+        - OFFLINE
+        - PUSH_NOTIFICATION
+        - SEGMENT_TRANSFER
+        - SMS
+        - WEBHOOK
+        description: '**Required** when the `type` parameter is present with any of the following values:
+          `COMPANY_CHANNEL`, `STORY_CHANNEL`, `CAMPAIGN_CHANNEL`. Represents the channel that statistics
+          should be returned for.'
+      type:
+        type: string
+        enum:
+        - COMPANY_CHANNEL
+        - STORY
+        - STORY_CHANNEL
+        - CAMPAIGN
+        - CAMPAIGN_CHANNEL
+        - MESSAGE
+        - EXPERIMENT
+        - VARIATION
+        description: Represents the type of entity that should be returned according to the ids selected
+  statisticsResponseEntity:
+    type: object
+    properties:
+      entity:
+        type: object
+        properties: {}
+  kpiResponsePaylodResult:
+    type: object
+    properties:
+      startDate:
+        type: string
+        example: '2018-08-24T00:00:00Z'
+        description: ISO 8601 formatted string representing the date and time of the start of one of the
+          aggregations requested.
+      endDate:
+        type: string
+        example: '2018-08-24T23:59:59Z'
+        description: ISO 8601 formatted string representing the date and time of the end of one of the
+          aggregations requested.
+  kpiResonsePaylodResultTotals:
+    type: object
+    properties:
+      startDate:
+        type: string
+        example: '2018-08-24T00:00:00Z'
+        description: ISO 8601 formatted string representing the date and time for which statistics data
+          will be computed from.
+      endDate:
+        type: string
+        example: '2018-08-24T23:59:59Z'
+        description: ISO 8601 formatted string representing the date and time for which statistics data
+          will be computed to.
+      kpi:
+        type: object
+        properties:
+          '23':
+            type: string
+            example: '100.0'
+            description: The key represents the KPI ID requested and the value is the computed statistics
+              response.
+          '25':
+            type: string
+            example: '80.0'
+            description: The key represents the KPI ID requested and the value is the computed statistics
+              response.
+          '31':
+            type: string
+            example: NaN
+            description: The key represents the KPI ID requested and the value is the computed statistics
+              response.
+        description: Object containing the requested results for a given entity and time period.
+  statisticsDetailedRequest:
+    type: object
+    required:
+    - entities
+    - interval
+    - aggregation
+    properties:
+      entities:
+        type: array
+        items: {}
+        description: Maximum 30 entities may be used for a single request.
+      kpiIds:
+        type: array
+        items: {}
+        description: The IDs of the KPIs that will be used to return statistics data for.
+      interval:
+        type: object
+        required:
+        - startDate
+        - endDate
+        properties:
+          startDate:
+            type: string
+            example: '2019-09-01T00:00:00Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed from. Required when using the `interval` object.
+          endDate:
+            type: string
+            example: '2019-09-30T23:59:59Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed to. Required when using the `interval` object.
+        description: 'Please note that, according to the time interval you request in conjunction with
+          the aggregation, our system will expand your requested interval to fit as many aggregations
+          as possible. For example:
+
+
+          Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-24T23:59:59Z` with a `MONTH`
+          aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (the entire
+          month of August).</li>
+
+          When _interval_ is not present, statistics data will be returned for the selected _entityIds_
+          overall (from their first dispatch and until the present day).'
+      aggregation:
+        type: string
+        enum:
+        - HOUR
+        - DAY
+        - WEEK
+        - MONTH
+        - YEAR
+        description: The aggregation time units that will be returned from your selected interval. When
+          a time unit is larger than the interval selected, no statistics data will be returned.
+  statisticsDetailedResponse:
+    type: object
+    properties:
+      interval:
+        type: object
+        required:
+        - startDate
+        - endDate
+        properties:
+          startDate:
+            type: string
+            example: '2018-08-24T00:00:00Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed from. Required when using the `interval` object.
+          endDate:
+            type: string
+            example: '2018-08-24T23:59:59Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed to. Required when using the `interval` object.
+        description: Please note that, for the detailed endpoint, according to the time interval you request
+          in conjunction with the aggregation, our system will expand your requested interval to fit as
+          many aggregations as possible. The response will return the actual interval for which data is
+          returned for.
+      detailed:
+        type: array
+        items: {}
+        description: Array containing the requested statistics data returned divided by aggregation time
+          unit selected.
+      overall:
+        type: array
+        items: {}
+        description: Array of KPI totals for each _entity_ for the truncated time period. If interval
+          is not present, statistics data will be returned for the selected _entity_ overall (from their
+          first dispatch and until the present day).
+  statisticsOverallRequest:
+    type: object
+    required:
+    - entities
+    properties:
+      entities:
+        type: array
+        items: {}
+        description: Maximum 30 entities may be used for a single request.
+      kpiIds:
+        type: array
+        items: {}
+        description: The IDs of the KPIs that will be used to return statistics data for.
+      interval:
+        type: object
+        required:
+        - startDate
+        - endDate
+        properties:
+          startDate:
+            type: string
+            example: '2018-08-24T00:00:00Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed from. Required when using the `interval` object.
+          endDate:
+            type: string
+            example: '2018-08-24T23:59:59Z'
+            description: ISO 8601 formatted string representing the date and time for which statistics
+              data will be computed to. Required when using the `interval` object.
+        description: Interval for which overall statistics should be returned for.
+  statisticsOverallResponse:
+    type: array
+    items: {}
+securityDefinitions:
+  XngAuthToken:
+    type: apiKey
+    name: X-XNG-AuthToken
+    in: header
+    description: CrossEngage header authentication. The API key is issued in the CrossEngage app under
+      Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+tags: []
+security:
+- XngAuthToken: []
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-statistics-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://statisticsapi1.docs.apiary.io/api-description-document
+    using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds
+    to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added
+    the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.

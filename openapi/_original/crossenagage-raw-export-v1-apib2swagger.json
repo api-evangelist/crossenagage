@@ -1,0 +1,1038 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Raw Export API",
+        "version": "",
+        "description": "This asynchronous API enables export of user & event data from CrossEngage.\n\nBecause sometimes events might come out of order or later than expected, \nto avoid inconsistencies or skipped data, we enforce a time gap for the data, that we export. \nWith this setting we won't export any events with a timestamp later than **3 hours** before export start time.\n\n#### Versioning\n\nThe API version is defined in the header `X-XNG-ApiVersion`. \nTo use the export API provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find it in the **System setup -> API keys** section\nin the `Master API key` value.\n\nThe following is an example of the format of an authentication header:\n\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n\n#### Date Format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\nPlease note, that Segment Buider in the CrossEngage App is using your local time zone.\nThis means that if you'd like your Export API data to align with your Segment data,\nyou need to use that same time zone when requesting your export via API.\n\n#### Data Availability\n\nThe data freshness for exported data is 3 hours relative to the export completion time.\n\n#### Error Handling\n\nWhen exporting data from CrossEngage, note the following error handling practices:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy \nif an export request returns a 5xx server error. These errors can occur if a server is \noverloaded. Exponential backoff can alleviate such problems during periods \nof high request volume or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation."
+    },
+    "host": "api.crossengage.io",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/destination": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": "b393489f-7d76-41c2-bb2f-f965ab997d2e",
+                                    "name": "My destination name",
+                                    "type": "EXPORT",
+                                    "destination": "https://api-stg.xng.rocks/events",
+                                    "createdAt": "2019-08-21T12:10:47Z",
+                                    "updatedAt": "2019-08-21T12:11:47Z"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                },
+                "summary": "Get all destinations and their details",
+                "operationId": "Get all destinations and their details",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "_Optional_. Type of destination that should be returned. When not provided all destinations will be returned.",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "EXPORT",
+                            "CALLBACK"
+                        ]
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/destination/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "id": "b393489f-7d76-41c2-bb2f-f965ab997d2e",
+                                "name": "My destination name",
+                                "type": "EXPORT",
+                                "destination": "https://api-stg.xng.rocks/events",
+                                "createdAt": "2019-08-21T12:10:47Z",
+                                "updatedAt": "2019-08-21T12:11:47Z"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "enum": [
+                                        "b393489f-7d76-41c2-bb2f-f965ab997d2e"
+                                    ],
+                                    "description": "ID of a destination."
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "Name of a destination."
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EXPORT",
+                                        "CALLBACK"
+                                    ],
+                                    "description": "Type of a destination."
+                                },
+                                "destination": {
+                                    "type": "string",
+                                    "description": "Destination url or folder."
+                                },
+                                "createdAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing creation date of a destination."
+                                },
+                                "updatedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing last modification date of destination settings."
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "type"
+                            ]
+                        }
+                    }
+                },
+                "summary": "Get a certain destination and its details",
+                "operationId": "Get a certain destination and its details",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "_Required_. ID of a destination to be returned.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/event-class": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "name": "message.viewed",
+                                    "legacyName": "mail.open",
+                                    "channel": "mail"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                },
+                "summary": "Get all event classes",
+                "operationId": "Get all event classes",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/export": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "status": "WAITING",
+                                    "requestedAt": "2019-09-04T15:30:53.298Z",
+                                    "startedAt": "2019-09-04T15:36:53.298Z",
+                                    "finishedAt": "2019-09-04T15:37:53.298Z",
+                                    "id": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                                    "exportDestinationId": "fec9ce18-a152-4fec-ab69-1b22606a015e",
+                                    "callbackDestinationId": "4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0",
+                                    "rawExport": true,
+                                    "outputFormat": "PARQUET",
+                                    "outputSuffix": "PARQUET",
+                                    "segmentId": "67",
+                                    "attributes": {
+                                        "enabled": true,
+                                        "filter": {
+                                            "action": "INCLUDE",
+                                            "names": [
+                                                "traits.firstName",
+                                                "traits.lastName",
+                                                "traits.email"
+                                            ]
+                                        }
+                                    },
+                                    "events": {
+                                        "enabled": false
+                                    }
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                },
+                "summary": "Get all exports and their details",
+                "operationId": "Get all exports and their details",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "_Optional_. Export status filter. By default only active exports are returned (`WAITING` and `RUNNING`)",
+                        "required": false,
+                        "x-example": "FINISHED",
+                        "type": "string",
+                        "enum": [
+                            "WAITING",
+                            "RUNNING",
+                            "FINISHED",
+                            "CANCELED"
+                        ]
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "_Optional_. page number.",
+                        "required": false,
+                        "x-example": "3",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "_Optional_. page size.",
+                        "required": false,
+                        "x-example": "25",
+                        "type": "integer",
+                        "default": 10
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Export job scheduled.",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "status": "WAITING",
+                                "requestedAt": "2019-09-04T15:30:53.298Z",
+                                "startedAt": "2019-09-04T15:36:53.298Z",
+                                "finishedAt": "2019-09-04T15:37:53.298Z",
+                                "id": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                                "exportDestinationId": "fec9ce18-a152-4fec-ab69-1b22606a015e",
+                                "callbackDestinationId": "4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0",
+                                "rawExport": true,
+                                "outputFormat": "PARQUET",
+                                "outputSuffix": "PARQUET",
+                                "segmentId": "67",
+                                "attributes": {
+                                    "enabled": true,
+                                    "filter": {
+                                        "action": "INCLUDE",
+                                        "names": [
+                                            "traits.firstName",
+                                            "traits.lastName",
+                                            "traits.email"
+                                        ]
+                                    }
+                                },
+                                "events": {
+                                    "enabled": false
+                                }
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "enum": [
+                                        "WAITING",
+                                        "RUNNING",
+                                        "FINISHED",
+                                        "CANCELED"
+                                    ],
+                                    "description": "Status of an export."
+                                },
+                                "requestedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export request date and time."
+                                },
+                                "startedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export start date and time."
+                                },
+                                "finishedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export finish date and time."
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "description": "ID of a requested export."
+                                },
+                                "exportDestinationId": {
+                                    "type": "string",
+                                    "description": "_Required_. ID of a destination used for saving the export data."
+                                },
+                                "callbackDestinationId": {
+                                    "type": "string",
+                                    "description": "_Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent."
+                                },
+                                "rawExport": {
+                                    "type": "boolean"
+                                },
+                                "outputFormat": {
+                                    "type": "string",
+                                    "description": "_Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON."
+                                },
+                                "outputSuffix": {
+                                    "type": "string",
+                                    "description": "_Optional_. String that will be appended to the File-Name."
+                                },
+                                "segmentId": {
+                                    "type": "string",
+                                    "description": "_Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export."
+                                },
+                                "attributes": {
+                                    "type": "object",
+                                    "properties": {
+                                        "enabled": {
+                                            "type": "boolean",
+                                            "description": "_Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported."
+                                        },
+                                        "filter": {
+                                            "type": "object",
+                                            "properties": {
+                                                "action": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "INCLUDE",
+                                                        "EXCLUDE"
+                                                    ],
+                                                    "description": "_Required_. Action to be done using the names array. Required when using the `filter` object."
+                                                },
+                                                "names": {
+                                                    "type": "array",
+                                                    "description": "_Required_. User attribute names that will be used together with the action for the export.",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "required": [
+                                                "action",
+                                                "names"
+                                            ],
+                                            "description": "_Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported."
+                                        }
+                                    },
+                                    "description": "_Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object."
+                                },
+                                "events": {
+                                    "type": "object",
+                                    "properties": {
+                                        "enabled": {
+                                            "type": "boolean",
+                                            "description": "_Optional_. When not provided takes default value `false` as events will not be exported with the raw user export."
+                                        }
+                                    },
+                                    "description": "_Required_. Export settings for event data. Can be used in conjunction with the `attributes` object."
+                                }
+                            },
+                            "required": [
+                                "exportDestinationId",
+                                "rawExport",
+                                "attributes",
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "summary": "Request an export(users)",
+                "operationId": "Request an export(users)",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/userExportRequest"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/export/{exportId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Export details and status.",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "status": "WAITING",
+                                "requestedAt": "2019-09-04T15:30:53.298Z",
+                                "startedAt": "2019-09-04T15:36:53.298Z",
+                                "finishedAt": "2019-09-04T15:37:53.298Z",
+                                "id": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                                "exportDestinationId": "fec9ce18-a152-4fec-ab69-1b22606a015e",
+                                "callbackDestinationId": "4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0",
+                                "rawExport": true,
+                                "outputFormat": "PARQUET",
+                                "outputSuffix": "PARQUET",
+                                "segmentId": "67",
+                                "attributes": {
+                                    "enabled": true,
+                                    "filter": {
+                                        "action": "INCLUDE",
+                                        "names": [
+                                            "traits.firstName",
+                                            "traits.lastName",
+                                            "traits.email"
+                                        ]
+                                    }
+                                },
+                                "events": {
+                                    "enabled": false
+                                }
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "enum": [
+                                        "WAITING",
+                                        "RUNNING",
+                                        "FINISHED",
+                                        "CANCELED"
+                                    ],
+                                    "description": "Status of an export."
+                                },
+                                "requestedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export request date and time."
+                                },
+                                "startedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export start date and time."
+                                },
+                                "finishedAt": {
+                                    "type": "string",
+                                    "description": "ISO 8601 formatted string representing the export finish date and time."
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "description": "ID of a requested export."
+                                },
+                                "exportDestinationId": {
+                                    "type": "string",
+                                    "description": "_Required_. ID of a destination used for saving the export data."
+                                },
+                                "callbackDestinationId": {
+                                    "type": "string",
+                                    "description": "_Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent."
+                                },
+                                "rawExport": {
+                                    "type": "boolean"
+                                },
+                                "outputFormat": {
+                                    "type": "string",
+                                    "description": "_Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON."
+                                },
+                                "outputSuffix": {
+                                    "type": "string",
+                                    "description": "_Optional_. String that will be appended to the File-Name."
+                                },
+                                "segmentId": {
+                                    "type": "string",
+                                    "description": "_Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export."
+                                },
+                                "attributes": {
+                                    "type": "object",
+                                    "properties": {
+                                        "enabled": {
+                                            "type": "boolean",
+                                            "description": "_Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported."
+                                        },
+                                        "filter": {
+                                            "type": "object",
+                                            "properties": {
+                                                "action": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "INCLUDE",
+                                                        "EXCLUDE"
+                                                    ],
+                                                    "description": "_Required_. Action to be done using the names array. Required when using the `filter` object."
+                                                },
+                                                "names": {
+                                                    "type": "array",
+                                                    "description": "_Required_. User attribute names that will be used together with the action for the export.",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "required": [
+                                                "action",
+                                                "names"
+                                            ],
+                                            "description": "_Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported."
+                                        }
+                                    },
+                                    "description": "_Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object."
+                                },
+                                "events": {
+                                    "type": "object",
+                                    "properties": {
+                                        "enabled": {
+                                            "type": "boolean",
+                                            "description": "_Optional_. When not provided takes default value `false` as events will not be exported with the raw user export."
+                                        }
+                                    },
+                                    "description": "_Required_. Export settings for event data. Can be used in conjunction with the `attributes` object."
+                                }
+                            },
+                            "required": [
+                                "exportDestinationId",
+                                "rawExport",
+                                "attributes",
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "summary": "Get a certain export's details",
+                "operationId": "Get a certain export's details",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "description": "_Required_. `id` of an export",
+                        "required": true,
+                        "x-example": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": "Export job stopped.",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Cancel an export",
+                "operationId": "Cancel an export",
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "description": "_Required_. `id` of an export",
+                        "required": true,
+                        "x-example": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-ApiVersion",
+                        "in": "header",
+                        "description": "e.g. 2",
+                        "required": false,
+                        "x-example": "2",
+                        "type": "string"
+                    },
+                    {
+                        "name": "X-XNG-AuthToken",
+                        "in": "header",
+                        "description": "e.g. YourAPIKey",
+                        "required": false,
+                        "x-example": "YourAPIKey",
+                        "type": "string"
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Destinations": {},
+        "Event classes": {},
+        "Managing Exports": {},
+        "destinationsResponse": {
+            "type": "array",
+            "items": {}
+        },
+        "destination": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "b393489f-7d76-41c2-bb2f-f965ab997d2e",
+                    "description": "ID of a destination."
+                },
+                "name": {
+                    "type": "string",
+                    "example": "My destination name",
+                    "description": "Name of a destination."
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "EXPORT",
+                        "CALLBACK"
+                    ],
+                    "description": "Type of a destination."
+                },
+                "destination": {
+                    "type": "string",
+                    "example": "https://api-stg.xng.rocks/events",
+                    "description": "Destination url or folder."
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2019-08-21T12:10:47Z",
+                    "description": "ISO 8601 formatted string representing creation date of a destination."
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2019-08-21T12:11:47Z",
+                    "description": "ISO 8601 formatted string representing last modification date of destination settings."
+                }
+            }
+        },
+        "eventClass": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "message.viewed",
+                    "description": "Name of an event."
+                },
+                "legacyName": {
+                    "type": "string",
+                    "example": "mail.open",
+                    "description": "Legacy name of an event."
+                },
+                "channel": {
+                    "type": "string",
+                    "example": "mail",
+                    "description": "Event channel."
+                }
+            }
+        },
+        "eventClassResponse": {
+            "type": "array",
+            "items": {}
+        },
+        "userExportRequest": {
+            "type": "object",
+            "required": [
+                "exportDestinationId",
+                "rawExport",
+                "attributes",
+                "events"
+            ],
+            "properties": {
+                "exportDestinationId": {
+                    "type": "string",
+                    "example": "fec9ce18-a152-4fec-ab69-1b22606a015e",
+                    "description": "_Required_. ID of a destination used for saving the export data."
+                },
+                "callbackDestinationId": {
+                    "type": "string",
+                    "example": "4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0",
+                    "description": "_Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent."
+                },
+                "rawExport": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "outputFormat": {
+                    "type": "string",
+                    "example": "PARQUET",
+                    "description": "_Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON."
+                },
+                "outputSuffix": {
+                    "type": "string",
+                    "example": "PARQUET",
+                    "description": "_Optional_. String that will be appended to the File-Name."
+                },
+                "segmentId": {
+                    "type": "string",
+                    "example": "67",
+                    "description": "_Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export."
+                },
+                "attributes": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "example": true,
+                            "description": "_Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported."
+                        },
+                        "filter": {
+                            "type": "object",
+                            "required": [
+                                "action",
+                                "names"
+                            ],
+                            "properties": {
+                                "action": {
+                                    "type": "string",
+                                    "enum": [
+                                        "INCLUDE",
+                                        "EXCLUDE"
+                                    ],
+                                    "description": "_Required_. Action to be done using the names array. Required when using the `filter` object."
+                                },
+                                "names": {
+                                    "type": "array",
+                                    "items": {},
+                                    "description": "_Required_. User attribute names that will be used together with the action for the export."
+                                }
+                            },
+                            "description": "_Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported."
+                        }
+                    },
+                    "description": "_Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object."
+                },
+                "events": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "_Optional_. When not provided takes default value `false` as events will not be exported with the raw user export."
+                        }
+                    },
+                    "description": "_Required_. Export settings for event data. Can be used in conjunction with the `attributes` object."
+                }
+            }
+        },
+        "eventExportRequest": {
+            "type": "object",
+            "required": [
+                "exportDestinationId",
+                "rawExport",
+                "attributes",
+                "events"
+            ],
+            "properties": {
+                "exportDestinationId": {
+                    "type": "string",
+                    "example": "fec9ce18-a152-4fec-ab69-1b22606a015e",
+                    "description": "_Required_. ID of a destination used for saving the export data."
+                },
+                "callbackDestinationId": {
+                    "type": "string",
+                    "example": "4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0",
+                    "description": "_Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent."
+                },
+                "rawExport": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "outputFormat": {
+                    "type": "string",
+                    "example": "PARQUET",
+                    "description": "_Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON."
+                },
+                "outputSuffix": {
+                    "type": "string",
+                    "example": "PARQUET",
+                    "description": "_Optional_. String that will be appended to the File-Name."
+                },
+                "segmentId": {
+                    "type": "string",
+                    "example": "67",
+                    "description": "_Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export."
+                },
+                "attributes": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "_Optional_. When not provided takes default value `false` as attributes will not be exported in the raw event export."
+                        }
+                    },
+                    "description": "_Required_. Export settings for user attributes. Can be used in conjunction with the `events` object."
+                },
+                "events": {
+                    "type": "object",
+                    "required": [
+                        "interval"
+                    ],
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "example": true,
+                            "description": "_Optional_. This toggles event data export. When not provided takes default value `false` so that events will not be exported."
+                        },
+                        "filter": {
+                            "type": "object",
+                            "required": [
+                                "action",
+                                "names"
+                            ],
+                            "properties": {
+                                "action": {
+                                    "type": "string",
+                                    "enum": [
+                                        "INCLUDE",
+                                        "EXCLUDE"
+                                    ],
+                                    "description": "_Required_. Action to be done using the names array. Required when using the `filter` object."
+                                },
+                                "names": {
+                                    "type": "array",
+                                    "items": {},
+                                    "description": "_Required_. Event class names that will be used together with the action for the export."
+                                }
+                            },
+                            "description": "_Optional_. The `filter` object allows you to include or exclude event classes from the export. When not provided, all event classes and their data will be exported."
+                        },
+                        "interval": {
+                            "type": "object",
+                            "required": [
+                                "startDate",
+                                "endDate"
+                            ],
+                            "properties": {
+                                "startDate": {
+                                    "type": "string",
+                                    "example": "2019-09-03T00:00:00.00Z",
+                                    "description": "_Required_. ISO 8601 string representing start date used for the event data filter. Required when using the `interval` object."
+                                },
+                                "endDate": {
+                                    "type": "string",
+                                    "example": "2019-09-04T00:00:00.00Z",
+                                    "description": "_Required_. ISO 8601 string representing end date used for the event data filter. Required when using the `interval` object."
+                                }
+                            },
+                            "description": "_Optional_. Time interval that will be used to filter the event data exported. Always considering hourly starting points."
+                        }
+                    },
+                    "description": "_Required_. Export settings for event data. Can be used in conjunction with the `attributes` object."
+                }
+            }
+        },
+        "exportResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "1ee25bc0-21aa-4759-8716-8397b6997e98",
+                    "description": "ID of a requested export."
+                }
+            }
+        },
+        "exportStatusResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "WAITING",
+                        "RUNNING",
+                        "FINISHED",
+                        "CANCELED"
+                    ],
+                    "description": "Status of an export."
+                },
+                "outputFormat": {
+                    "type": "string",
+                    "example": "JSON",
+                    "description": "Data format of the exported data. Currently on JSON is suppoted."
+                },
+                "requestedAt": {
+                    "type": "string",
+                    "example": "2019-09-04T15:30:53.298Z",
+                    "description": "ISO 8601 formatted string representing the export request date and time."
+                },
+                "startedAt": {
+                    "type": "string",
+                    "example": "2019-09-04T15:36:53.298Z",
+                    "description": "ISO 8601 formatted string representing the export start date and time."
+                },
+                "finishedAt": {
+                    "type": "string",
+                    "example": "2019-09-04T15:37:53.298Z",
+                    "description": "ISO 8601 formatted string representing the export finish date and time."
+                }
+            }
+        },
+        "exports": {
+            "type": "array",
+            "items": {}
+        }
+    },
+    "securityDefinitions": {},
+    "tags": []
+}

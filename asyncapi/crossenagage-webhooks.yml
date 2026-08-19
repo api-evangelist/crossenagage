@@ -1,0 +1,95 @@
+generated: '2026-08-13'
+method: searched
+spec_type: null
+asyncapi_published: false
+source: https://documentation.crossengage.io/data-and-engagement-platform/messages/integrations/channels/webhooks
+  + https://userseventsexportapiv1.docs.apiary.io/api-description-document
+note: 'CrossEngage publishes NO AsyncAPI document — searched the documentation host, the API reference
+  host, the GitHub org and /asyncapi.yaml on every host. It does operate two real, documented outbound
+  event surfaces, captured below as a webhook catalogue: an outbound WEBHOOK MESSAGE CHANNEL (campaigns
+  deliver to a customer endpoint, and delivery outcomes are fed back as CrossEngage events) and an EXPORT
+  COMPLETION CALLBACK. Both are provider-to-customer HTTP POSTs. There is no subscription API: both are
+  configured inside the CrossEngage app as integrations, not through the REST API, which is why no operation
+  in openapi/ creates or lists a webhook subscription.'
+surfaces:
+- name: Webhook message channel
+  direction: outbound
+  transport: HTTPS POST
+  docs: https://documentation.crossengage.io/data-and-engagement-platform/messages/integrations/channels/webhooks
+  modes:
+  - mode: Single Webhook
+    note: One HTTP call per recipient, driven by a campaign message.
+    docs: https://documentation.crossengage.io/data-and-engagement-platform/messages/integrations/channels/webhooks/single-webhook
+  - mode: Batch Webhook
+    note: Recipients batched into a single call.
+    docs: https://documentation.crossengage.io/data-and-engagement-platform/messages/integrations/channels/webhooks/batch-webhook
+  payload: Customer-defined — the campaign message body is authored in the CrossEngage template builder,
+    so the schema is per-integration, not fixed by the provider.
+  configuration: CrossEngage app -> Settings -> Integrations -> Add a new integration
+  result_events:
+  - event: Webhook Delivered
+    trigger: 2xx response from the destination URL
+  - event: Webhook Bounced
+    trigger: 5xx response from the destination URL
+  - event: Errors
+    trigger: 4xx response from the destination URL
+  result_events_note: These three are generated and stored by CrossEngage as campaign statistics events,
+    viewable per campaign and queryable through the Statistics API.
+  custom_events:
+    supported: true
+    ingest_operation: openapi/crossenagage-user-management-v1-openapi.yml#sendAnEvent
+    fields:
+    - campaignId
+    - campaignExternalReferenceId
+    - messageId
+    - channelConfigExternalReferenceId
+    - channelConfigId
+    - event
+    - properties
+    note: Response data from a webhook destination can be posted back into CrossEngage as custom events,
+      but the event and property names must be provisioned by CrossEngage support first.
+  known_consumers:
+  - Zenloop (survey response capture)
+  - Google Analytics
+  - Generic customer endpoints
+- name: Export completion callback
+  direction: outbound
+  transport: HTTPS POST
+  docs: https://userseventsexportapiv1.docs.apiary.io/
+  requirements:
+  - Method POST
+  - Content type JSON
+  - Basic authentication
+  configuration: Registered as a destination of type CALLBACK in the CrossEngage app; discoverable through
+    openapi/crossenagage-raw-export-v1-openapi.yml#getAllDestinationsAndTheirDetails
+  payload_fields:
+  - field: exportId
+    description: ID of the export
+  - field: exportDestinationId
+    description: The (S)FTP destination the files were written to
+  - field: callbackDestinationId
+    description: The callback destination that was invoked
+  - field: status
+    description: 'Export status: FINISHED or FAILED'
+  - field: finishedAt
+    description: Export end time, ISO 8601 UTC
+  example_documented:
+    exportId: 5d90695a-c61f-453a-bd2d-7c4f0b8536cf
+    exportDestinationId: c88c0ddf-d3e3-4190-b1f8-df3dfbc7238f
+    callbackDestinationId: 9f86d4c8-d902-497d-8d78-53ce184ac3ce
+    status: FINISHED
+    finishedAt: '2019-08-07T12:24:06.772Z'
+  note: This is the only machine-defined event payload CrossEngage publishes; the schema above is verbatim
+    from the Raw Export contract.
+inbound_ingest:
+  name: Web Tracking SDK
+  direction: inbound
+  note: Browser-side event collection via ce.js (identify/update/page/track methods) feeding the same
+    event store as POST /events. Not a webhook, recorded here because it is the other real-time event
+    surface.
+  docs: https://documentation.crossengage.io/data-and-engagement-platform/web-tracking/web-tracking-v2
+gaps:
+- No AsyncAPI document
+- No signature/HMAC verification scheme documented for outbound webhook payloads
+- No retry or redelivery policy documented
+- No webhook subscription operations in the REST API

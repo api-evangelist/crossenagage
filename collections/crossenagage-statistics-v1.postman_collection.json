@@ -1,0 +1,517 @@
+{
+  "item": [
+    {
+      "id": "14adf045-b4c0-4f45-a3a5-ce79775e7abd",
+      "name": "Statistics API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "592d0725-ac0a-4bc8-9db4-531f56ae489a",
+          "name": "Get all KPIs",
+          "request": {
+            "name": "Get all KPIs",
+            "description": {
+              "content": "Use this endpoint to get all of the KPIs available on your account and their details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kpi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d72e7aee-dec6-4cc0-a35b-67d8a828f217",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kpi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"213\",\n    \"name\": \"Conversion to View Rate\",\n    \"formula\": \"CONVERSION / UNIQUE VIEWED * 100\",\n    \"type\": \"PERCENTAGE\",\n    \"createdAt\": \"2015-08-05T08:40Z\",\n    \"updatedAt\": \"2015-08-05T08:40Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "367fe7f5-b4ed-45c3-99b0-0fcd51e236d6",
+          "name": "Get a certain KPI",
+          "request": {
+            "name": "Get a certain KPI",
+            "description": {
+              "content": "Use this endpoint to get the details of a certain KPI by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kpi",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) `id` of a KPI"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d632c39d-9a68-4726-a7fa-62034aff3eb7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kpi",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) `id` of a KPI"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"213\",\n  \"name\": \"Conversion to View Rate\",\n  \"formula\": \"CONVERSION / UNIQUE VIEWED * 100\",\n  \"type\": \"PERCENTAGE\",\n  \"createdAt\": \"2015-08-05T08:40Z\",\n  \"updatedAt\": \"2015-08-05T08:40Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48a82205-7bdf-4736-8712-e2ba00f60d3b",
+          "name": "Get detailed statistics",
+          "request": {
+            "name": "Get detailed statistics",
+            "description": {
+              "content": "Use this endpoint to get statistics for certain entity IDs (story, campaign or message ID)\non your account according to a variety of aggregation options.\n\nPlease note that, according to the time interval you request in conjunction with the aggregation, our system will expand your requested interval to fit as many aggregations as possible. Please see the examples below:\n\n> Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-26T23:59:59Z` with a `MONTH` aggregation would return data from `2018-08-01T00:00:00Z` to `2018-08-31T23:59:59Z` (returning the entire month of August 2018).\n\n> Requesting an interval from `2018-08-24T00:00:00Z` to `2018-08-31T23:59:59Z` with a `WEEK` aggregation would return data from `2018-08-20T00:00:00Z` to `2018-09-02T23:59:59Z` (returning calendar Week 34 and 35 of 2018).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "detailed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entities\": [],\n  \"interval\": {\n    \"startDate\": \"<string>\",\n    \"endDate\": \"<string>\"\n  },\n  \"aggregation\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1ca6d5b-1441-4241-b3d8-0355c8dc16c5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entities\": [],\n  \"interval\": {\n    \"startDate\": \"<string>\",\n    \"endDate\": \"<string>\"\n  },\n  \"aggregation\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"interval\": {\n    \"startDate\": \"2018-08-24T00:00:00Z\",\n    \"endDate\": \"2018-08-24T23:59:59Z\"\n  },\n  \"detailed\": [\n    {\n      \"entity\": {\n        \"id\": \"245\",\n        \"channel\": \"MAIL\",\n        \"type\": \"CAMPAIGN_CHANNEL\"\n      },\n      \"startDate\": \"2018-08-24T00:00:00Z\",\n      \"endDate\": \"2018-08-24T23:59:59Z\",\n      \"kpi\": {\n        \"23\": \"100.0\",\n        \"25\": \"80.0\",\n        \"31\": \"NaN\"\n      }\n    }\n  ],\n  \"overall\": [\n    {\n      \"entity\": {\n        \"id\": \"245\",\n        \"channel\": \"MAIL\",\n        \"type\": \"CAMPAIGN_CHANNEL\"\n      },\n      \"startDate\": \"2018-08-24T00:00:00Z\",\n      \"endDate\": \"2018-08-24T23:59:59Z\",\n      \"kpi\": {\n        \"23\": \"100.0\",\n        \"25\": \"80.0\",\n        \"31\": \"NaN\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "533a867d-260f-4102-a9fe-b5506df6605e",
+          "name": "Get overall statistics",
+          "request": {
+            "name": "Get overall statistics",
+            "description": {
+              "content": "Use this endpoint to get overall statistics for certain entity IDs (story, campaign or message ID)\non your account according to a particular time interval or since the first dispatch of a selected entity until the present.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "overall"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "e.g. 2",
+                "key": "X-XNG-ApiVersion",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "e.g. YourAPIKey",
+                "key": "X-XNG-AuthToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entities\": [],\n  \"interval\": {\n    \"startDate\": \"<string>\",\n    \"endDate\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a529cc50-f873-4493-a7dc-4f1a4c7330ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "overall"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-XNG-AuthToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. 2",
+                    "key": "X-XNG-ApiVersion",
+                    "value": "2"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "e.g. YourAPIKey",
+                    "key": "X-XNG-AuthToken",
+                    "value": "YourAPIKey"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entities\": [],\n  \"interval\": {\n    \"startDate\": \"<string>\",\n    \"endDate\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"entity\": {\n      \"id\": \"245\",\n      \"channel\": \"MAIL\",\n      \"type\": \"CAMPAIGN_CHANNEL\"\n    },\n    \"startDate\": \"2018-08-24T00:00:00Z\",\n    \"endDate\": \"2018-08-24T23:59:59Z\",\n    \"kpi\": {\n      \"23\": \"100.0\",\n      \"25\": \"80.0\",\n      \"31\": \"NaN\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crossengage.io/statistics",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-XNG-AuthToken"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ed3a375b-0cb0-4118-8f99-df54363eea99",
+    "name": "Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Statistics API is designed to help you synchronously access all story, campaign & message statistics performance data available in CrossEngage.\n\n#### Versioning\n\nThe versions of our different endpoints are defined in the header `X-XNG-ApiVersion`. \nTo use this API please provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your API key, please log into the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find the value in the **System setup -> API keys** section\nin the `Public API key`. For example:\n\n* `X-XNG-AuthToken`: `3fe00023932f9903`\n\n#### Date format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\n#### Error handling\n\nWhen exporting data from CrossEngage, please use the below practices related to error handling:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if any \n5xx server error is returned when retrying export requests. These errors can occur if a server is \ngetting overloaded. Exponential backoff can help alleviate these kinds of problems during periods \nof high volume of requests or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation.",
+      "type": "text/plain"
+    }
+  }
+}
