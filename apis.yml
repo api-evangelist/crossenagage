@@ -47,6 +47,22 @@ tags:
 - Campaign Management
 - Product Feed
 - Data Export
+- Webhook
+- Web Tracking
+- Germany
+tags_raw:
+- Company
+- Customer Data Platform
+- Marketing
+- Customer Engagement
+- Marketing Automation
+- Cross-Channel
+- Personalization
+- Predictive Analytics
+- Segmentation
+- Campaign Management
+- Product Feed
+- Data Export
 - Webhooks
 - Web Tracking
 - Germany
@@ -90,6 +106,12 @@ apis:
   tags:
   - Customer Data Platform
   - User Management
+  - Event
+  - Consent Management
+  - Attributes
+  tags_raw:
+  - Customer Data Platform
+  - User Management
   - Events
   - Consent Management
   - Attributes
@@ -118,6 +140,11 @@ apis:
   tags:
   - Product Catalog
   - Personalization
+  - E-Commerce
+  - Product Feed
+  tags_raw:
+  - Product Catalog
+  - Personalization
   - E-commerce
   - Product Feed
   properties:
@@ -140,6 +167,11 @@ apis:
   humanURL: https://userseventsexportapiv1.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - Data Export
+  - ETL
+  - Analytics
+  - Webhook
+  tags_raw:
   - Data Export
   - ETL
   - Analytics
