@@ -13,6 +13,18 @@ description: CrossEngage is a Berlin-based customer data and cross-channel marke
   surface. Product documentation is published at documentation.crossengage.io, which serves a first-party
   llms.txt index of all 219 pages.
 url: https://raw.githubusercontent.com/api-evangelist/crossenagage/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
