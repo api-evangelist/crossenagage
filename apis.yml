@@ -85,6 +85,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - Event Management
+  tags_raw:
   - Event management
   properties:
   - type: OpenAPI
@@ -157,6 +159,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - Lead Management
+  tags_raw:
   - Lead management
   properties:
   - type: OpenAPI
@@ -193,6 +197,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - Opt-Out Management
+  tags_raw:
   - Opt-out management
   properties:
   - type: OpenAPI
@@ -229,6 +235,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - Product Feed
+  tags_raw:
   - product-feed
   properties:
   - type: OpenAPI

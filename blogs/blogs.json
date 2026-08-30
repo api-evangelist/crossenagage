@@ -2,17 +2,10 @@
   "repo": "crossenagage",
   "feeds": [
     {
-      "source": "https://spotler.com/en-de/pricing/blog/feed/",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://spotler.com/en-de/pricing",
-      "feed_url": "https://spotler.com/en-de/pricing",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "error": "HTTPError"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-22T20:20:02Z"
+  "fetched": "2026-08-30T22:33:40Z"
 }
