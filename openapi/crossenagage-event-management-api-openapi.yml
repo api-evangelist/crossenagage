@@ -1,0 +1,209 @@
+openapi: 3.2.0
+info:
+  title: User Management API v1 Event management API
+  version: '1.0'
+  description: 'The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.
+
+
+    ## Authentication
+
+
+    CrossEngage uses **header authentication**.
+
+    To obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.
+
+
+    ## Versions
+
+
+    The API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.
+
+
+    ## Headers
+
+
+    To use the CrossEngage API, define the following header values for each call made:
+
+    `X-XNG-AuthToken`, `X-XNG-ApiVersion`.
+
+
+    ## Date Format
+
+
+    Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+
+    For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+
+    ## Error Handling
+
+
+    Resume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:
+
+
+    * `500 Internal Server Error`
+
+
+    * `502 Bad Gateway`
+
+
+    * `503 Service Unavailable`
+
+
+    * `504 Gateway Timeout`
+
+
+    How to retry CrossEngage API requests in case of errors:
+
+
+    * Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.
+
+
+    * For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests.'
+  x-apib-source: https://usermanagementv1.docs.apiary.io/api-description-document
+servers:
+- url: https://api.crossengage.io/
+security:
+- XngAuthToken: []
+tags:
+- name: Event management
+paths:
+  /events:
+    post:
+      responses:
+        '202':
+          description: Accepted
+          headers: {}
+          content: {}
+        '400':
+          description: Wrong format of the request (see response)
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  type:
+                    type: string
+                example:
+                  field: event
+                  type: UNKNOWN_VALUE
+              example:
+                field: event
+                type: UNKNOWN_VALUE
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Send an event
+      operationId: sendAnEvent
+      description: "Events are individually assigned to users. You can send up to \n50 events per request. However, sending one single \nevent per request is the most common practice.\n\nPlease note that the **management of custom event property is not yet possible via API**.\nIn order to create a custom properties, please contact your customer experience manager."
+      tags:
+      - Event management
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The id of the user in your database
+                email:
+                  type: string
+                  description: '*Required* if `id` is not available'
+                events:
+                  type: object
+                  properties:
+                    event:
+                      type: string
+                      description: Name of the event class
+                    properties:
+                      type: object
+                      properties:
+                        stringExample:
+                          type: string
+                          description: An name example of a landing page name
+                        integerExample:
+                          type: number
+                          description: A stock quantity example
+                        floatExample:
+                          type: number
+                          description: A price example
+                        ArrayExample:
+                          type: array
+                          description: A taggs array example
+                        cart:
+                          type: object
+                          properties:
+                            sku:
+                              type: string
+                              description: Product SKU
+                            name:
+                              type: string
+                              description: Name of the product
+                            price:
+                              type: number
+                              description: Product price
+                          description: An example of a user cart object
+                      description: 'List of event properties. For example:'
+                  description: List of events for this user
+              required:
+              - id
+              - events
+              example:
+                id: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+                events:
+                - event: Completed Order
+                  properties:
+                    cart:
+                      total: 0
+                      currency: EUR
+                      products:
+                      - id: 507f1f77bcf86cd879439023
+                        sku: '61979589'
+                        name: Zegna Shirt
+                        price: 150
+                        quantity: 1
+                        category: Shirts
+                        hasZipper: false
+                      - id: 507f1f77bcf86cd799439011
+                        sku: '51979501'
+                        name: Levi Jeans
+                        price: 100
+                        quantity: 1
+                        category: Jeans
+                        hasZipper: true
+components:
+  securitySchemes:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-user-management-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://usermanagementv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.

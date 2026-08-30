@@ -1,0 +1,732 @@
+openapi: 3.2.0
+info:
+  title: Crossenagage User profile management API
+  x-refined-note:
+  - x-apib-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged User profile management across 2 of this provider''s published API definitions: crossenagage-user-management-v1-openapi.yml, crossenagage-user-management-v2-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.crossengage.io/
+security:
+- XngAuthToken: []
+tags:
+- name: User profile management
+paths:
+  /users/{id}:
+    put:
+      responses:
+        '200':
+          description: User has been created or updated successfully
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  xngId:
+                    type: string
+                  email:
+                    type: string
+                  businessUnit:
+                    type: string
+                  success:
+                    type: boolean
+                example:
+                  id: '1234'
+                  xngId: asdgaw223-sf122-48211-1231-3155dff2
+                  email: john.doe@crossengage.io
+                  businessUnit: DE
+                  success: true
+              example:
+                id: '1234'
+                xngId: asdgaw223-sf122-48211-1231-3155dff2
+                email: john.doe@crossengage.io
+                businessUnit: DE
+                success: true
+        '400':
+          description: User was not processed due to a validation error (see response)
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  xngId:
+                    type: string
+                  email:
+                    type: string
+                  businessUnit:
+                    type: string
+                  success:
+                    type: boolean
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                        type:
+                          type: string
+                example:
+                  id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: asdgaw223-sf122-48211-1231-3155dff2
+                  email: john.doe+crossengage.io
+                  businessUnit: unit
+                  success: false
+                  errors:
+                  - field: email
+                    type: WRONG_VALUE
+              example:
+                id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                xngId: asdgaw223-sf122-48211-1231-3155dff2
+                email: john.doe+crossengage.io
+                businessUnit: unit
+                success: false
+                errors:
+                - field: email
+                  type: WRONG_VALUE
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '409':
+          description: '`id` sent in the request body does not match the `id` paramater entered in the request path'
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Create & update a user
+      operationId: createUpdateAUser
+      description: This endpoint lets you create or update a specific user by `id`.
+      tags:
+      - User profile management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database.
+        required: true
+        x-example: fb85fe50-a528-11e7-abc4-cec278b6b50a
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The id of the user in your database
+                email:
+                  type: string
+                  description: The user's email.
+                businessUnit:
+                  type: string
+                  description: The business unit of the user.
+                firstName:
+                  type: string
+                  description: The user's first name.
+                lastName:
+                  type: string
+                  description: The user's last name.
+                birthday:
+                  type: string
+                  description: The user's birthday.
+                gender:
+                  type: string
+                  description: The user's gender.
+                createdAt:
+                  type: string
+                  description: The date the user was created in your database.
+              required:
+              - id
+              example:
+                email: john.doe@crossengage.io
+                firstName: John
+                lastName: Doe
+                birthday: '1982-08-30'
+                createdAt: '2015-10-02T08:23:53Z'
+                gender: male
+                businessUnit: DE
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  id:
+                    type: string
+                  xngId:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  birthday:
+                    type: string
+                  createdAt:
+                    type: string
+                  gender:
+                    type: string
+                example:
+                  email: john.doe@crossengage.io
+                  id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: 123e4567-e89b-12d3-a456-426655440000
+                  firstName: John
+                  lastName: Doe
+                  birthday: '1982-08-30'
+                  createdAt: '2015-10-02T08:23:53Z'
+                  gender: male
+              example:
+                email: john.doe@crossengage.io
+                id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                xngId: 123e4567-e89b-12d3-a456-426655440000
+                firstName: John
+                lastName: Doe
+                birthday: '1982-08-30'
+                createdAt: '2015-10-02T08:23:53Z'
+                gender: male
+      summary: Fetch a user
+      operationId: fetchAUser
+      description: This endpoint lets you fetch a specific user by `id`.
+      tags:
+      - User profile management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database.
+        required: true
+        x-example: fb85fe50-a528-11e7-abc4-cec278b6b50a
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+          content: {}
+      summary: Delete a user
+      operationId: deleteAUser
+      description: This endpoint lets you delete a specific user by `id`.
+      tags:
+      - User profile management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database.
+        required: true
+        x-example: fb85fe50-a528-11e7-abc4-cec278b6b50a
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+    servers:
+    - url: https://api.crossengage.io/
+  /users/batch:
+    post:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  updated:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        xngId:
+                          type: string
+                        success:
+                          type: boolean
+                  deleted:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        xngId:
+                          type: string
+                        success:
+                          type: boolean
+                example:
+                  updated:
+                  - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                    xngId: 088818b3-445e-41a6-a7e1-cf86c8cdfbe4
+                    success: true
+                  deleted:
+                  - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                    xngId: ae86796f-8aca-4f65-a5dc-dea9a269f2a5
+                    success: true
+              example:
+                updated:
+                - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: 088818b3-445e-41a6-a7e1-cf86c8cdfbe4
+                  success: true
+                deleted:
+                - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: ae86796f-8aca-4f65-a5dc-dea9a269f2a5
+                  success: true
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  updated:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        xngId:
+                          type: string
+                        success:
+                          type: boolean
+                        errors:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              field:
+                                type: string
+                              type:
+                                type: string
+                            required:
+                            - field
+                            - type
+                  deleted:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        xngId:
+                          type: string
+                        success:
+                          type: boolean
+                        errors:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              field:
+                                type: string
+                              type:
+                                type: string
+                            required:
+                            - field
+                            - type
+                example:
+                  updated:
+                  - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                    xngId: 088818b3-445e-41a6-a7e1-cf86c8cdfbe4
+                    success: false
+                    errors:
+                    - field: id
+                      type: NOT_NULL
+                    - field: email
+                      type: WRONG_FORMAT
+                  deleted:
+                  - id: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+                    xngId: ae86796f-8aca-4f65-a5dc-dea9a269f2a5
+                    success: false
+                    errors:
+                    - field: id
+                      type: NOT_NULL
+                    - field: email
+                      type: WRONG_FORMAT
+              example:
+                updated:
+                - id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: 088818b3-445e-41a6-a7e1-cf86c8cdfbe4
+                  success: false
+                  errors:
+                  - field: id
+                    type: NOT_NULL
+                  - field: email
+                    type: WRONG_FORMAT
+                deleted:
+                - id: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+                  xngId: ae86796f-8aca-4f65-a5dc-dea9a269f2a5
+                  success: false
+                  errors:
+                  - field: id
+                    type: NOT_NULL
+                  - field: email
+                    type: WRONG_FORMAT
+      summary: Create & update or delete users in bulk
+      operationId: createUpdateOrDeleteUsersInBulk
+      description: "The maximum number of users that can be reached as per one call is 1000. \nShould you need to change more user profiles, please consider dividing them in \nsuccessive calls."
+      tags:
+      - User profile management
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The id of the user in your database
+                email:
+                  type: string
+                  description: The user's email.
+                businessUnit:
+                  type: string
+                  description: The business unit of the user.
+                firstName:
+                  type: string
+                  description: The user's first name.
+                lastName:
+                  type: string
+                  description: The user's last name.
+                birthday:
+                  type: string
+                  description: The user's birthday.
+                gender:
+                  type: string
+                  description: The user's gender.
+                createdAt:
+                  type: string
+                  description: The date the user was created in your database.
+              required:
+              - id
+              example:
+                updated:
+                - email: john.doe@crossengage.io
+                  id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  firstName: John
+                  lastName: Doe
+                  birthday: '1982-08-30'
+                  createdAt: '2015-10-02T08:23:53Z'
+                  gender: male
+                deleted:
+                - email: janice.doe@crossengage.io
+                  id: 62968d37-91f5-46f3-bd62-2432510f1a23
+                  firstName: Janice
+                  lastName: Doe
+                  birthday: '1987-06-15'
+                  createdAt: '2015-10-02T08:23:53Z'
+                  gender: female
+    servers:
+    - url: https://api.crossengage.io/
+  /users/email/{email}/bu/{bu}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  id:
+                    type: string
+                  xngId:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  birthday:
+                    type: string
+                  createdAt:
+                    type: string
+                  gender:
+                    type: string
+                example:
+                  email: john.doe@crossengage.io
+                  id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                  xngId: 123e4567-e89b-12d3-a456-426655440000
+                  firstName: John
+                  lastName: Doe
+                  birthday: '1982-08-30'
+                  createdAt: '2015-10-02T08:23:53Z'
+                  gender: male
+              example:
+                email: john.doe@crossengage.io
+                id: fb85fe50-a528-11e7-abc4-cec278b6b50a
+                xngId: 123e4567-e89b-12d3-a456-426655440000
+                firstName: John
+                lastName: Doe
+                birthday: '1982-08-30'
+                createdAt: '2015-10-02T08:23:53Z'
+                gender: male
+        '404':
+          description: User with a given input was not found.
+          headers: {}
+          content: {}
+      summary: Get a single user with email and bu
+      operationId: getASingleUserWithEmailAndBu
+      description: ''
+      tags:
+      - User profile management
+      parameters:
+      - name: email
+        in: path
+        description: Email of the user.
+        required: true
+        x-example: example@crossengage.io
+        schema:
+          type: string
+      - name: bu
+        in: path
+        description: Business Unit of the user.
+        required: true
+        x-example: BU
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+    servers:
+    - url: https://api.crossengage.io/
+  /users:
+    put:
+      responses:
+        '202':
+          description: "Request was accepted and will be processed asynchronously. \nUse \n[Request Tracking](https://usermanagementv2.docs.apiary.io/#reference/user-profile-management/request-tracking)\nendpoint with the provided tracking ID \nin order to check request status."
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  trackingId:
+                    type: string
+                example:
+                  trackingId: 2e312089-a987-45c6-adbd-b904bc4dfc97
+              example:
+                trackingId: 2e312089-a987-45c6-adbd-b904bc4dfc97
+        '400':
+          description: "Request was not processed due to a validation error (see response).\n\nPlease see the \n[Error Handling section](https://usermanagementv2.docs.apiary.io/#introduction/error-handling)\nfor possible validation errors."
+          headers: {}
+          content: {}
+        '401':
+          description: Wrong or missing credentials.
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side.
+          headers: {}
+          content: {}
+      summary: Create/update a single user
+      operationId: createUpdateASingleUser
+      description: "It's required to provide both `id` and `email` in every query.\n\nIf you will provide an `email`, which is different from the one, \ncurrently stored for this user, it will be updated.\n\nIf you will provide a new `id`, but already existing `email`, \nyou will get a processing error and the user will not be created."
+      tags:
+      - User profile management
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: User identifier in your database
+                email:
+                  type: string
+                  description: User e-mail
+                businessUnit:
+                  type: string
+                  description: Your company's business unit, to which this user is attached, only relevant if you have multiple business units set up in your CrossEngage account, in other cases, it may be null
+                lastName:
+                  type: string
+                  description: Custom user's attribute
+                age:
+                  type: number
+                  description: Custom user's attribute
+                '...':
+                  type: string
+                  description: Any other custom user attributes defined for your company
+              required:
+              - id
+              - email
+              example:
+                id: 31d29083-b3ad-4864-9d0c-dc20a9fa72c8
+                email: john.doe@crossengage.io
+                firstName: John
+                lastName: Doe
+                birthday: '1982-08-30'
+                createdAt: '2015-10-02T08:23:53Z'
+                gender: male
+                businessUnit: DE
+    servers:
+    - url: https://api.crossengage.io/
+  /users/track/{trackingId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stage:
+                    type: string
+                    description: '**PENDING** - request waiting to be processed, **PROCESSED** - request already processed'
+                  total:
+                    type: string
+                    description: Total number of users in the bulk request
+                  success:
+                    type: string
+                    description: Number of users who were processed sucesfully
+                  error:
+                    type: string
+                    description: Number of users who can't be processed due to errors
+              example:
+                stage: PROCESSED
+                total: 2
+                success: 1
+                error: 1
+        '404':
+          description: Requested tracking information was not found because trackingId is unknown or expired.
+          headers: {}
+          content: {}
+      summary: Retrieve status
+      operationId: retrieveStatus
+      description: ''
+      tags:
+      - User profile management
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+    servers:
+    - url: https://api.crossengage.io/
+components:
+  securitySchemes:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+x-refined-from:
+- crossenagage-user-management-v1-openapi.yml
+- crossenagage-user-management-v2-openapi.yml
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-file-attachments-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://fileattachmentsv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.

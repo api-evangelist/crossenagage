@@ -1,0 +1,399 @@
+openapi: 3.2.0
+info:
+  title: User Management API v1 Opt-out management API
+  version: '1.0'
+  description: 'The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.
+
+
+    ## Authentication
+
+
+    CrossEngage uses **header authentication**.
+
+    To obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.
+
+
+    ## Versions
+
+
+    The API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.
+
+
+    ## Headers
+
+
+    To use the CrossEngage API, define the following header values for each call made:
+
+    `X-XNG-AuthToken`, `X-XNG-ApiVersion`.
+
+
+    ## Date Format
+
+
+    Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+
+    For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+
+    ## Error Handling
+
+
+    Resume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:
+
+
+    * `500 Internal Server Error`
+
+
+    * `502 Bad Gateway`
+
+
+    * `503 Service Unavailable`
+
+
+    * `504 Gateway Timeout`
+
+
+    How to retry CrossEngage API requests in case of errors:
+
+
+    * Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.
+
+
+    * For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests.'
+  x-apib-source: https://usermanagementv1.docs.apiary.io/api-description-document
+servers:
+- url: https://api.crossengage.io/
+security:
+- XngAuthToken: []
+tags:
+- name: Opt-out management
+paths:
+  /users/{id}/recipient-status:
+    get:
+      responses:
+        '200':
+          description: Example server response
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  blacklisted:
+                    type: boolean
+                  optOutAll:
+                    type: boolean
+                  optOutChannels:
+                    type: array
+                    items: {}
+                example:
+                  blacklisted: false
+                  optOutAll: false
+                  optOutChannels: []
+              example:
+                blacklisted: false
+                optOutAll: false
+                optOutChannels: []
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Get a user's status
+      operationId: getAUserSStatus
+      description: Check the overall status of a particular user.
+      tags:
+      - Opt-out management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database
+        required: true
+        x-example: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+  /users/{id}/optout-status:
+    put:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  optOut:
+                    type: boolean
+                example:
+                  optOut: true
+              example:
+                optOut: true
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '404':
+          description: This user does not exist
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Update a user's opt out status
+      operationId: updateAUserSOptOutStatus
+      description: Update a specific user's overall opt out status or for a specific channel.
+      tags:
+      - Opt-out management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database
+        required: true
+        x-example: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+        schema:
+          type: string
+      - name: channelType
+        in: query
+        description: The specific channel you'd like to update
+        required: false
+        x-example: MAIL
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                optOut:
+                  type: boolean
+              example:
+                optOut: true
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  optOut:
+                    type: boolean
+                example:
+                  optOut: true
+              example:
+                optOut: true
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '404':
+          description: This user does not exist
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Read a user's opt out status
+      operationId: readAUserSOptOutStatus
+      description: Read a specific user's overall opt out status or for a specific channel.
+      tags:
+      - Opt-out management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database
+        required: true
+        x-example: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+        schema:
+          type: string
+      - name: channelType
+        in: query
+        description: The specific channel you'd like to update
+        required: false
+        x-example: MAIL
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+  /users/{id}/blacklist-status:
+    put:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  blacklisted:
+                    type: boolean
+                example:
+                  blacklisted: true
+              example:
+                blacklisted: true
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '404':
+          description: This user does not exist
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Update a user's blacklist status
+      operationId: updateAUserSBlacklistStatus
+      description: ''
+      tags:
+      - Opt-out management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database
+        required: true
+        x-example: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blacklisted:
+                  type: boolean
+              example:
+                blacklisted: true
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  blacklisted:
+                    type: boolean
+                example:
+                  blacklisted: true
+              example:
+                blacklisted: true
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '404':
+          description: This user does not exist
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Read a user's blacklist status
+      operationId: readAUserSBlacklistStatus
+      description: ''
+      tags:
+      - Opt-out management
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user in your database
+        required: true
+        x-example: 78ad0e3e-19e6-4ec1-84a7-b2c860c05387
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+components:
+  securitySchemes:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-user-management-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://usermanagementv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.

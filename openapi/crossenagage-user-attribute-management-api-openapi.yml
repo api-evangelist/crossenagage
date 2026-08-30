@@ -1,0 +1,401 @@
+openapi: 3.2.0
+info:
+  title: User Management API v1 User Attribute Management API
+  version: '1.0'
+  description: 'The host of all of the URLs defined in this documentation is `https://api.documentation.crossengage.io`.
+
+
+    ## Authentication
+
+
+    CrossEngage uses **header authentication**.
+
+    To obtain your API key, log in to the [app](https://app.crossengage.io) and select **System setup** from the **Settings** dropdown. Copy the Master API value from the **API keys** section of the **System setup** page.
+
+
+    ## Versions
+
+
+    The API version is defined in the header `X-XNG-ApiVersion`. This documentation displays endpoints for version 1.
+
+
+    ## Headers
+
+
+    To use the CrossEngage API, define the following header values for each call made:
+
+    `X-XNG-AuthToken`, `X-XNG-ApiVersion`.
+
+
+    ## Date Format
+
+
+    Dates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator ("Z")
+
+    For more information please check [here](https://www.w3.org/TR/NOTE-datetime).
+
+
+    ## Error Handling
+
+
+    Resume or retry uploads that fail due to connection interruptions or `5xx` errors such as the following:
+
+
+    * `500 Internal Server Error`
+
+
+    * `502 Bad Gateway`
+
+
+    * `503 Service Unavailable`
+
+
+    * `504 Gateway Timeout`
+
+
+    How to retry CrossEngage API requests in case of errors:
+
+
+    * Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.
+
+
+    * For other kinds of requests, do not use exponential backoff. Instead, retry a limited number of the desired requests.'
+  x-apib-source: https://usermanagementv1.docs.apiary.io/api-description-document
+servers:
+- url: https://api.crossengage.io/
+security:
+- XngAuthToken: []
+tags:
+- name: User Attribute Management
+paths:
+  /users/attributes:
+    post:
+      responses:
+        '200':
+          description: Successful creation of attribute
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  attributeType:
+                    type: string
+                  success:
+                    type: boolean
+                example:
+                  id: '111'
+                  name: traits.example
+                  attributeType: ARRAY
+                  success: true
+              example:
+                id: '111'
+                name: traits.example
+                attributeType: ARRAY
+                success: true
+        '400':
+          description: Attribute was not processed due to a validation error (see response)
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                  message:
+                    type: string
+                example:
+                  requestId: c2a20133-ecdd-4e43-8abd-943e5911737e
+                  message: No enum constant com.crossengage.attribute.AttributeType.ARRAaY
+              example:
+                requestId: c2a20133-ecdd-4e43-8abd-943e5911737e
+                message: No enum constant com.crossengage.attribute.AttributeType.ARRAaY
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Create attribute
+      operationId: createAttribute
+      description: "User attributes are called traits in CrossEngage. \nPlease create all user attributes with the\n`traits` prefix, for example, `traits.firstName`. Please note\nthat attributes cannot be created with the following protected suffixes: \"_date\", \"_float\", \"_bool\", \"_string\", \"_nested\", \"_int\".\n<br/><br/>When having to create a new attribute, please check the attribute list via the <strong>Fetch Attribute List</strong> endpoint to verify whether a similar or same attribute is available."
+      tags:
+      - User Attribute Management
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/simpleAtrribute'
+              - type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the child attribute
+                  attributeType:
+                    type: string
+                    description: The type of the child attribute
+                  parentName:
+                    type: string
+                    description: The name of the parent attribute
+                required:
+                - name
+                - attributeType
+                - parentName
+                example:
+                  name: exampleChild
+                  attributeType: STRING
+                  parentName: traits.exampleParent
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  attributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        attributeType:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - attributeType
+                  total:
+                    type: string
+                example:
+                  attributes:
+                  - id: 1001
+                    name: traits.example
+                    attributeType: STRING
+                  - id: 1002
+                    name: traits.example2
+                    attributeType: ARRAY
+                  total: '200'
+              example:
+                attributes:
+                - id: 1001
+                  name: traits.example
+                  attributeType: STRING
+                - id: 1002
+                  name: traits.example2
+                  attributeType: ARRAY
+                total: '200'
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Fetch attribute list
+      operationId: fetchAttributeList
+      description: This endpoint fetches all existing user attributes.
+      tags:
+      - User Attribute Management
+      parameters:
+      - name: offset
+        in: query
+        description: The number of the first element.
+        required: false
+        x-example: '0'
+        schema:
+          type: number
+      - name: limit
+        in: query
+        description: Number of elements to be returned. Default value is 10, maximum is 100.
+        required: false
+        x-example: '2'
+        schema:
+          type: number
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+  /users/attributes/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  attributeType:
+                    type: string
+                example:
+                  id: '1234'
+                  name: traits.example
+                  attributeType: STRING
+              example:
+                id: '1234'
+                name: traits.example
+                attributeType: STRING
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '404':
+          description: The attribute with the requested `id` does not exist
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Fetch attribute
+      operationId: fetchAttribute
+      description: 'Fetch a specific user attribute by its `id`. To find an
+
+        attribute `id`, please use the [Fetch attribute list](#fetchAttrList)
+
+        call.'
+      tags:
+      - User Attribute Management
+      parameters:
+      - name: id
+        in: path
+        description: '`id` of the attribute'
+        required: true
+        x-example: '123'
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: Attribute successfully deleted
+          headers: {}
+          content: {}
+        '401':
+          description: Wrong or missing credentials
+          headers: {}
+          content: {}
+        '409':
+          description: "Attribute in use in at least one campaign or has active \nnested attributes. Otherwise, the `id` entered in the\nrequest body does not match the `id` \nprovided in the request path."
+          headers: {}
+          content: {}
+        '500':
+          description: Unknown error on our side
+          headers: {}
+          content: {}
+      summary: Delete attribute
+      operationId: deleteAttribute
+      description: "In order to delete an attributes in CrossEngage, you need to know its `id`. \nTo find it out, please use [Fetch attribute list](#fetchAttrList) endpoint and search its `id` value.\n\nNote that deleting an attribute does not result in the removal of that attribute value from individual users.\nTo modify individual users, it is necessary to update their profiles."
+      tags:
+      - User Attribute Management
+      parameters:
+      - name: id
+        in: path
+        description: '`id` of the attribute'
+        required: true
+        x-example: '123'
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 1
+        required: false
+        x-example: '1'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. Your API Key
+        required: false
+        x-example: Your API Key
+        schema:
+          type: string
+components:
+  schemas:
+    simpleAtrribute:
+      type: object
+      required:
+      - name
+      - attributeType
+      properties:
+        name:
+          type: string
+          example: traits.example
+          description: The name of the user attribute
+        attributeType:
+          type: string
+          example: STRING, INTEGER, FLOAT, DATETIME, BOOLEAN or ARRAY
+          description: The type of the user attribute
+        nestedType:
+          type: string
+          example: STRING, INTEGER, FLOAT, BOOLEAN, DATETIME, ARRAY or OBJECT
+          description: The type of the nested attribute that will be added. Only applicable for array or object type.
+  securitySchemes:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-user-management-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://usermanagementv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.

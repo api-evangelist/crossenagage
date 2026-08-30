@@ -1,0 +1,617 @@
+openapi: 3.2.0
+info:
+  title: Raw Export API
+  version: '1.0'
+  description: "This asynchronous API enables export of user & event data from CrossEngage.\n\nBecause sometimes events might come out of order or later than expected, \nto avoid inconsistencies or skipped data, we enforce a time gap for the data, that we export. \nWith this setting we won't export any events with a timestamp later than **3 hours** before export start time.\n\n#### Versioning\n\nThe API version is defined in the header `X-XNG-ApiVersion`. \nTo use the export API provide version **2**.\n\n#### Authentication\n\nCrossEngage uses **header authentication**.\nTo get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate\nto **Settings**. You will find it in the **System setup -> API keys** section\nin the `Master API key` value.\n\nThe following is an example of the format of an authentication header:\n\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n\n#### Date Format\n\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\"Z\")\nFor more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n\nPlease note, that Segment Buider in the CrossEngage App is using your local time zone.\nThis means that if you'd like your Export API data to align with your Segment data,\nyou need to use that same time zone when requesting your export via API.\n\n#### Data Availability\n\nThe data freshness for exported data is 3 hours relative to the export completion time.\n\n#### Error Handling\n\nWhen exporting data from CrossEngage, note the following error handling practices:\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors, including:\n\n* `500 Internal Server Error`\n\n* `502 Bad gateway`\n\n* `503 Service Unavailable`\n\n* `504 Gateway Timeout`\n\nHow to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy \nif an export request returns a 5xx server error. These errors can occur if a server is \noverloaded. Exponential backoff can alleviate such problems during periods \nof high request volume or heavy network traffic.\n\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. \nWhen retrying these requests, limit the number of times you retry them. For example your code could limit to ten \nretries or less before reporting the error to our team for investigation."
+  x-apib-source: https://userseventsexportapiv1.docs.apiary.io/api-description-document
+servers:
+- url: https://api.crossengage.io/
+security:
+- XngAuthToken: []
+tags:
+- name: Raw Export API
+paths:
+  /destination:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - id: b393489f-7d76-41c2-bb2f-f965ab997d2e
+                name: My destination name
+                type: EXPORT
+                destination: https://api-stg.xng.rocks/events
+                createdAt: '2019-08-21T12:10:47Z'
+                updatedAt: '2019-08-21T12:11:47Z'
+      summary: Get all destinations and their details
+      operationId: getAllDestinationsAndTheirDetails
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: type
+        in: query
+        description: _Optional_. Type of destination that should be returned. When not provided all destinations will be returned.
+        required: false
+        schema:
+          type: string
+          enum:
+          - EXPORT
+          - CALLBACK
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+  /destination/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    enum:
+                    - b393489f-7d76-41c2-bb2f-f965ab997d2e
+                    description: ID of a destination.
+                  name:
+                    type: string
+                    description: Name of a destination.
+                  type:
+                    type: string
+                    enum:
+                    - EXPORT
+                    - CALLBACK
+                    description: Type of a destination.
+                  destination:
+                    type: string
+                    description: Destination url or folder.
+                  createdAt:
+                    type: string
+                    description: ISO 8601 formatted string representing creation date of a destination.
+                  updatedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing last modification date of destination settings.
+                required:
+                - id
+                - type
+              example:
+                id: b393489f-7d76-41c2-bb2f-f965ab997d2e
+                name: My destination name
+                type: EXPORT
+                destination: https://api-stg.xng.rocks/events
+                createdAt: '2019-08-21T12:10:47Z'
+                updatedAt: '2019-08-21T12:11:47Z'
+      summary: Get a certain destination and its details
+      operationId: getACertainDestinationAndItsDetails
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: id
+        in: path
+        description: _Required_. ID of a destination to be returned.
+        required: true
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+  /event-class:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - name: message.viewed
+                legacyName: mail.open
+                channel: mail
+      summary: Get all event classes
+      operationId: getAllEventClasses
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+  /export:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - status: WAITING
+                requestedAt: '2019-09-04T15:30:53.298Z'
+                startedAt: '2019-09-04T15:36:53.298Z'
+                finishedAt: '2019-09-04T15:37:53.298Z'
+                id: 1ee25bc0-21aa-4759-8716-8397b6997e98
+                exportDestinationId: fec9ce18-a152-4fec-ab69-1b22606a015e
+                callbackDestinationId: 4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0
+                rawExport: true
+                outputFormat: PARQUET
+                outputSuffix: PARQUET
+                segmentId: '67'
+                attributes:
+                  enabled: true
+                  filter:
+                    action: INCLUDE
+                    names:
+                    - traits.firstName
+                    - traits.lastName
+                    - traits.email
+                events:
+                  enabled: false
+      summary: Get all exports and their details
+      operationId: getAllExportsAndTheirDetails
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: status
+        in: query
+        description: _Optional_. Export status filter. By default only active exports are returned (`WAITING` and `RUNNING`)
+        required: false
+        x-example: FINISHED
+        schema:
+          type: string
+          enum:
+          - WAITING
+          - RUNNING
+          - FINISHED
+          - CANCELED
+      - name: pageNumber
+        in: query
+        description: _Optional_. page number.
+        required: false
+        x-example: '3'
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: _Optional_. page size.
+        required: false
+        x-example: '25'
+        schema:
+          type: integer
+          default: 10
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: Export job scheduled.
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - WAITING
+                    - RUNNING
+                    - FINISHED
+                    - CANCELED
+                    description: Status of an export.
+                  requestedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export request date and time.
+                  startedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export start date and time.
+                  finishedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export finish date and time.
+                  id:
+                    type: string
+                    description: ID of a requested export.
+                  exportDestinationId:
+                    type: string
+                    description: _Required_. ID of a destination used for saving the export data.
+                  callbackDestinationId:
+                    type: string
+                    description: _Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent.
+                  rawExport:
+                    type: boolean
+                  outputFormat:
+                    type: string
+                    description: _Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON.
+                  outputSuffix:
+                    type: string
+                    description: _Optional_. String that will be appended to the File-Name.
+                  segmentId:
+                    type: string
+                    description: _Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export.
+                  attributes:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: _Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported.
+                      filter:
+                        type: object
+                        properties:
+                          action:
+                            type: string
+                            enum:
+                            - INCLUDE
+                            - EXCLUDE
+                            description: _Required_. Action to be done using the names array. Required when using the `filter` object.
+                          names:
+                            type: array
+                            description: _Required_. User attribute names that will be used together with the action for the export.
+                            items: {}
+                        required:
+                        - action
+                        - names
+                        description: _Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported.
+                    description: _Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object.
+                  events:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: _Optional_. When not provided takes default value `false` as events will not be exported with the raw user export.
+                    description: _Required_. Export settings for event data. Can be used in conjunction with the `attributes` object.
+                required:
+                - exportDestinationId
+                - rawExport
+                - attributes
+                - events
+              example:
+                status: WAITING
+                requestedAt: '2019-09-04T15:30:53.298Z'
+                startedAt: '2019-09-04T15:36:53.298Z'
+                finishedAt: '2019-09-04T15:37:53.298Z'
+                id: 1ee25bc0-21aa-4759-8716-8397b6997e98
+                exportDestinationId: fec9ce18-a152-4fec-ab69-1b22606a015e
+                callbackDestinationId: 4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0
+                rawExport: true
+                outputFormat: PARQUET
+                outputSuffix: PARQUET
+                segmentId: '67'
+                attributes:
+                  enabled: true
+                  filter:
+                    action: INCLUDE
+                    names:
+                    - traits.firstName
+                    - traits.lastName
+                    - traits.email
+                events:
+                  enabled: false
+      summary: Request an export(users)
+      operationId: requestAnExportUsers
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userExportRequest'
+  /export/{exportId}:
+    get:
+      responses:
+        '200':
+          description: Export details and status.
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - WAITING
+                    - RUNNING
+                    - FINISHED
+                    - CANCELED
+                    description: Status of an export.
+                  requestedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export request date and time.
+                  startedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export start date and time.
+                  finishedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing the export finish date and time.
+                  id:
+                    type: string
+                    description: ID of a requested export.
+                  exportDestinationId:
+                    type: string
+                    description: _Required_. ID of a destination used for saving the export data.
+                  callbackDestinationId:
+                    type: string
+                    description: _Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent.
+                  rawExport:
+                    type: boolean
+                  outputFormat:
+                    type: string
+                    description: _Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON.
+                  outputSuffix:
+                    type: string
+                    description: _Optional_. String that will be appended to the File-Name.
+                  segmentId:
+                    type: string
+                    description: _Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export.
+                  attributes:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: _Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported.
+                      filter:
+                        type: object
+                        properties:
+                          action:
+                            type: string
+                            enum:
+                            - INCLUDE
+                            - EXCLUDE
+                            description: _Required_. Action to be done using the names array. Required when using the `filter` object.
+                          names:
+                            type: array
+                            description: _Required_. User attribute names that will be used together with the action for the export.
+                            items: {}
+                        required:
+                        - action
+                        - names
+                        description: _Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported.
+                    description: _Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object.
+                  events:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: _Optional_. When not provided takes default value `false` as events will not be exported with the raw user export.
+                    description: _Required_. Export settings for event data. Can be used in conjunction with the `attributes` object.
+                required:
+                - exportDestinationId
+                - rawExport
+                - attributes
+                - events
+              example:
+                status: WAITING
+                requestedAt: '2019-09-04T15:30:53.298Z'
+                startedAt: '2019-09-04T15:36:53.298Z'
+                finishedAt: '2019-09-04T15:37:53.298Z'
+                id: 1ee25bc0-21aa-4759-8716-8397b6997e98
+                exportDestinationId: fec9ce18-a152-4fec-ab69-1b22606a015e
+                callbackDestinationId: 4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0
+                rawExport: true
+                outputFormat: PARQUET
+                outputSuffix: PARQUET
+                segmentId: '67'
+                attributes:
+                  enabled: true
+                  filter:
+                    action: INCLUDE
+                    names:
+                    - traits.firstName
+                    - traits.lastName
+                    - traits.email
+                events:
+                  enabled: false
+      summary: Get a certain export's details
+      operationId: getACertainExportSDetails
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: exportId
+        in: path
+        description: _Required_. `id` of an export
+        required: true
+        x-example: 1ee25bc0-21aa-4759-8716-8397b6997e98
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+    delete:
+      responses:
+        '200':
+          description: Export job stopped.
+          headers: {}
+          content: {}
+      summary: Cancel an export
+      operationId: cancelAnExport
+      description: ''
+      tags:
+      - Raw Export API
+      parameters:
+      - name: exportId
+        in: path
+        description: _Required_. `id` of an export
+        required: true
+        x-example: 1ee25bc0-21aa-4759-8716-8397b6997e98
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+components:
+  schemas:
+    userExportRequest:
+      type: object
+      required:
+      - exportDestinationId
+      - rawExport
+      - attributes
+      - events
+      properties:
+        exportDestinationId:
+          type: string
+          example: fec9ce18-a152-4fec-ab69-1b22606a015e
+          description: _Required_. ID of a destination used for saving the export data.
+        callbackDestinationId:
+          type: string
+          example: 4ce5fad8-4ec6-41ad-a5a0-fbf9b9ebdde0
+          description: _Optional_. ID of a destination used to send callback notifications generated by the export job. When not provided no callbacks will be sent.
+        rawExport:
+          type: boolean
+          example: true
+        outputFormat:
+          type: string
+          example: PARQUET
+          description: _Optional_. This allows defining the export data format(PARQUET or JSON) defaults to JSON.
+        outputSuffix:
+          type: string
+          example: PARQUET
+          description: _Optional_. String that will be appended to the File-Name.
+        segmentId:
+          type: string
+          example: '67'
+          description: _Optional_. ID of a user segment to be exported. When not provided all users will be exported. Please note that providing a segment will add an additional filtering step, which can slow down your export.
+        attributes:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              example: true
+              description: _Optional_. This toggles attribute data export. When not provided takes default value `false` so that attributes will not be exported.
+            filter:
+              type: object
+              required:
+              - action
+              - names
+              properties:
+                action:
+                  type: string
+                  enum:
+                  - INCLUDE
+                  - EXCLUDE
+                  description: _Required_. Action to be done using the names array. Required when using the `filter` object.
+                names:
+                  type: array
+                  items: {}
+                  description: _Required_. User attribute names that will be used together with the action for the export.
+              description: _Optional_. The `filter` object allows you to include or exclude certain attributes from the export. When not provided, all user attribute data will be exported.
+          description: _Required_. Export settings for user attributes. Can not be used in conjuction with the `events` object.
+        events:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              description: _Optional_. When not provided takes default value `false` as events will not be exported with the raw user export.
+          description: _Required_. Export settings for event data. Can be used in conjunction with the `attributes` object.
+  securitySchemes:
+    XngAuthToken:
+      type: apiKey
+      name: X-XNG-AuthToken
+      in: header
+      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
+x-apievangelist:
+  generated: '2026-08-13'
+  method: derived
+  source: blueprint/crossenagage-raw-export-v1.apib
+  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://userseventsexportapiv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.
