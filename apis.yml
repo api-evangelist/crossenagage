@@ -117,42 +117,6 @@ apis:
     url: blueprint/crossenagage-file-attachments-v1.apib
   - type: APIReference
     url: https://fileattachmentsv1.docs.apiary.io/
-- aid: crossenagage:crossenagage-file-attachment-api-api
-  name: CrossEngage File Attachment API
-  description: The File Attachment API API from CrossEngage — 1 operation(s) for file attachment api.
-  humanURL: https://usermanagementv2.docs.apiary.io/
-  baseURL: https://api.crossengage.io
-  tags:
-  - File Attachment API
-  properties:
-  - type: OpenAPI
-    url: openapi/crossenagage-file-attachment-api-api-openapi.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v2.apib
-  - type: APIReference
-    url: https://usermanagementv2.docs.apiary.io/
-  - type: Documentation
-    url: https://api.documentation.crossengage.io/
-  - type: Authentication
-    url: authentication/crossenagage-authentication.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v1.apib
-  - type: APIReference
-    url: https://usermanagementv1.docs.apiary.io/
-  - type: APIReference
-    url: https://productfeedapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-raw-export-v1.apib
-  - type: APIReference
-    url: https://userseventsexportapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-statistics-v1.apib
-  - type: APIReference
-    url: https://statisticsapi1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-file-attachments-v1.apib
-  - type: APIReference
-    url: https://fileattachmentsv1.docs.apiary.io/
 - aid: crossenagage:crossenagage-lead-management-api
   name: CrossEngage Lead management API
   description: The Lead management API from CrossEngage — 1 operation(s) for lead management.
@@ -267,78 +231,6 @@ apis:
     url: blueprint/crossenagage-file-attachments-v1.apib
   - type: APIReference
     url: https://fileattachmentsv1.docs.apiary.io/
-- aid: crossenagage:crossenagage-raw-export-api-api
-  name: CrossEngage Raw Export API
-  description: The Raw Export API API from CrossEngage — 5 operation(s) for raw export api.
-  humanURL: https://usermanagementv2.docs.apiary.io/
-  baseURL: https://api.crossengage.io
-  tags:
-  - Raw Export API
-  properties:
-  - type: OpenAPI
-    url: openapi/crossenagage-raw-export-api-api-openapi.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v2.apib
-  - type: APIReference
-    url: https://usermanagementv2.docs.apiary.io/
-  - type: Documentation
-    url: https://api.documentation.crossengage.io/
-  - type: Authentication
-    url: authentication/crossenagage-authentication.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v1.apib
-  - type: APIReference
-    url: https://usermanagementv1.docs.apiary.io/
-  - type: APIReference
-    url: https://productfeedapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-raw-export-v1.apib
-  - type: APIReference
-    url: https://userseventsexportapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-statistics-v1.apib
-  - type: APIReference
-    url: https://statisticsapi1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-file-attachments-v1.apib
-  - type: APIReference
-    url: https://fileattachmentsv1.docs.apiary.io/
-- aid: crossenagage:crossenagage-statistics-api-api
-  name: CrossEngage Statistics API
-  description: The Statistics API API from CrossEngage — 4 operation(s) for statistics api.
-  humanURL: https://usermanagementv2.docs.apiary.io/
-  baseURL: https://api.crossengage.io
-  tags:
-  - Statistics API
-  properties:
-  - type: OpenAPI
-    url: openapi/crossenagage-statistics-api-api-openapi.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v2.apib
-  - type: APIReference
-    url: https://usermanagementv2.docs.apiary.io/
-  - type: Documentation
-    url: https://api.documentation.crossengage.io/
-  - type: Authentication
-    url: authentication/crossenagage-authentication.yml
-  - type: APIBlueprint
-    url: blueprint/crossenagage-user-management-v1.apib
-  - type: APIReference
-    url: https://usermanagementv1.docs.apiary.io/
-  - type: APIReference
-    url: https://productfeedapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-raw-export-v1.apib
-  - type: APIReference
-    url: https://userseventsexportapiv1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-statistics-v1.apib
-  - type: APIReference
-    url: https://statisticsapi1.docs.apiary.io/
-  - type: APIBlueprint
-    url: blueprint/crossenagage-file-attachments-v1.apib
-  - type: APIReference
-    url: https://fileattachmentsv1.docs.apiary.io/
 - aid: crossenagage:crossenagage-user-attribute-management-api
   name: CrossEngage User Attribute Management API
   description: >-
@@ -387,6 +279,258 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/crossenagage-user-profile-management-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-destination-api
+  name: CrossEngage Destination API
+  description: The Destination API from CrossEngage — 2 operation(s) for destination.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Destination
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-destination-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-detailed-api
+  name: CrossEngage Detailed API
+  description: The Detailed API from CrossEngage — 1 operation(s) for detailed.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Detailed
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-detailed-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-event-class-api
+  name: CrossEngage Event Class API
+  description: The Event Class API from CrossEngage — 1 operation(s) for event class.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Event Class
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-event-class-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-export-api
+  name: CrossEngage Export API
+  description: The Export API from CrossEngage — 2 operation(s) for export.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-export-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-files-api
+  name: CrossEngage Files API
+  description: The Files API from CrossEngage — 1 operation(s) for files.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-files-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-kpi-api
+  name: CrossEngage Kpi API
+  description: The Kpi API from CrossEngage — 2 operation(s) for kpi.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Kpi
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-kpi-api-openapi.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v2.apib
+  - type: APIReference
+    url: https://usermanagementv2.docs.apiary.io/
+  - type: Documentation
+    url: https://api.documentation.crossengage.io/
+  - type: Authentication
+    url: authentication/crossenagage-authentication.yml
+  - type: APIBlueprint
+    url: blueprint/crossenagage-user-management-v1.apib
+  - type: APIReference
+    url: https://usermanagementv1.docs.apiary.io/
+  - type: APIReference
+    url: https://productfeedapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-raw-export-v1.apib
+  - type: APIReference
+    url: https://userseventsexportapiv1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-statistics-v1.apib
+  - type: APIReference
+    url: https://statisticsapi1.docs.apiary.io/
+  - type: APIBlueprint
+    url: blueprint/crossenagage-file-attachments-v1.apib
+  - type: APIReference
+    url: https://fileattachmentsv1.docs.apiary.io/
+- aid: crossenagage:crossenagage-overall-api
+  name: CrossEngage Overall API
+  description: The Overall API from CrossEngage — 1 operation(s) for overall.
+  humanURL: https://usermanagementv2.docs.apiary.io/
+  baseURL: https://api.crossengage.io
+  tags:
+  - Overall
+  properties:
+  - type: OpenAPI
+    url: openapi/crossenagage-overall-api-openapi.yml
   - type: APIBlueprint
     url: blueprint/crossenagage-user-management-v2.apib
   - type: APIReference
