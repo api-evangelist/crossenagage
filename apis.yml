@@ -57,7 +57,7 @@ tags:
 - Predictive Analytics
 - Segmentation
 - Campaign Management
-- Product Feed
+- Product Feeds
 - Data Export
 - Webhook
 - Web Tracking
@@ -199,7 +199,7 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
-  - Product Feed
+  - Product Feeds
   tags_raw:
   - product-feed
   properties:
@@ -455,6 +455,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -491,6 +493,8 @@ apis:
   humanURL: https://usermanagementv2.docs.apiary.io/
   baseURL: https://api.crossengage.io
   tags:
+  - KPI
+  tags_raw:
   - Kpi
   properties:
   - type: OpenAPI
