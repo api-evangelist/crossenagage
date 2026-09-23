@@ -1,14 +1,10 @@
 openapi: 3.2.0
 info:
   title: Crossenagage User profile management API
-  x-refined-note:
-  - x-apib-source differs across the merged source definitions and was not carried
-  version: '1.0'
-  description: 'Operations tagged User profile management across 2 of this provider''s published API definitions: crossenagage-user-management-v1-openapi.yml, crossenagage-user-management-v2-openapi.yml. Each path carries the servers of the definition it was published in.'
+  version: ''
+  description: 'Operations tagged User profile management across 2 of this provider''s published API definitions: crossenagage-user-management-v1-apib2swagger.json, crossenagage-user-management-v2-apib2swagger.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.crossengage.io/
-security:
-- XngAuthToken: []
 tags:
 - name: User profile management
 paths:
@@ -103,7 +99,7 @@ paths:
           headers: {}
           content: {}
       summary: Create & update a user
-      operationId: createUpdateAUser
+      operationId: Create & update a user
       description: This endpoint lets you create or update a specific user by `id`.
       tags:
       - User profile management
@@ -214,7 +210,7 @@ paths:
                 createdAt: '2015-10-02T08:23:53Z'
                 gender: male
       summary: Fetch a user
-      operationId: fetchAUser
+      operationId: Fetch a user
       description: This endpoint lets you fetch a specific user by `id`.
       tags:
       - User profile management
@@ -247,7 +243,7 @@ paths:
           headers: {}
           content: {}
       summary: Delete a user
-      operationId: deleteAUser
+      operationId: Delete a user
       description: This endpoint lets you delete a specific user by `id`.
       tags:
       - User profile management
@@ -419,8 +415,12 @@ paths:
                   - field: email
                     type: WRONG_FORMAT
       summary: Create & update or delete users in bulk
-      operationId: createUpdateOrDeleteUsersInBulk
-      description: "The maximum number of users that can be reached as per one call is 1000. \nShould you need to change more user profiles, please consider dividing them in \nsuccessive calls."
+      operationId: Create & update or delete users in bulk
+      description: 'The maximum number of users that can be reached as per one call is 1000.
+
+        Should you need to change more user profiles, please consider dividing them in
+
+        successive calls.'
       tags:
       - User profile management
       parameters:
@@ -539,7 +539,7 @@ paths:
           headers: {}
           content: {}
       summary: Get a single user with email and bu
-      operationId: getASingleUserWithEmailAndBu
+      operationId: Get a single user with email and bu
       description: ''
       tags:
       - User profile management
@@ -604,8 +604,18 @@ paths:
           headers: {}
           content: {}
       summary: Create/update a single user
-      operationId: createUpdateASingleUser
-      description: "It's required to provide both `id` and `email` in every query.\n\nIf you will provide an `email`, which is different from the one, \ncurrently stored for this user, it will be updated.\n\nIf you will provide a new `id`, but already existing `email`, \nyou will get a processing error and the user will not be created."
+      operationId: Create/update a single user
+      description: 'It''s required to provide both `id` and `email` in every query.
+
+
+        If you will provide an `email`, which is different from the one,
+
+        currently stored for this user, it will be updated.
+
+
+        If you will provide a new `id`, but already existing `email`,
+
+        you will get a processing error and the user will not be created.'
       tags:
       - User profile management
       parameters:
@@ -694,7 +704,7 @@ paths:
           headers: {}
           content: {}
       summary: Retrieve status
-      operationId: retrieveStatus
+      operationId: Retrieve status
       description: ''
       tags:
       - User profile management
@@ -715,18 +725,6 @@ paths:
           type: string
     servers:
     - url: https://api.crossengage.io/
-components:
-  securitySchemes:
-    XngAuthToken:
-      type: apiKey
-      name: X-XNG-AuthToken
-      in: header
-      description: CrossEngage header authentication. The API key is issued in the CrossEngage app under Settings -> System setup -> API keys (Master API key or Public API key depending on the API).
 x-refined-from:
-- crossenagage-user-management-v1-openapi.yml
-- crossenagage-user-management-v2-openapi.yml
-x-apievangelist:
-  generated: '2026-08-13'
-  method: derived
-  source: blueprint/crossenagage-file-attachments-v1.apib
-  note: Mechanically converted from the API Blueprint CrossEngage publishes at https://fileattachmentsv1.docs.apiary.io/api-description-document using apib2swagger. Verbatim blueprint retained at blueprint/. API Evangelist normalized operationIds to camelCase, declared the documented X-XNG-AuthToken header auth as a securityDefinition, and added the documented X-XNG-ApiVersion header parameter. No operations, paths, schemas or examples were invented.
+- crossenagage-user-management-v1-apib2swagger.json
+- crossenagage-user-management-v2-apib2swagger.json

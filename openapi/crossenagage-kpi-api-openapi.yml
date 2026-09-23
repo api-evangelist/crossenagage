@@ -1,0 +1,160 @@
+openapi: 3.2.0
+info:
+  title: Statistics Kpi API
+  version: ''
+  description: The Statistics API is designed to help you synchronously access all story, campaign & message statistics performance data available in CrossEngage.
+servers:
+- url: https://api.crossengage.io/statistics
+tags:
+- name: Kpi
+paths:
+  /kpi:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - id: '213'
+                name: Conversion to View Rate
+                formula: CONVERSION / UNIQUE VIEWED * 100
+                type: PERCENTAGE
+                createdAt: 2015-08-05T08:40Z
+                updatedAt: 2015-08-05T08:40Z
+      summary: Get all KPIs
+      operationId: Get all KPIs
+      description: Use this endpoint to get all of the KPIs available on your account and their details.
+      tags:
+      - Kpi
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+  /kpi/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                    enum:
+                    - Sent
+                    - Delivered
+                    - Viewed
+                    - Unique Viewed
+                    - Clicked
+                    - Unique Clicked
+                    - Soft Bounced
+                    - Hard Bounced
+                    - Bounced
+                    - Unsubscribed
+                    - Marked as Spam
+                    - Conversion
+                    - Delivery Rate
+                    - View to Delivery Rate
+                    - Click to Delivery Rate
+                    - Click-through-Rate (CTR)
+                    - Bounce Rate
+                    - Spam Rate
+                    - Unsubscribe Rate
+                    - Conversion to Delivery Rate
+                    - Conversion to View Rate
+                    - Conversion to Click Rate
+                    - Not Sent due to Control Group
+                    - Control Group Conversion
+                    - Control Group Conversion Rate
+                  formula:
+                    type: string
+                    enum:
+                    - SENT
+                    - DELIVERED
+                    - VIEWED
+                    - UNIQUE VIEWED
+                    - CLICKED
+                    - UNIQUE CLICKED
+                    - SOFT BOUNCED
+                    - HARD BOUNCED
+                    - SOFT BOUNCED + HARD BOUNCED
+                    - UNSUBSCRIBED
+                    - MARKED AS SPAM
+                    - CONVERSION
+                    - DELIVERED / SENT * 100
+                    - UNIQUE VIEWED / DELIVERED * 100
+                    - UNIQUE CLICKED / DELIVERED * 100
+                    - UNIQUE CLICKED / UNIQUE VIEWED * 100
+                    - (SOFT BOUNCED + HARD BOUNCED) / (SOFT BOUNCED + HARD BOUNCED + DELIVERED) * 100
+                    - MARKED AS SPAM / DELIVERED * 100
+                    - UNSUBSCRIBED / DELIVERED * 100
+                    - CONVERSION / DELIVERED * 100
+                    - CONVERSION / UNIQUE VIEWED * 100
+                    - CONVERSION / UNIQUE VIEWED * 100
+                    - SENT_CONTROL_GROUP
+                    - GOAL_COMPLETED_CONTROL_GROUP
+                    - GOAL_COMPLETED_CONTROL_GROUP / SENT_CONTROL_GROUP * 100
+                  type:
+                    type: string
+                    enum:
+                    - INTEGER
+                    - PERCENTAGE
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+              example:
+                id: '213'
+                name: Conversion to View Rate
+                formula: CONVERSION / UNIQUE VIEWED * 100
+                type: PERCENTAGE
+                createdAt: 2015-08-05T08:40Z
+                updatedAt: 2015-08-05T08:40Z
+      summary: Get a certain KPI
+      operationId: Get a certain KPI
+      description: Use this endpoint to get the details of a certain KPI by ID.
+      tags:
+      - Kpi
+      parameters:
+      - name: id
+        in: path
+        description: '`id` of a KPI'
+        required: true
+        x-example: '234'
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string

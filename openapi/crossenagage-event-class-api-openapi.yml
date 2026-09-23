@@ -1,0 +1,45 @@
+openapi: 3.2.0
+info:
+  title: Raw Export Event Class API
+  version: ''
+  description: This asynchronous API enables export of user & event data from CrossEngage.
+servers:
+- url: https://api.crossengage.io/
+tags:
+- name: Event Class
+paths:
+  /event-class:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - name: message.viewed
+                legacyName: mail.open
+                channel: mail
+      summary: Get all event classes
+      operationId: Get all event classes
+      description: ''
+      tags:
+      - Event Class
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string

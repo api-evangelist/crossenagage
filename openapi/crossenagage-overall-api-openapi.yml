@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  title: Statistics Overall API
+  version: ''
+  description: The Statistics API is designed to help you synchronously access all story, campaign & message statistics performance data available in CrossEngage.
+servers:
+- url: https://api.crossengage.io/statistics
+tags:
+- name: Overall
+paths:
+  /overall:
+    post:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - entity:
+                  id: '245'
+                  channel: MAIL
+                  type: CAMPAIGN_CHANNEL
+                startDate: '2018-08-24T00:00:00Z'
+                endDate: '2018-08-24T23:59:59Z'
+                kpi:
+                  '23': '100.0'
+                  '25': '80.0'
+                  '31': NaN
+      summary: Get overall statistics
+      operationId: Get overall statistics
+      description: 'Use this endpoint to get overall statistics for certain entity IDs (story, campaign or message ID)
+
+        on your account according to a particular time interval or since the first dispatch of a selected entity until the present.'
+      tags:
+      - Overall
+      parameters:
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  description: Maximum 30 entities may be used for a single request.
+                kpiIds:
+                  type: array
+                  description: The IDs of the KPIs that will be used to return statistics data for.
+                interval:
+                  type: object
+                  properties:
+                    startDate:
+                      type: string
+                      description: ISO 8601 formatted string representing the date and time for which statistics data will be computed from. Required when using the `interval` object.
+                    endDate:
+                      type: string
+                      description: ISO 8601 formatted string representing the date and time for which statistics data will be computed to. Required when using the `interval` object.
+                  required:
+                  - startDate
+                  - endDate
+                  description: Interval for which overall statistics should be returned for.
+              required:
+              - entities
+              example:
+                entities:
+                - id: '245'
+                  channel: MAIL
+                  type: CAMPAIGN_CHANNEL
+                kpiIds:
+                - '1'
+                - '12'
+                interval:
+                  startDate: '2018-08-24T00:00:00Z'
+                  endDate: '2018-08-24T23:59:59Z'

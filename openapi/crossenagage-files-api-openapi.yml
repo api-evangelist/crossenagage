@@ -1,0 +1,46 @@
+openapi: 3.2.0
+info:
+  title: File Attachment Files API
+  version: ''
+  description: 'The File Attachments API is designed to help you attach files in messages sent to clients through stories
+
+    or campaigns.'
+servers:
+- url: https://api.crossengage.io/
+tags:
+- name: Files
+paths:
+  /files/{fileName}:
+    put:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content: {}
+      summary: Upload a file
+      operationId: Upload a file
+      description: Use this endpoint to upload a single file to the cloud storage
+      tags:
+      - Files
+      parameters:
+      - name: fileName
+        in: path
+        description: name of the file as it is to be saved in cloud storage
+        required: true
+        x-example: welcome.pdf
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string

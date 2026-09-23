@@ -1,0 +1,127 @@
+openapi: 3.2.0
+info:
+  title: Raw Export Destination API
+  version: ''
+  description: This asynchronous API enables export of user & event data from CrossEngage.
+servers:
+- url: https://api.crossengage.io/
+tags:
+- name: Destination
+paths:
+  /destination:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example:
+              - id: b393489f-7d76-41c2-bb2f-f965ab997d2e
+                name: My destination name
+                type: EXPORT
+                destination: https://api-stg.xng.rocks/events
+                createdAt: '2019-08-21T12:10:47Z'
+                updatedAt: '2019-08-21T12:11:47Z'
+      summary: Get all destinations and their details
+      operationId: Get all destinations and their details
+      description: ''
+      tags:
+      - Destination
+      parameters:
+      - name: type
+        in: query
+        description: _Optional_. Type of destination that should be returned. When not provided all destinations will be returned.
+        required: false
+        schema:
+          type: string
+          enum:
+          - EXPORT
+          - CALLBACK
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string
+  /destination/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    enum:
+                    - b393489f-7d76-41c2-bb2f-f965ab997d2e
+                    description: ID of a destination.
+                  name:
+                    type: string
+                    description: Name of a destination.
+                  type:
+                    type: string
+                    enum:
+                    - EXPORT
+                    - CALLBACK
+                    description: Type of a destination.
+                  destination:
+                    type: string
+                    description: Destination url or folder.
+                  createdAt:
+                    type: string
+                    description: ISO 8601 formatted string representing creation date of a destination.
+                  updatedAt:
+                    type: string
+                    description: ISO 8601 formatted string representing last modification date of destination settings.
+                required:
+                - id
+                - type
+              example:
+                id: b393489f-7d76-41c2-bb2f-f965ab997d2e
+                name: My destination name
+                type: EXPORT
+                destination: https://api-stg.xng.rocks/events
+                createdAt: '2019-08-21T12:10:47Z'
+                updatedAt: '2019-08-21T12:11:47Z'
+      summary: Get a certain destination and its details
+      operationId: Get a certain destination and its details
+      description: ''
+      tags:
+      - Destination
+      parameters:
+      - name: id
+        in: path
+        description: _Required_. ID of a destination to be returned.
+        required: true
+        schema:
+          type: string
+      - name: X-XNG-ApiVersion
+        in: header
+        description: e.g. 2
+        required: false
+        x-example: '2'
+        schema:
+          type: string
+      - name: X-XNG-AuthToken
+        in: header
+        description: e.g. YourAPIKey
+        required: false
+        x-example: YourAPIKey
+        schema:
+          type: string

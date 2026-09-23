@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   version: '1.0'
   title: Product Feed API
-  description: "The Product feed API allows you to fetch, upload, edit and delete your products in real-time. It should be used together with the File Upload functionality in case more frequent updates are necessary.\nAll default attributes are described in the [Product data feed/Available properties documentation](https://documentation.crossengage.io/feeds/product).\n######\nFor test purposes, you can try the Postman collection. The collection contains all the calls needed. [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f6c14ba49835c19dbd7)\n#### Versioning\nThe API version is defined in the header `X-XNG-ApiVersion`. To use the product API provide version **1**.\n#### Authentication\nCrossEngage uses **header authentication**. To get your Master API key, please log in to the [app](https://app.crossengage.io) and navigate to **Settings**. You will find it in the **System setup -> API keys** section in the `Master API key` value.\nThe following is an example of the format of an authentication header:\n* `X-XNG-AuthToken`: `1ab00011122c1234`\n#### Date Format\nDates and times are expressed in ISO8601 format in UTC (Coordinated Universal Time), with a special UTC designator (\\\"Z\\\") For more information please check [here](https://www.w3.org/TR/NOTE-datetime).\n#### Error Handling\nFollowing errors are possible:\n* `401 Unauthorized access is not allowed`\n* `500 Internal Server Error`\n* `502 Bad gateway`\n* `503 Service Unavailable`\n* `504 Gateway Timeout`\n\nResume or retry uploads that fail due to connection interruptions or any `5xx` errors\n\n ##### How to retry requests made to CrossEngage in case of errors:\n\n* Use an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) strategy if an export request returns a 5xx server error. These errors can occur if a server is overloaded. Exponential backoff can alleviate such problems during periods of high request volume or heavy network traffic.\n* Other kinds of requests should not be handled by exponential backoff but you can still retry a number of them. When retrying these requests, limit the number of times you retry them. For example your code could limit to ten retries or less before reporting the error to our team for investigation."
+  description: The Product feed API allows you to fetch, upload, edit and delete your products in real-time.
 servers:
 - url: https://api.crossengage.io/product-feed/v1
 tags:
@@ -15,9 +15,7 @@ paths:
       summary: Get products with pagination
       description: 'When requesting a list of products, you may include the `pageNumber` and `pageSize` as parameters.
 
-        By default, you will fetch the first page with 10 products (displayed in Response: pageNumber 0).
-
-        '
+        By default, you will fetch the first page with 10 products (displayed in Response: pageNumber 0).'
       operationId: getProductsPage
       parameters:
       - name: pageNumber
@@ -53,9 +51,7 @@ paths:
 
         * In case, you’re using both `sku` and `businessUnit` as a combined identifier for your products, please provide both of them here.
 
-        * If only `sku` is provided, we will look for a product with that `sku` and an empty `businessUnit`.
-
-        '
+        * If only `sku` is provided, we will look for a product with that `sku` and an empty `businessUnit`.'
       operationId: getProductBySku
       parameters:
       - name: sku
@@ -87,9 +83,7 @@ paths:
 
         * To update information about a product include `sku` or `sku` and `businessUnit` of that product to the JSON body. All properties will be updated, missing properties will be removed.
 
-        * Custom attributes can be added as a string type to the product.
-
-        '
+        * Custom attributes can be added as a string type to the product.'
       operationId: updateOrCreateProduct
       parameters:
       - name: sku
@@ -124,7 +118,9 @@ paths:
       tags:
       - product-feed
       summary: Delete a single product
-      description: "Delete a single product by `sku` or `sku` and `businessUnit`\n * A product will be deleted if `sku` or `sku` and `businessUnit` match a product in the system.\n"
+      description: 'Delete a single product by `sku` or `sku` and `businessUnit`
+
+        * A product will be deleted if `sku` or `sku` and `businessUnit` match a product in the system.'
       operationId: deleteProductBySku
       parameters:
       - name: sku
@@ -144,31 +140,54 @@ paths:
           description: Product deletion was scheduled
 components:
   schemas:
-    ErrorItem:
-      type: object
-      readOnly: true
+    ProductPage:
+      description: a standard page object
       properties:
-        source:
-          description: param/field name or path (for instance SomeObject.someField.someOtherField)
-          type: string
-          example: productDTO.sku
-        key:
-          description: 'Dot-separated error key (for example `error.constraint-violation.Size`).
-
-            '
-          type: string
-          example: error.constraint-violation.NotNull
-        message:
-          description: error message
-          type: string
-          example: must not be null
-        args:
-          description: 'arguments for key (example: min=2, max=10, value="some string value" etc.)
-
-            '
-          type: object
-          additionalProperties:
-            type: string
+        pageNumber:
+          type: integer
+          format: int32
+          readOnly: true
+          example: 0
+        pageSize:
+          example: 10
+          type: integer
+          format: int32
+          readOnly: true
+        totalElements:
+          example: 1
+          type: integer
+          format: int32
+          readOnly: true
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      example:
+        pageNumber: 0
+        pageSize: 10
+        totalElements: 1
+        content:
+        - id: 123
+          sku: 56874
+          businessUnit: DE
+          title: Data-Decision-Delivery Pillow
+          description: Extra cozy pillow
+          link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
+          bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
+          smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
+          category: Pilow
+          price: 10.0
+          salesPrice: 8.5
+          salesPriceEffectiveDate: the sale will run until Friday
+          discount: -15%
+          currency: €
+          stockQuantity: 120
+          enabled: 1
+          attributes:
+            colour: Black
+            material: Plush
+          createdAt: '2020-01-02T16:00:03.449Z'
+          updatedAt: '2020-04-21T17:00:03.449Z'
     Error:
       description: Error response
       type: object
@@ -196,6 +215,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorItem'
+    ErrorItem:
+      type: object
+      readOnly: true
+      properties:
+        source:
+          description: param/field name or path (for instance SomeObject.someField.someOtherField)
+          type: string
+          example: productDTO.sku
+        key:
+          description: 'Dot-separated error key (for example `error.constraint-violation.Size`).
+
+            '
+          type: string
+          example: error.constraint-violation.NotNull
+        message:
+          description: error message
+          type: string
+          example: must not be null
+        args:
+          description: 'arguments for key (example: min=2, max=10, value="some string value" etc.)
+
+            '
+          type: object
+          additionalProperties:
+            type: string
     Product:
       type: object
       description: 'Product data. The unique identifier for the product is a combination of `sku` and `businessUnit`.
@@ -321,51 +365,3 @@ components:
           material: Plush
         createdAt: '2020-01-02T16:00:03.449Z'
         updatedAt: '2020-04-21T17:00:03.449Z'
-    ProductPage:
-      description: a standard page object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-          readOnly: true
-          example: 0
-        pageSize:
-          example: 10
-          type: integer
-          format: int32
-          readOnly: true
-        totalElements:
-          example: 1
-          type: integer
-          format: int32
-          readOnly: true
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-      example:
-        pageNumber: 0
-        pageSize: 10
-        totalElements: 1
-        content:
-        - id: 123
-          sku: 56874
-          businessUnit: DE
-          title: Data-Decision-Delivery Pillow
-          description: Extra cozy pillow
-          link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
-          bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
-          smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
-          category: Pilow
-          price: 10.0
-          salesPrice: 8.5
-          salesPriceEffectiveDate: the sale will run until Friday
-          discount: -15%
-          currency: €
-          stockQuantity: 120
-          enabled: 1
-          attributes:
-            colour: Black
-            material: Plush
-          createdAt: '2020-01-02T16:00:03.449Z'
-          updatedAt: '2020-04-21T17:00:03.449Z'
