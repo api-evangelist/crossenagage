@@ -31,7 +31,7 @@ paths:
                   '25': '80.0'
                   '31': NaN
       summary: Get overall statistics
-      operationId: Get overall statistics
+      operationId: GetOverallStatistics
       description: 'Use this endpoint to get overall statistics for certain entity IDs (story, campaign or message ID)
 
         on your account according to a particular time interval or since the first dispatch of a selected entity until the present.'
@@ -90,3 +90,5 @@ paths:
                 interval:
                   startDate: '2018-08-24T00:00:00Z'
                   endDate: '2018-08-24T23:59:59Z'
+      x-operation-id-source: normalized
+      x-operation-id-original: Get overall statistics

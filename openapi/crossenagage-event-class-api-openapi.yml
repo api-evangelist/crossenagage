@@ -24,7 +24,7 @@ paths:
                 legacyName: mail.open
                 channel: mail
       summary: Get all event classes
-      operationId: Get all event classes
+      operationId: GetAllEventClasses
       description: ''
       tags:
       - Event Class
@@ -43,3 +43,5 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get all event classes

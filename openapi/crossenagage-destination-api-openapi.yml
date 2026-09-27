@@ -27,7 +27,7 @@ paths:
                 createdAt: '2019-08-21T12:10:47Z'
                 updatedAt: '2019-08-21T12:11:47Z'
       summary: Get all destinations and their details
-      operationId: Get all destinations and their details
+      operationId: GetAllDestinationsAndTheirDetails
       description: ''
       tags:
       - Destination
@@ -55,6 +55,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get all destinations and their details
   /destination/{id}:
     get:
       responses:
@@ -100,7 +102,7 @@ paths:
                 createdAt: '2019-08-21T12:10:47Z'
                 updatedAt: '2019-08-21T12:11:47Z'
       summary: Get a certain destination and its details
-      operationId: Get a certain destination and its details
+      operationId: GetACertainDestinationAndItsDetails
       description: ''
       tags:
       - Destination
@@ -125,3 +127,5 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get a certain destination and its details

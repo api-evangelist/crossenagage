@@ -64,7 +64,7 @@ paths:
           headers: {}
           content: {}
       summary: Create attribute
-      operationId: Create attribute
+      operationId: CreateAttribute
       description: 'User attributes are called traits in CrossEngage.
 
         Please create all user attributes with the
@@ -117,6 +117,8 @@ paths:
                   name: exampleChild
                   attributeType: STRING
                   parentName: traits.exampleParent
+      x-operation-id-source: normalized
+      x-operation-id-original: Create attribute
     get:
       responses:
         '200':
@@ -171,7 +173,7 @@ paths:
           headers: {}
           content: {}
       summary: Fetch attribute list
-      operationId: Fetch attribute list
+      operationId: FetchAttributeList
       description: This endpoint fetches all existing user attributes.
       tags:
       - User Attribute Management
@@ -204,6 +206,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Fetch attribute list
   /users/attributes/{id}:
     get:
       responses:
@@ -242,7 +246,7 @@ paths:
           headers: {}
           content: {}
       summary: Fetch attribute
-      operationId: Fetch attribute
+      operationId: FetchAttribute
       description: 'Fetch a specific user attribute by its `id`. To find an
 
         attribute `id`, please use the Fetch attribute list
@@ -272,6 +276,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Fetch attribute
     delete:
       responses:
         '204':
@@ -291,7 +297,7 @@ paths:
           headers: {}
           content: {}
       summary: Delete attribute
-      operationId: Delete attribute
+      operationId: DeleteAttribute
       description: 'In order to delete an attributes in CrossEngage, you need to know its `id`.
 
         To find it out, please use Fetch attribute list endpoint and search its `id` value.
@@ -324,6 +330,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete attribute
 components:
   schemas:
     simpleAtrribute:

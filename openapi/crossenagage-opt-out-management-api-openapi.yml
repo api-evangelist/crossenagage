@@ -43,7 +43,7 @@ paths:
           headers: {}
           content: {}
       summary: Get a user's status
-      operationId: Get a user's status
+      operationId: GetAUser'sStatus
       description: Check the overall status of a particular user.
       tags:
       - Opt-Out Management
@@ -69,6 +69,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get a user's status
   /users/{id}/optout-status:
     put:
       responses:
@@ -99,7 +101,7 @@ paths:
           headers: {}
           content: {}
       summary: Update a user's opt out status
-      operationId: Update a user's opt out status
+      operationId: UpdateAUser'sOptOutStatus
       description: Update a specific user's overall opt out status or for a specific channel.
       tags:
       - Opt-Out Management
@@ -142,6 +144,8 @@ paths:
                   type: boolean
               example:
                 optOut: true
+      x-operation-id-source: normalized
+      x-operation-id-original: Update a user's opt out status
     get:
       responses:
         '200':
@@ -171,7 +175,7 @@ paths:
           headers: {}
           content: {}
       summary: Read a user's opt out status
-      operationId: Read a user's opt out status
+      operationId: ReadAUser'sOptOutStatus
       description: Read a specific user's overall opt out status or for a specific channel.
       tags:
       - Opt-Out Management
@@ -204,6 +208,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Read a user's opt out status
   /users/{id}/blacklist-status:
     put:
       responses:
@@ -234,7 +240,7 @@ paths:
           headers: {}
           content: {}
       summary: Update a user's blacklist status
-      operationId: Update a user's blacklist status
+      operationId: UpdateAUser'sBlacklistStatus
       description: ''
       tags:
       - Opt-Out Management
@@ -270,6 +276,8 @@ paths:
                   type: boolean
               example:
                 blacklisted: true
+      x-operation-id-source: normalized
+      x-operation-id-original: Update a user's blacklist status
     get:
       responses:
         '200':
@@ -299,7 +307,7 @@ paths:
           headers: {}
           content: {}
       summary: Read a user's blacklist status
-      operationId: Read a user's blacklist status
+      operationId: ReadAUser'sBlacklistStatus
       description: ''
       tags:
       - Opt-Out Management
@@ -325,3 +333,5 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Read a user's blacklist status

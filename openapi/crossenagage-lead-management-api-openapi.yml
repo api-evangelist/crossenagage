@@ -99,7 +99,7 @@ paths:
           headers: {}
           content: {}
       summary: Create & update a lead
-      operationId: Create & update a lead
+      operationId: Create&UpdateALead
       description: 'This endpoint lets you create or update leads.
 
         The system searches for existing leads based on records with email
@@ -161,3 +161,5 @@ paths:
                   lastName: Doe
                   age: 21
                   gender: male
+      x-operation-id-source: normalized
+      x-operation-id-original: Create & update a lead

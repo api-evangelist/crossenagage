@@ -27,7 +27,7 @@ paths:
                 createdAt: 2015-08-05T08:40Z
                 updatedAt: 2015-08-05T08:40Z
       summary: Get all KPIs
-      operationId: Get all KPIs
+      operationId: GetAllKPIs
       description: Use this endpoint to get all of the KPIs available on your account and their details.
       tags:
       - Kpi
@@ -46,6 +46,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get all KPIs
   /kpi/{id}:
     get:
       responses:
@@ -132,7 +134,7 @@ paths:
                 createdAt: 2015-08-05T08:40Z
                 updatedAt: 2015-08-05T08:40Z
       summary: Get a certain KPI
-      operationId: Get a certain KPI
+      operationId: GetACertainKPI
       description: Use this endpoint to get the details of a certain KPI by ID.
       tags:
       - Kpi
@@ -158,3 +160,5 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get a certain KPI

@@ -42,7 +42,7 @@ paths:
                 events:
                   enabled: false
       summary: Get all exports and their details
-      operationId: Get all exports and their details
+      operationId: GetAllExportsAndTheirDetails
       description: ''
       tags:
       - Export
@@ -88,6 +88,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get all exports and their details
     post:
       responses:
         '200':
@@ -194,7 +196,7 @@ paths:
                 events:
                   enabled: false
       summary: Request an export(users)
-      operationId: Request an export(users)
+      operationId: RequestAnExport(users)
       description: ''
       tags:
       - Export
@@ -218,6 +220,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/userExportRequest'
+      x-operation-id-source: normalized
+      x-operation-id-original: Request an export(users)
   /export/{exportId}:
     get:
       responses:
@@ -325,7 +329,7 @@ paths:
                 events:
                   enabled: false
       summary: Get a certain export's details
-      operationId: Get a certain export's details
+      operationId: GetACertainExport'sDetails
       description: ''
       tags:
       - Export
@@ -351,6 +355,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get a certain export's details
     delete:
       responses:
         '200':
@@ -358,7 +364,7 @@ paths:
           headers: {}
           content: {}
       summary: Cancel an export
-      operationId: Cancel an export
+      operationId: CancelAnExport
       description: ''
       tags:
       - Export
@@ -384,6 +390,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Cancel an export
 components:
   schemas:
     userExportRequest:

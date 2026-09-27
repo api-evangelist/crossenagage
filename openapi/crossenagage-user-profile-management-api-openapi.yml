@@ -99,7 +99,7 @@ paths:
           headers: {}
           content: {}
       summary: Create & update a user
-      operationId: Create & update a user
+      operationId: Create&UpdateAUser
       description: This endpoint lets you create or update a specific user by `id`.
       tags:
       - User profile management
@@ -165,6 +165,8 @@ paths:
                 createdAt: '2015-10-02T08:23:53Z'
                 gender: male
                 businessUnit: DE
+      x-operation-id-source: normalized
+      x-operation-id-original: Create & update a user
     get:
       responses:
         '200':
@@ -210,7 +212,7 @@ paths:
                 createdAt: '2015-10-02T08:23:53Z'
                 gender: male
       summary: Fetch a user
-      operationId: Fetch a user
+      operationId: FetchAUser
       description: This endpoint lets you fetch a specific user by `id`.
       tags:
       - User profile management
@@ -236,6 +238,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Fetch a user
     delete:
       responses:
         '204':
@@ -243,7 +247,7 @@ paths:
           headers: {}
           content: {}
       summary: Delete a user
-      operationId: Delete a user
+      operationId: DeleteAUser
       description: This endpoint lets you delete a specific user by `id`.
       tags:
       - User profile management
@@ -269,6 +273,8 @@ paths:
         x-example: Your API Key
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete a user
     servers:
     - url: https://api.crossengage.io/
   /users/batch:
@@ -415,7 +421,7 @@ paths:
                   - field: email
                     type: WRONG_FORMAT
       summary: Create & update or delete users in bulk
-      operationId: Create & update or delete users in bulk
+      operationId: Create&UpdateOrDeleteUsersInBulk
       description: 'The maximum number of users that can be reached as per one call is 1000.
 
         Should you need to change more user profiles, please consider dividing them in
@@ -487,6 +493,8 @@ paths:
                   birthday: '1987-06-15'
                   createdAt: '2015-10-02T08:23:53Z'
                   gender: female
+      x-operation-id-source: normalized
+      x-operation-id-original: Create & update or delete users in bulk
     servers:
     - url: https://api.crossengage.io/
   /users/email/{email}/bu/{bu}:
@@ -539,7 +547,7 @@ paths:
           headers: {}
           content: {}
       summary: Get a single user with email and bu
-      operationId: Get a single user with email and bu
+      operationId: GetASingleUserWithEmailAndBu
       description: ''
       tags:
       - User profile management
@@ -572,6 +580,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get a single user with email and bu
     servers:
     - url: https://api.crossengage.io/
   /users:
@@ -604,7 +614,7 @@ paths:
           headers: {}
           content: {}
       summary: Create/update a single user
-      operationId: Create/update a single user
+      operationId: Create/updateASingleUser
       description: 'It''s required to provide both `id` and `email` in every query.
 
 
@@ -669,6 +679,8 @@ paths:
                 createdAt: '2015-10-02T08:23:53Z'
                 gender: male
                 businessUnit: DE
+      x-operation-id-source: normalized
+      x-operation-id-original: Create/update a single user
     servers:
     - url: https://api.crossengage.io/
   /users/track/{trackingId}:
@@ -704,7 +716,7 @@ paths:
           headers: {}
           content: {}
       summary: Retrieve status
-      operationId: Retrieve status
+      operationId: RetrieveStatus
       description: ''
       tags:
       - User profile management
@@ -723,6 +735,8 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Retrieve status
     servers:
     - url: https://api.crossengage.io/
 x-refined-from:

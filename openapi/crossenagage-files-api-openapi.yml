@@ -18,7 +18,7 @@ paths:
           headers: {}
           content: {}
       summary: Upload a file
-      operationId: Upload a file
+      operationId: UploadAFile
       description: Use this endpoint to upload a single file to the cloud storage
       tags:
       - Files
@@ -44,3 +44,5 @@ paths:
         x-example: YourAPIKey
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Upload a file

@@ -42,7 +42,7 @@ paths:
           headers: {}
           content: {}
       summary: Send an event
-      operationId: Send an event
+      operationId: SendAnEvent
       description: 'Events are individually assigned to users. You can send up to
 
         50 events per request. However, sending one single
@@ -144,3 +144,5 @@ paths:
                         quantity: 1
                         category: Jeans
                         hasZipper: true
+      x-operation-id-source: normalized
+      x-operation-id-original: Send an event
