@@ -570,6 +570,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/crossenagage-capability-edges.yml
+  name: CrossEngage Business Capability Map
 - type: Overlay
   url: overlays/crossenagage-user-management-v2-overlay.yaml
 - type: Overlay
