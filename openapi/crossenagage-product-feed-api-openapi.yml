@@ -140,6 +140,106 @@ paths:
           description: Product deletion was scheduled
 components:
   schemas:
+    ProductPage:
+      description: a standard page object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          readOnly: true
+          example: 0
+        pageSize:
+          example: 10
+          type: integer
+          format: int32
+          readOnly: true
+        totalElements:
+          example: 1
+          type: integer
+          format: int32
+          readOnly: true
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      example:
+        pageNumber: 0
+        pageSize: 10
+        totalElements: 1
+        content:
+        - id: 123
+          sku: 56874
+          businessUnit: DE
+          title: Data-Decision-Delivery Pillow
+          description: Extra cozy pillow
+          link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
+          bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
+          smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
+          category: Pilow
+          price: 10.0
+          salesPrice: 8.5
+          salesPriceEffectiveDate: the sale will run until Friday
+          discount: -15%
+          currency: €
+          stockQuantity: 120
+          enabled: 1
+          attributes:
+            colour: Black
+            material: Plush
+          createdAt: '2020-01-02T16:00:03.449Z'
+          updatedAt: '2020-04-21T17:00:03.449Z'
+    ErrorItem:
+      type: object
+      readOnly: true
+      properties:
+        source:
+          description: param/field name or path (for instance SomeObject.someField.someOtherField)
+          type: string
+          example: productDTO.sku
+        key:
+          description: 'Dot-separated error key (for example `error.constraint-violation.Size`).
+
+            '
+          type: string
+          example: error.constraint-violation.NotNull
+        message:
+          description: error message
+          type: string
+          example: must not be null
+        args:
+          description: 'arguments for key (example: min=2, max=10, value="some string value" etc.)
+
+            '
+          type: object
+          additionalProperties:
+            type: string
+    Error:
+      description: Error response
+      type: object
+      readOnly: true
+      properties:
+        message:
+          description: error message
+          type: string
+          example: Input validation failed
+        key:
+          description: 'Dot-separated error key (for example `error.input-validation`).
+
+            '
+          type: string
+          example: error.input-validation
+        args:
+          description: 'arguments for the key (example: min=2, max=10, value="some string value" etc.)
+
+            '
+          type: object
+          additionalProperties:
+            type: string
+        errors:
+          description: list of parameter-related or field-related errors. One field may have several errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorItem'
     Product:
       type: object
       description: 'Product data. The unique identifier for the product is a combination of `sku` and `businessUnit`.
@@ -265,103 +365,3 @@ components:
           material: Plush
         createdAt: '2020-01-02T16:00:03.449Z'
         updatedAt: '2020-04-21T17:00:03.449Z'
-    ErrorItem:
-      type: object
-      readOnly: true
-      properties:
-        source:
-          description: param/field name or path (for instance SomeObject.someField.someOtherField)
-          type: string
-          example: productDTO.sku
-        key:
-          description: 'Dot-separated error key (for example `error.constraint-violation.Size`).
-
-            '
-          type: string
-          example: error.constraint-violation.NotNull
-        message:
-          description: error message
-          type: string
-          example: must not be null
-        args:
-          description: 'arguments for key (example: min=2, max=10, value="some string value" etc.)
-
-            '
-          type: object
-          additionalProperties:
-            type: string
-    Error:
-      description: Error response
-      type: object
-      readOnly: true
-      properties:
-        message:
-          description: error message
-          type: string
-          example: Input validation failed
-        key:
-          description: 'Dot-separated error key (for example `error.input-validation`).
-
-            '
-          type: string
-          example: error.input-validation
-        args:
-          description: 'arguments for the key (example: min=2, max=10, value="some string value" etc.)
-
-            '
-          type: object
-          additionalProperties:
-            type: string
-        errors:
-          description: list of parameter-related or field-related errors. One field may have several errors.
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorItem'
-    ProductPage:
-      description: a standard page object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-          readOnly: true
-          example: 0
-        pageSize:
-          example: 10
-          type: integer
-          format: int32
-          readOnly: true
-        totalElements:
-          example: 1
-          type: integer
-          format: int32
-          readOnly: true
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-      example:
-        pageNumber: 0
-        pageSize: 10
-        totalElements: 1
-        content:
-        - id: 123
-          sku: 56874
-          businessUnit: DE
-          title: Data-Decision-Delivery Pillow
-          description: Extra cozy pillow
-          link: https://demo.crossengage.io/product/data-decision-delivery-pillow/
-          bigImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586-big.jpg
-          smallImageLink: https://demo.crossengage.io/wp-content/uploads/2019/05/5586.jpg
-          category: Pilow
-          price: 10.0
-          salesPrice: 8.5
-          salesPriceEffectiveDate: the sale will run until Friday
-          discount: -15%
-          currency: €
-          stockQuantity: 120
-          enabled: 1
-          attributes:
-            colour: Black
-            material: Plush
-          createdAt: '2020-01-02T16:00:03.449Z'
-          updatedAt: '2020-04-21T17:00:03.449Z'
